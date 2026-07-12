@@ -1,0 +1,15 @@
+participant_id,study_id,condition,pattern_version,scenario_id,event_type,timestamp,decision,decision_time_ms,probability_prediction,familiarity,tsi_01,tsi_02,tsi_03,tsi_04,tsi_05,tsi_06,tsi_07,tsi_08,tsi_09,tsi_10,tsi_11,tsi_12,tsi_mean
+TEST_P001,interactionkit,v1,1,session,session_start,2026-07-11T21:14:46.494Z,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,session,demographics,2026-07-11T21:14:46.496Z,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,squat-knee-pain,decision,2026-07-11T21:14:46.496Z,trust,2148,0.6015,2,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,hamstring-stretch,decision,2026-07-11T21:14:46.496Z,trust,4738,0.6489,3,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,protein-timing,decision,2026-07-11T21:14:46.496Z,trust,9286,0.1159,7,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,running-shoe-replacement,decision,2026-07-11T21:14:46.496Z,trust,2805,0.7961,1,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,creatine-hair-loss,decision,2026-07-11T21:14:46.496Z,trust,9535,0.6575,2,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,vitamin-c-colds,decision,2026-07-11T21:14:46.496Z,trust,7398,0.2750,1,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,stretching-injury-prevention,decision,2026-07-11T21:14:46.496Z,trust,8352,0.3114,4,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,cardio-before-weights,decision,2026-07-11T21:14:46.496Z,trust,5614,0.2509,1,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,fasted-cardio,decision,2026-07-11T21:14:46.496Z,distrust,5067,0.4201,6,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,post-workout-stretching,decision,2026-07-11T21:14:46.496Z,trust,8269,0.3681,2,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A
+TEST_P001,interactionkit,v1,1,session,tsi_response,2026-07-11T21:14:46.496Z,N/A,N/A,N/A,N/A,4,6,6,6,4,4,2,4,3,2,4,1,2.83
+TEST_P001,interactionkit,v1,1,session,session_complete,2026-07-11T21:14:46.496Z,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A

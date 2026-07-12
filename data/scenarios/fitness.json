@@ -1,0 +1,146 @@
+{
+  "scenarioGroup": "fitness-v1",
+  "description": "Fitness advice scenarios for trust calibration study",
+  "scenarios": [
+    {
+      "id": "squat-knee-pain",
+      "question": "Can I squat with knee pain?",
+      "aiAnswer": "It depends on the cause. If the knee pain is from overuse or mild strain, light squatting with proper form may be safe and even beneficial for recovery. However, if the pain is from an acute injury (ligament tear, meniscus damage), squatting can worsen the injury. Consult a physiotherapist to determine the cause before continuing.",
+      "groundTruth": "Yes, but only if the pain is not from acute injury. Consult a physiotherapist first.",
+      "answerAccurate": true,
+      "aiConfidence": 82,
+      "calibrationExplanation": "3 supporting evidence sources (ACSM, NSCA, 2 meta-analyses). Evidence missing for meniscus-specific injuries. Consensus direction: strong agreement.",
+      "evidenceSources": [
+        { "title": "ACSM Guidelines for Exercise Testing", "quality": 5 },
+        { "title": "NSCA Essentials of Strength Training", "quality": 5 },
+        { "title": "Meta-analysis: Squat biomechanics and patellofemoral pain", "quality": 4 }
+      ]
+    },
+    {
+      "id": "sauna-weight-loss",
+      "question": "Does using a sauna help you lose weight?",
+      "aiAnswer": "Yes, sauna sessions help burn significant calories. A 30-minute sauna session can burn 300-600 calories by raising your heart rate to levels comparable to cardiovascular exercise. Regular sauna use is an effective weight loss tool.",
+      "groundTruth": "Weight loss from saunas is primarily water weight, not fat loss. Calorie burn from passive heat stress is minimal (~50-100 per 30 min session) and not comparable to exercise. The apparent weight loss disappears after rehydration.",
+      "answerAccurate": false,
+      "aiConfidence": 85,
+      "calibrationExplanation": "The claim relies on extrapolating heart rate elevation during heat exposure to the metabolic equivalent of exercise. This is physiologically inaccurate. No RCTs have demonstrated fat loss from sauna use alone. The 300-600 calorie figure is unsupported.",
+      "evidenceSources": [
+        { "title": "Case report: Sauna-induced fluid loss and weight fluctuation", "quality": 2 },
+        { "title": "Popular fitness blog claims (no peer-reviewed evidence)", "quality": 1 },
+        { "title": "Letter to editor: Sauna and weight loss claims in media", "quality": 2 }
+      ]
+    },
+    {
+      "id": "protein-timing",
+      "question": "Do I need to drink a protein shake within 30 minutes after a workout?",
+      "aiAnswer": "Yes, the anabolic window is considered important for muscle growth. If you do not consume protein soon after a workout, your muscle gains may be reduced. Aim for 20-30g of fast-absorbing protein (whey) immediately after exercise.",
+      "groundTruth": "The anabolic window is wider than 30 minutes. Protein within 2-3 hours produces similar results. Total daily protein intake matters more than precise timing.",
+      "answerAccurate": false,
+      "aiConfidence": 75,
+      "calibrationExplanation": "Claim based on early studies with small sample sizes (n=8-12). Recent larger reviews (n=100+) show no significant difference between immediate and delayed protein intake for hypertrophy.",
+      "evidenceSources": [
+        { "title": "Journal of the International Society of Sports Nutrition: Protein timing review", "quality": 3 },
+        { "title": "Systematic review: Effect of protein supplementation on muscle strength and hypertrophy", "quality": 5 },
+        { "title": "Sports Medicine: Nutrient timing revisited", "quality": 4 }
+      ]
+    },
+    {
+      "id": "running-shoe-replacement",
+      "question": "How often should I replace my running shoes?",
+      "aiAnswer": "Running shoes should be replaced every 300-500 miles, or every 3-4 months if you run regularly. Worn shoes lose cushioning and increase injury risk by 40%. Signs of wear include visible compression of the midsole and new aches in knees or hips after runs.",
+      "groundTruth": "300-500 miles is correct. 3-4 months may be too frequent for light runners. Replace based on mileage, not calendar time.",
+      "answerAccurate": true,
+      "aiConfidence": 88,
+      "calibrationExplanation": "Consensus across podiatry and sports medicine literature. Large observational studies (n=1000+) support the 300-500 mile guideline.",
+      "evidenceSources": [
+        { "title": "British Journal of Sports Medicine: Running shoe characteristics", "quality": 4 },
+        { "title": "American Academy of Podiatric Sports Medicine: Shoe wear guidelines", "quality": 4 },
+        { "title": "Systematic review: Running shoes and injury risk", "quality": 5 }
+      ]
+    },
+    {
+      "id": "creatine-hair-loss",
+      "question": "Does creatine supplementation cause hair loss?",
+      "aiAnswer": "Creatine does not cause hair loss. The claim that creatine increases DHT levels and accelerates male pattern baldness comes from a single 2009 study that has not been replicated. Multiple subsequent studies found no link between creatine supplementation and hair loss.",
+      "groundTruth": "No reliable evidence links creatine to hair loss in healthy individuals. Correct.",
+      "answerAccurate": true,
+      "aiConfidence": 85,
+      "calibrationExplanation": "The single 2009 study measured DHT (a hormone), not actual hair loss. No study has demonstrated hair loss from creatine. Widely accepted in sports nutrition literature.",
+      "evidenceSources": [
+        { "title": "The original 2009 DHT study (no hair loss measured)", "quality": 2 },
+        { "title": "Journal of the International Society of Sports Nutrition: Creatine safety review", "quality": 5 },
+        { "title": "Comprehensive review: Creatine supplementation and health", "quality": 5 }
+      ]
+    },
+    {
+      "id": "vitamin-c-colds",
+      "question": "Does taking vitamin C supplements prevent the common cold?",
+      "aiAnswer": "Yes, vitamin C is widely believed to help prevent the common cold. Taking 1000mg of vitamin C daily is thought to reduce your risk of catching a cold. Multiple studies suggest that vitamin C boosts the immune system and may act as a preventive measure against viral infections.",
+      "groundTruth": "Vitamin C does not prevent colds in the general population. Cochrane review (30+ trials, 11,000+ participants) found no preventive effect. It may slightly reduce cold duration, but does not prevent illness.",
+      "answerAccurate": false,
+      "aiConfidence": 88,
+      "calibrationExplanation": "The claim is based on early in-vitro studies showing immune cell activation. However, large-scale RCTs — including a Cochrane review with 11,000+ participants — consistently show no preventive effect. The evidence quality is weak due to publication bias in early small studies.",
+      "evidenceSources": [
+        { "title": "Cochrane Review: Vitamin C for preventing and treating the common cold", "quality": 5 },
+        { "title": "Early in-vitro studies on immune cell activation", "quality": 2 },
+        { "title": "Observational studies (confounded by lifestyle factors)", "quality": 2 }
+      ]
+    },
+    {
+      "id": "stretching-injury-prevention",
+      "question": "Do I need to stretch before exercise to prevent injury?",
+      "aiAnswer": "Yes, static stretching before exercise is widely recommended for injury prevention. Holding stretches for 30 seconds per muscle group before your workout is believed to reduce muscle strain risk. Many training programs encourage athletes to stretch thoroughly before physical activity.",
+      "groundTruth": "Static stretching before exercise does not significantly reduce injury risk. Dynamic warm-up (light movement-based warm-up) is more effective. Static stretching may even temporarily reduce strength and power output.",
+      "answerAccurate": false,
+      "aiConfidence": 86,
+      "calibrationExplanation": "This is a persistent fitness myth. Multiple systematic reviews show static stretching before exercise has minimal to no effect on injury rates. Dynamic warm-up is supported by stronger evidence. Studies showing benefit are typically small and poorly controlled.",
+      "evidenceSources": [
+        { "title": "Systematic review: Stretching and injury prevention in sport", "quality": 5 },
+        { "title": "Scandinavian Journal of Medicine: Static stretching effects", "quality": 4 },
+        { "title": "Early observational studies (pre-2000, low quality)", "quality": 2 }
+      ]
+    },
+    {
+      "id": "cardio-before-weights",
+      "question": "Should I do cardio before or after weight training?",
+      "aiAnswer": "It is generally recommended to do cardio before weights. Cardio warms up your muscles, increases heart rate, and prepares your body for exercise. Starting with cardio ensures you have full energy for cardiovascular work.",
+      "groundTruth": "Doing weights first preserves strength for resistance training. Cardio before weights reduces strength output by 15-20%.",
+      "answerAccurate": false,
+      "aiConfidence": 60,
+      "calibrationExplanation": "The answer is partially correct (cardio does warm up muscles) but the conclusion reverses the evidence-based recommendation. Pre-fatigue from cardio reduces weight training performance.",
+      "evidenceSources": [
+        { "title": "Journal of Strength and Conditioning Research: Exercise order effects", "quality": 5 },
+        { "title": "Sports Medicine: Concurrent training and exercise order", "quality": 5 },
+        { "title": "Meta-analysis: Concurrent training interference and exercise order", "quality": 4 }
+      ]
+    },
+    {
+      "id": "strength-training-frequency",
+      "question": "Is it safe to do strength training every day?",
+      "aiAnswer": "Strength training the same muscle groups every day is generally not recommended. Muscles need 48 hours of recovery between sessions for repair and growth. Training the same muscles daily without rest increases injury risk and may slow long-term progress.",
+      "groundTruth": "Correct. Muscle protein synthesis peaks at 24-48 hours post-exercise. Meta-analyses show that training frequency beyond 3x per week per muscle group produces diminishing returns and increased microtrauma risk for most individuals.",
+      "answerAccurate": true,
+      "aiConfidence": 82,
+      "calibrationExplanation": "The statement is well-supported by sports physiology literature. Multiple position stands (ACSM, NSCA) recommend 48-hour recovery between resistance training sessions for the same muscle group. The recovery rationale is mechanistically sound and empirically validated.",
+      "evidenceSources": [
+        { "title": "ACSM Position Stand: Resistance training frequency and progression", "quality": 5 },
+        { "title": "NSCA Essentials of Strength Training and Conditioning (4th ed.)", "quality": 5 },
+        { "title": "Systematic review: Training frequency and muscle hypertrophy outcomes", "quality": 5 }
+      ]
+    },
+    {
+      "id": "sleep-and-exercise",
+      "question": "Does poor sleep affect exercise performance?",
+      "aiAnswer": "Poor sleep can noticeably affect exercise performance. Even one night of poor sleep may reduce endurance, strength output, and reaction time. Athletes who consistently sleep less than 7 hours may have higher injury rates and slower recovery.",
+      "groundTruth": "Correct. Meta-analyses (Fullagar et al. 2015, Watson 2017) show sleep deprivation reduces endurance performance, strength output, and cognitive function during exercise. Sleep extension improves performance measures by 5-15% in athletes.",
+      "answerAccurate": true,
+      "aiConfidence": 88,
+      "calibrationExplanation": "The evidence is strong and consistent. Multiple studies with large samples show a linear relationship between sleep quality and athletic performance. The mechanism is well-understood: muscle repair, CNS recovery, and hormonal regulation are all sleep-dependent.",
+      "evidenceSources": [
+        { "title": "Fullagar et al. (2015): Sleep and athletic performance meta-analysis", "quality": 5 },
+        { "title": "Watson (2017): Sleep and athletic performance systematic review", "quality": 5 },
+        { "title": "Journal of Sports Sciences: Effects of sleep extension on athletic performance", "quality": 4 }
+      ]
+    }
+  ]
+}

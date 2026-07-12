@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InteractionKit
 
-## Getting Started
+A methodological infrastructure for producing structured, schema-mergeable behavioral data from Human-AI trust calibration experiments.
 
-First, run the development server:
+## Research Claim
+
+Different implementations of the same HAI interaction pattern currently produce incompatible behavioral data. InteractionKit provides a versioned pattern interface and a mandatory structured log schema such that two independent implementations of the same experiment produce data that can be merged with minimal translation overhead.
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000/study/confidence-v1-v2` in a browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Experiment Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+/study/{id}
+  │
+  ├── Consent
+  ├── Demographics
+  ├── Random assignment (v1: confidence only / v2: evidence-augmented)
+  ├── 10 scenarios (randomized order):
+  │     question → AI answer → confidence pattern →
+  │     probability estimate → trust decision →
+  │     ground truth reveal → familiarity rating
+  ├── TSI questionnaire (Trust in Automation Scale)
+  └── Debrief → CSV download → Return to Prolific
+```
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+```
+User interaction → Scenario Runner → Event Logger → CSV → Analysis Pipeline
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The schema is the scientific contribution. The CSV records participant behavior (not experimenter knowledge). Ground truth is resolved by joining CSV output with scenario data files.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+| Directory | Purpose |
+|-----------|---------|
+| `app/` | Next.js App Router — single page `/study/[id]` |
+| `components/` | Experiment UI components |
+| `lib/` | Logger, randomization, checkpoint |
+| `data/scenarios/` | Stimulus materials with ground truth |
+| `data/studies/` | Study configuration JSON files |
+| `schemas/` | `log-event.schema.json` — canonical data schema |
+| `types/` | TypeScript type definitions |
+| `analysis/` | R analysis scripts |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key Design Decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **No Pattern Engine.** Two conditions use conditional rendering, not an abstraction layer
+- **No backend.** All state in browser memory + localStorage checkpoint
+- **No database.** CSV is the output format
+- **Schema-first.** All engineering decisions evaluated against: "does this serve the schema?"
+- **Ground truth separation.** Participant behavior in CSV, scenario properties in `fitness.json`
+
+## Dependencies
+
+- Next.js 16 (App Router)
+- TypeScript (strict mode)
+- Tailwind CSS
+- Ajv (JSON Schema validation)
+- R (analysis) with lmerTest, lme4, jsonlite
+
+## Deployment
+
+```bash
+npm run build
+# Deploy to Vercel or any static hosting
+```
+
+## Citation
+
+If you use InteractionKit in your research, please cite:
+
+```
+[Citation placeholder — paper pending]
+```
+
+## License
+
+[License TBD]

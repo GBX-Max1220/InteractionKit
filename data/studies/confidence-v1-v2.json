@@ -1,0 +1,13 @@
+{
+  "studyId": "evidence-provenance-card",
+  "title": "Evidence-Augmented Confidence Card",
+  "description": "Does adding evidence provenance to confidence communication affect trust calibration?",
+  "conditions": [
+    { "id": "v1", "label": "Confidence Only", "patternVersion": 1 },
+    { "id": "v2", "label": "Confidence + Evidence", "patternVersion": 2 }
+  ],
+  "scenarioGroup": "fitness-v1",
+  "randomize": true,
+  "scenariosPerParticipant": 10,
+  "minScenariosForCompletion": 6
+}

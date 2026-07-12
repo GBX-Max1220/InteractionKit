@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://interactionkit.dev/schemas/log-event.json",
+  "title": "InteractionKit Log Event",
+  "description": "Schema for participant behavioral data from Human-AI trust calibration experiments. Ground truth is resolved by joining with scenario data on scenario_id.",
+  "version": "0.3.0",
+
+  "type": "object",
+
+  "required": [
+    "participant_id", "study_id", "condition", "pattern_version",
+    "scenario_id", "event_type", "timestamp",
+    "decision", "decision_time_ms",
+    "probability_prediction",
+    "familiarity"
+  ],
+
+  "properties": {
+    "participant_id": {
+      "type": "string",
+      "description": "Participant identifier: Prolific PID or crypto.randomUUID()"
+    },
+    "study_id": {
+      "type": "string",
+      "enum": ["interactionkit", "independent-implementation"],
+      "description": "Study source identifier for pooled analysis"
+    },
+    "condition": {
+      "type": "string",
+      "enum": ["v1", "v2"],
+      "description": "Experimental condition assignment"
+    },
+    "pattern_version": {
+      "type": "integer",
+      "enum": [1, 2],
+      "description": "Pattern version used for this trial"
+    },
+    "scenario_id": {
+      "type": "string",
+      "description": "Scenario identifier. Join with data/scenarios/*.json for ground truth."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "decision",
+        "demographics",
+        "tsi_response",
+        "session_start",
+        "session_complete"
+      ],
+      "description": "Type of event being logged"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp"
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["trust", "distrust", "unsure"],
+      "description": "Participant's trust decision"
+    },
+    "decision_time_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Milliseconds from content ready to trust decision"
+    },
+    "familiarity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 7,
+      "description": "Optional: Per-scenario self-reported topic familiarity (1=unfamiliar, 7=very familiar)"
+    },
+    "probability_prediction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Participant's probability estimate that AI answer is correct, normalized [0,1]"
+    },
+    "tsi_01": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_02": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_03": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_04": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_05": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_06": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_07": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_08": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_09": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_10": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_11": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_12": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "tsi_mean": { "type": "number", "minimum": 1, "maximum": 7 }
+  }
+}
