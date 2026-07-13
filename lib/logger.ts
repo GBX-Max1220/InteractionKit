@@ -4,6 +4,7 @@ const CSV_HEADERS = [
   'participant_id', 'study_id', 'condition', 'pattern_version',
   'scenario_id', 'event_type', 'timestamp', 'decision',
   'decision_time_ms', 'probability_prediction', 'familiarity',
+  'age', 'gender', 'ai_familiarity',
   'tsi_01', 'tsi_02', 'tsi_03', 'tsi_04', 'tsi_05', 'tsi_06',
   'tsi_07', 'tsi_08', 'tsi_09', 'tsi_10', 'tsi_11', 'tsi_12', 'tsi_mean',
 ];

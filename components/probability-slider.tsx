@@ -36,12 +36,27 @@ export function ProbabilitySlider({ value, onChange, onSubmit }: Props) {
       </div>
 
       <div className="space-y-2">
+        {/* Slider thumb sized at 28px for easier touch/mouse interaction */}
+        <style>{`
+          .slider-thumb-lg::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: #2563eb; cursor: pointer; border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+          }
+          .slider-thumb-lg::-moz-range-thumb {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: #2563eb; cursor: pointer; border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+          }
+        `}</style>
         <input
           type="range"
           min="0"
           max="100"
           value={percent}
           onChange={(e) => handleChange(Number(e.target.value) / 100)}
+          className="slider-thumb-lg h-2"
         />
         <div className="flex justify-between text-xs text-gray-400">
           <span>0%</span>

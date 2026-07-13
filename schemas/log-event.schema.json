@@ -7,12 +7,13 @@
 
   "type": "object",
 
+  "$comment": "BRIER_FORMULA_v1: (probability_prediction - answer_accurate)^2; TRUST_CLASS_v1: overtrust = trust & !answer_accurate, undertrust = distrust & answer_accurate",
+
   "required": [
     "participant_id", "study_id", "condition", "pattern_version",
     "scenario_id", "event_type", "timestamp",
     "decision", "decision_time_ms",
-    "probability_prediction",
-    "familiarity"
+    "probability_prediction"
   ],
 
   "properties": {
@@ -89,6 +90,23 @@
     "tsi_10": { "type": "integer", "minimum": 1, "maximum": 7 },
     "tsi_11": { "type": "integer", "minimum": 1, "maximum": 7 },
     "tsi_12": { "type": "integer", "minimum": 1, "maximum": 7 },
-    "tsi_mean": { "type": "number", "minimum": 1, "maximum": 7 }
+    "tsi_mean": { "type": "number", "minimum": 1, "maximum": 7 },
+
+    "age": {
+      "type": "string",
+      "enum": ["18-24", "25-34", "35-44", "45-54", "55+"],
+      "description": "Demographics: age range (demographics event only)"
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["male", "female", "non-binary", "prefer-not-to-say"],
+      "description": "Demographics: gender identity (demographics event only)"
+    },
+    "ai_familiarity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Demographics: self-reported AI familiarity 1-5 (demographics event only)"
+    }
   }
 }

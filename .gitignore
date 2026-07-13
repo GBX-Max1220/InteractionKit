@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# simulated test output (not real participant data)
+test/simulated-output.csv
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

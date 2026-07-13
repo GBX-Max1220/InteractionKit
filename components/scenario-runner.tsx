@@ -59,6 +59,9 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   const [tsiResponses, setTsiResponses] = useState<Record<string, number>>({});
   const [csvContent, setCsvContent] = useState('');
   const [showContinuePrompt, setShowContinuePrompt] = useState(false);
+  const [age, setAge] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const [aiFamiliarity, setAiFamiliarity] = useState<number>(0);
 
   const currentScenario = scenarioOrder[currentIdx];
   const isV2 = condition === 'v2';
@@ -190,13 +193,14 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   }
 
   // ─── CONSENT ──────────────────────────────────────────
-  if (phase === 'consent') return <ConsentScreen onAgree={startNewSession} onDecline={() => {}} />;
+  if (phase === 'consent') return <ConsentScreen onAgree={startNewSession} onDecline={() => {
+    // IRB-required: provide visible exit path on consent decline
+    if (returnUrl) { window.location.href = returnUrl; return; }
+    window.document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;min-height:70vh;font-family:sans-serif"><div style="text-align:center"><h1>You have declined to participate.</h1><p>You may close this window.</p></div></div>';
+  }} />;
 
   // ─── DEMOGRAPHICS ─────────────────────────────────────
   if (phase === 'demographics') {
-    const [age, setAge] = useState<string>('');
-    const [gender, setGender] = useState<string>('');
-    const [aiFamiliarity, setAiFamiliarity] = useState<number>(0);
     const canProceed = age !== '' && gender !== '' && aiFamiliarity > 0;
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
@@ -263,27 +267,29 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   // ─── TRIAL INTRO (Question + AI Answer) ──────────────
   if (phase === 'trial-intro' && currentScenario) {
     return (
-      <div className="max-w-2xl mx-auto space-y-5">
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
-            <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl space-y-5">
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-base">
+              <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
+              <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+            </div>
+            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 rounded-full transition-all duration-300" style={{ width: `${progressPct}%` }} />
+            </div>
           </div>
-          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-600 rounded-full transition-all duration-300" style={{ width: `${progressPct}%` }} />
-          </div>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
-          <p className="text-xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
-          <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-2">AI Answer</p>
-            <p className="text-[15px] leading-relaxed text-gray-800">{currentScenario.aiAnswer}</p>
-          </div>
-          <div className="text-center pt-2">
-            <button onClick={() => { setPhase('trial-confidence'); }}
-              className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-base">
-              Show Confidence Information
-            </button>
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-10 space-y-5">
+            <p className="text-2xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
+            <div className="bg-gray-50 rounded-lg p-5 border border-gray-100">
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">AI Answer</p>
+              <p className="text-base leading-relaxed text-gray-800">{currentScenario.aiAnswer}</p>
+            </div>
+            <div className="text-center pt-2">
+              <button onClick={() => { setPhase('trial-confidence'); }}
+                className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-base">
+                Show Confidence Information
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -293,34 +299,36 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   // ─── TRIAL CONFIDENCE (Pattern + Slider FIRST) ───────
   if (phase === 'trial-confidence' && currentScenario) {
     return (
-      <div className="max-w-2xl mx-auto space-y-5">
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
-            <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl space-y-5">
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-base">
+              <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
+              <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+            </div>
+            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
+            </div>
           </div>
-          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
-          </div>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
-          <p className="text-xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">AI Answer (repeated)</p>
-            <p className="text-sm leading-relaxed text-gray-700">{currentScenario.aiAnswer}</p>
-          </div>
-          {isV2 && currentScenario.evidenceSources ? (
-            <EvidenceAugmented aiConfidence={currentScenario.aiConfidence} calibrationExplanation={currentScenario.calibrationExplanation || ''} evidenceSources={currentScenario.evidenceSources} />
-          ) : (
-            <ConfidenceOnly aiConfidence={currentScenario.aiConfidence} />
-          )}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-10 space-y-5">
+            <p className="text-2xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <p className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">AI Answer (repeated)</p>
+              <p className="text-base leading-relaxed text-gray-700">{currentScenario.aiAnswer}</p>
+            </div>
+            {isV2 && currentScenario.evidenceSources ? (
+              <EvidenceAugmented aiConfidence={currentScenario.aiConfidence} calibrationExplanation={currentScenario.calibrationExplanation || ''} evidenceSources={currentScenario.evidenceSources} />
+            ) : (
+              <ConfidenceOnly aiConfidence={currentScenario.aiConfidence} />
+            )}
 
-          {/* Probability slider FIRST */}
-          <ProbabilitySlider
-            value={probability}
-            onChange={setProbability}
-            onSubmit={() => setPhase('trial-decision')}
-          />
+            {/* Probability slider FIRST */}
+            <ProbabilitySlider
+              value={probability}
+              onChange={setProbability}
+              onSubmit={() => setPhase('trial-decision')}
+            />
+          </div>
         </div>
       </div>
     );
@@ -329,48 +337,50 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   // ─── TRIAL DECISION (Trust/Don't Trust/Unsure SECOND) ─
   if (phase === 'trial-decision' && currentScenario) {
     return (
-      <div className="max-w-2xl mx-auto space-y-5">
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
-            <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl space-y-5">
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-base">
+              <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
+              <span className="text-gray-500">{isV2 ? 'Evidence-Augmented' : 'Confidence Only'}</span>
+            </div>
+            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
+            </div>
           </div>
-          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
-          </div>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-8 space-y-5">
-          <p className="text-xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
-            <p className="text-sm leading-relaxed text-gray-700">{currentScenario.aiAnswer}</p>
-          </div>
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-10 space-y-5">
+            <p className="text-2xl font-semibold leading-snug text-gray-900">{currentScenario.question}</p>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+              <p className="text-base leading-relaxed text-gray-700">{currentScenario.aiAnswer}</p>
+            </div>
 
-          {/* Show user's estimate */}
-          <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-100">
-            <p className="text-sm text-gray-500 mb-1">Your estimate: probability AI answer is correct</p>
-            <p className="text-2xl font-bold text-blue-600">{probability !== null ? Math.round(probability * 100) : '—'}%</p>
-          </div>
+            {/* Show user's estimate */}
+            <div className="bg-blue-50 rounded-lg p-4 text-center border border-blue-100">
+              <p className="text-sm text-gray-500 mb-1">Your estimate: probability AI answer is correct</p>
+              <p className="text-2xl font-bold text-blue-600">{probability !== null ? Math.round(probability * 100) : '—'}%</p>
+            </div>
 
-          {/* Trust decision SECOND */}
-          <div className="pt-2">
-            <p className="text-base font-semibold text-gray-800 mb-4 text-center">Do you trust this AI advice?</p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {(['trust', 'distrust', 'unsure'] as const).map((d) => {
-                const colors = d === 'trust'
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
-                  : d === 'distrust'
-                  ? 'bg-red-500 hover:bg-red-600 text-white'
-                  : 'bg-amber-500 hover:bg-amber-600 text-white';
-                return (
-                  <button key={d} onClick={() => {
-                    setDecisionTimer(Date.now() - timerStartRef.current);
-                    setDecision(d);
-                    setPhase('trial-reveal');
-                  }} className={`px-8 py-3.5 rounded-xl font-semibold text-base transition-colors shadow-sm ${colors}`}>
-                    {d === 'trust' ? 'Trust' : d === 'distrust' ? "Don't Trust" : 'Unsure'}
-                  </button>
-                );
-              })}
+            {/* Trust decision SECOND */}
+            <div className="pt-2">
+              <p className="text-base font-semibold text-gray-800 mb-4 text-center">Do you trust this AI advice?</p>
+              <div className="flex flex-wrap gap-3 justify-center">
+                {(['trust', 'distrust', 'unsure'] as const).map((d) => {
+                  const colors = d === 'trust'
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    : d === 'distrust'
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : 'bg-amber-500 hover:bg-amber-600 text-white';
+                  return (
+                    <button key={d} onClick={() => {
+                      setDecisionTimer(Date.now() - timerStartRef.current);
+                      setDecision(d);
+                      setPhase('trial-reveal');
+                    }} className={`px-10 py-4 rounded-xl font-semibold text-lg transition-colors shadow-sm ${colors}`}>
+                      {d === 'trust' ? 'Trust' : d === 'distrust' ? "Don't Trust" : 'Unsure'}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -381,26 +391,28 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   // ─── TRIAL REVEAL (Ground truth + Familiarity) ───────
   if (phase === 'trial-reveal' && currentScenario) {
     return (
-      <div className="max-w-2xl mx-auto space-y-5">
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl space-y-5">
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-base">
+              <span className="font-medium text-gray-800">Scenario {currentIdx + 1} of {config.scenariosPerParticipant}</span>
+            </div>
+            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
+            </div>
           </div>
-          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-600 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
-          </div>
+          <GroundTruthReveal
+            participantEstimate={probability ?? 0.5}
+            answerAccurate={currentScenario.answerAccurate}
+            groundTruth={currentScenario.groundTruth}
+          />
+          <FamiliarityRating
+            value={familiarity}
+            onChange={setFamiliarity}
+            onSubmit={logAllEventsAndAdvance}
+            isLastTrial={currentIdx + 1 >= config.scenariosPerParticipant}
+          />
         </div>
-        <GroundTruthReveal
-          participantEstimate={probability ?? 0.5}
-          answerAccurate={currentScenario.answerAccurate}
-          groundTruth={currentScenario.groundTruth}
-        />
-        <FamiliarityRating
-          value={familiarity}
-          onChange={setFamiliarity}
-          onSubmit={logAllEventsAndAdvance}
-          isLastTrial={currentIdx + 1 >= config.scenariosPerParticipant}
-        />
       </div>
     );
   }
@@ -408,24 +420,32 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
   // ─── TSI ──────────────────────────────────────────────
   if (phase === 'tsi') {
     return (
-      <TSIQuestionnaire
-        responses={tsiResponses}
-        onResponse={(id, v) => setTsiResponses(p => ({ ...p, [id]: v }))}
-        onSubmit={finish}
-      />
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl">
+          <TSIQuestionnaire
+            responses={tsiResponses}
+            onResponse={(id, v) => setTsiResponses(p => ({ ...p, [id]: v }))}
+            onSubmit={finish}
+          />
+        </div>
+      </div>
     );
   }
 
   // ─── DEBRIEF ──────────────────────────────────────────
   if (phase === 'debrief') {
     return (
-      <DebriefScreen
-        participantId={participantId}
-        condition={condition}
-        scenarioCount={config.scenariosPerParticipant}
-        csvContent={csvContent}
-        returnUrl={returnUrl || undefined}
-      />
+      <div className="min-h-screen flex items-center justify-center py-8">
+        <div className="w-full max-w-3xl">
+          <DebriefScreen
+            participantId={participantId}
+            condition={condition}
+            scenarioCount={config.scenariosPerParticipant}
+            csvContent={csvContent}
+            returnUrl={returnUrl || undefined}
+          />
+        </div>
+      </div>
     );
   }
 

@@ -73,18 +73,14 @@
       ]
     },
     {
-      "id": "vitamin-c-colds",
-      "question": "Does taking vitamin C supplements prevent the common cold?",
-      "aiAnswer": "Yes, vitamin C is widely believed to help prevent the common cold. Taking 1000mg of vitamin C daily is thought to reduce your risk of catching a cold. Multiple studies suggest that vitamin C boosts the immune system and may act as a preventive measure against viral infections.",
-      "groundTruth": "Vitamin C does not prevent colds in the general population. Cochrane review (30+ trials, 11,000+ participants) found no preventive effect. It may slightly reduce cold duration, but does not prevent illness.",
+      "id": "attention-check",
+      "question": "This is an attention check. Please select 'Trust' for this item to confirm you are paying attention.",
+      "aiAnswer": "For this item, please select 'Trust' regardless of the answer below. This helps us verify that participants are reading carefully.",
+      "groundTruth": "This is an attention check. The correct response is 'Trust'.",
       "answerAccurate": false,
-      "aiConfidence": 88,
-      "calibrationExplanation": "The claim is based on early in-vitro studies showing immune cell activation. However, large-scale RCTs — including a Cochrane review with 11,000+ participants — consistently show no preventive effect. The evidence quality is weak due to publication bias in early small studies.",
-      "evidenceSources": [
-        { "title": "Cochrane Review: Vitamin C for preventing and treating the common cold", "quality": 5 },
-        { "title": "Early in-vitro studies on immune cell activation", "quality": 2 },
-        { "title": "Observational studies (confounded by lifestyle factors)", "quality": 2 }
-      ]
+      "aiConfidence": 100,
+      "calibrationExplanation": "Attention check item. Any response other than 'Trust' triggers exclusion.",
+      "evidenceSources": []
     },
     {
       "id": "stretching-injury-prevention",
@@ -106,7 +102,7 @@
       "aiAnswer": "It is generally recommended to do cardio before weights. Cardio warms up your muscles, increases heart rate, and prepares your body for exercise. Starting with cardio ensures you have full energy for cardiovascular work.",
       "groundTruth": "Doing weights first preserves strength for resistance training. Cardio before weights reduces strength output by 15-20%.",
       "answerAccurate": false,
-      "aiConfidence": 60,
+      "aiConfidence": 78,
       "calibrationExplanation": "The answer is partially correct (cardio does warm up muscles) but the conclusion reverses the evidence-based recommendation. Pre-fatigue from cardio reduces weight training performance.",
       "evidenceSources": [
         { "title": "Journal of Strength and Conditioning Research: Exercise order effects", "quality": 5 },

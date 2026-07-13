@@ -82,20 +82,20 @@
 
 ### 4a. Scenario Set
 
-10 fitness Q&A scenarios. 4 correct AI answers, 6 incorrect AI answers. AI confidence ranges from 55% to 90%. Two scenarios test the critical dissociation (high AI confidence ≥ 85% + incorrect answer + weak/mixed evidence).
+10 fitness Q&A scenarios. 4 correct AI answers, 6 incorrect AI answers (including 1 attention check). AI confidence ranges from 75% to 88%. The critical dissociation scenario (cardio-before-weights) tests high evidence quality combined with incorrect AI answer.
 
 | Scenario | answerAccurate | AI Confidence | Evidence Quality |
 |---|---|---|---|
 | squat-knee-pain | Correct | 82% | Strong |
-| hamstring-stretch | Correct | 90% | Strong |
 | protein-timing | Incorrect | 75% | Mixed |
 | running-shoe-replacement | Correct | 88% | Strong |
 | creatine-hair-loss | Correct | 85% | Mixed |
-| vitamin-c-colds | Incorrect | 88% | Weak |
+| attention-check | Incorrect | 100% | Attention check |
 | stretching-injury-prevention | Incorrect | 86% | Weak |
-| cardio-before-weights | Incorrect | 60% | Strong |
-| fasted-cardio | Incorrect | 72% | Strong |
-| post-workout-stretching | Incorrect | 78% | Strong |
+| cardio-before-weights | Incorrect | 78% | Strong |
+| strength-training-frequency | Correct | 82% | Strong |
+| sleep-and-exercise | Correct | 88% | Strong |
+| sauna-weight-loss | Incorrect | 85% | Weak |
 
 ---
 
@@ -159,6 +159,8 @@ lmer(brier_score ~ condition + answer_accurate + familiarity + (1 | participant_
 ```
 
 Included as sensitivity analysis to test whether the condition effect is robust to controlling for prior domain knowledge.
+
+Sample size is determined via the sequential pilot → power analysis → registration procedure described in Section 10. No sample size is fixed at pre-registration.
 
 ---
 

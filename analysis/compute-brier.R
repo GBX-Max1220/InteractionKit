@@ -12,6 +12,7 @@ suppressPackageStartupMessages({
   library(jsonlite)
   library(lmerTest)    # p-values for mixed models
   library(lme4)        # glmer for binary outcomes
+  library(car)         # Anova() for GLMM p-values
 })
 
 # ─── Config ──────────────────────────────────────────────
@@ -27,6 +28,17 @@ if (length(args) < 2) {
 
 # ─── Read data ────────────────────────────────────────────
 participants <- read.csv(args[1], stringsAsFactors = FALSE, na.strings = c("NA", ""))
+
+# Validate study_id column exists and is consistent
+stopifnot("study_id" %in% colnames(participants))
+study_ids <- unique(participants$study_id)
+if (length(study_ids) > 1) {
+  message(sprintf("Multiple study_ids detected: %s — running pooled analysis",
+                  paste(study_ids, collapse = ", ")))
+} else {
+  message(sprintf("Single study: %s", study_ids))
+}
+
 scenarios_raw <- fromJSON(args[2])
 
 # ─── Build scenario lookup ────────────────────────────────
@@ -58,8 +70,15 @@ decisions <- participants[participants$event_type == "decision", ]
 
 # 2. Apply exclusion criteria
 
-# 2a. Attention check: DISABLED — no attention check scenario in current scenario set.
-# Re-enable by adding an attention-check scenario to data/scenarios/*.json.
+# 2a. Attention check: exclude participants who fail it (should select "trust")
+attention_failures <- unique(
+  decisions$participant_id[decisions$scenario_id == ATTENTION_CHECK_ID & decisions$decision != "trust"]
+)
+if (length(attention_failures) > 0) {
+  message(sprintf("Excluding %d participants who failed attention check",
+                  length(attention_failures)))
+  decisions <- decisions[!decisions$participant_id %in% attention_failures, ]
+}
 
 # 2b. Minimum scenarios
 trial_counts <- aggregate(scenario_id ~ participant_id, data = decisions, FUN = function(x) length(unique(x)))
@@ -131,7 +150,9 @@ print(unsure_rate)
 
 # ─── Primary Analysis: Brier Score ───────────────────────
 cat("\n=== Brier Score by Condition ===\n")
-brier_summary <- aggregate(brier_score ~ condition, data = decisions, FUN = function(x)
+cat("(Participant-level means — correct for between-subject design)\n")
+participant_brier <- aggregate(brier_score ~ participant_id + condition, data = decisions, FUN = mean)
+brier_summary <- aggregate(brier_score ~ condition, data = participant_brier, FUN = function(x)
   round(c(mean = mean(x), sd = sd(x), n = length(x)), 4))
 print(brier_summary)
 
@@ -160,6 +181,8 @@ if (length(unique(overtrust_data$condition)) > 1 && var(overtrust_data$overtrust
   m4 <- glmer(overtrust ~ condition + familiarity + (1 | participant_id) + (1 | scenario_id),
               family = binomial, data = overtrust_data)
   print(summary(m4))
+  cat("\n--- Over-trust ANOVA (Type III Wald Chisq) ---\n")
+  print(Anova(m4, type = 3))
 } else {
   cat("Insufficient variance for overtrust model\n")
 }
@@ -176,6 +199,8 @@ if (length(unique(undertrust_data$condition)) > 1 && var(undertrust_data$undertr
   m5 <- glmer(undertrust ~ condition + familiarity + (1 | participant_id) + (1 | scenario_id),
               family = binomial, data = undertrust_data)
   print(summary(m5))
+  cat("\n--- Under-trust ANOVA (Type III Wald Chisq) ---\n")
+  print(Anova(m5, type = 3))
 } else {
   cat("Insufficient variance for undertrust model\n")
 }
@@ -197,3 +222,18 @@ cat(sprintf("Total trials: %d\n", nrow(decisions)))
 cat(sprintf("Trials per condition: v1 = %d, v2 = %d\n",
             sum(decisions$condition == "v1"), sum(decisions$condition == "v2")))
 cat(sprintf("Overall unsure rate: %.2f%%\n", 100 * mean(decisions$is_unsure)))
+
+# ─── Effect sizes ──────────────────────────────────────────
+cat("\n\n=== Cohen's d (Brier Score) ===\n")
+if (length(unique(participant_brier$condition)) == 2) {
+  v1 <- participant_brier$brier_score[participant_brier$condition == "v1"]
+  v2 <- participant_brier$brier_score[participant_brier$condition == "v2"]
+  diff_mean <- mean(v2, na.rm = TRUE) - mean(v1, na.rm = TRUE)
+  pooled_sd <- sqrt((sd(v1, na.rm = TRUE)^2 + sd(v2, na.rm = TRUE)^2) / 2)
+  cohens_d <- diff_mean / pooled_sd
+  cat(sprintf("Cohen's d = %.3f (v2 - v1)\n", cohens_d))
+  cat(sprintf("Interpretation: %s\n",
+              ifelse(abs(cohens_d) < 0.2, "negligible",
+                     ifelse(abs(cohens_d) < 0.5, "small",
+                            ifelse(abs(cohens_d) < 0.8, "medium", "large")))))
+}
