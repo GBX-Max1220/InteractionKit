@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "InteractionKit — Trust Calibration Experiment",
-  description: "A methodological infrastructure for Human-AI trust calibration experiments",
+  title: "InteractionKit v1.0 — Typed AI Experiment Specifications",
+  description:
+    "A typed specification format for defining AI interaction experiments and generating structured behavioral data.",
 };
 
 export default function RootLayout({

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "pattern": "ConfidenceDisplay",
+  "version": "1.0.0",
+  "construct": "AI uncertainty communication",
+  "constructDefinition": "The observable representation of an AI system's uncertainty shown before a reliance decision.",
+  "input": {
+    "type": "object",
+    "properties": {
+      "trialIndex": { "type": "integer", "minimum": 0, "description": "Zero-based trial index." },
+      "scenarioId": { "type": "string", "description": "Stable scenario identifier." },
+      "aiOutput": { "type": "string", "description": "AI recommendation presented to the participant." },
+      "aiIsCorrect": { "type": "boolean", "description": "Ground-truth correctness of the AI recommendation; not displayed." },
+      "confidencePoint": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+      "confidenceRangeLower": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+      "confidenceRangeUpper": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+      "calibratedAccuracy": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+    },
+    "required": ["trialIndex", "scenarioId", "aiOutput", "aiIsCorrect"],
+    "additionalProperties": false
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "patternName": { "const": "ConfidenceDisplay", "description": "Pattern that emitted this row." },
+      "patternVersion": { "const": "1.0.0", "description": "Semantic version of the pattern contract." },
+      "trialIndex": { "type": "integer", "minimum": 0, "description": "Zero-based trial index." },
+      "scenarioId": { "type": "string", "description": "Stable scenario identifier." },
+      "aiOutput": { "type": "string", "description": "AI recommendation presented to the participant." },
+      "aiIsCorrect": { "type": "boolean", "description": "Ground-truth correctness of the AI recommendation." },
+      "displayFormat": { "enum": ["point_only", "range", "calibrated_badge"], "description": "Uncertainty display variant assigned to this instance." },
+      "confidenceVisible": { "type": "boolean", "description": "Whether an uncertainty signal was visible." },
+      "confidenceSignalType": { "enum": ["point", "interval", "calibration_summary"], "description": "Semantic form of the displayed signal." },
+      "confidencePoint": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Displayed point estimate, or null when not used." },
+      "confidenceRangeLower": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Displayed interval lower bound, or null." },
+      "confidenceRangeUpper": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Displayed interval upper bound, or null." },
+      "calibratedAccuracy": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Displayed historical calibration accuracy, or null." }
+    },
+    "required": ["patternName", "patternVersion", "trialIndex", "scenarioId", "aiOutput", "aiIsCorrect", "displayFormat", "confidenceVisible", "confidenceSignalType", "confidencePoint", "confidenceRangeLower", "confidenceRangeUpper", "calibratedAccuracy"],
+    "additionalProperties": false
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "format": { "enum": ["point_only", "range", "calibrated_badge"] }
+    },
+    "required": ["format"],
+    "additionalProperties": false
+  },
+  "composition": {
+    "allowedAfter": [],
+    "allowedBefore": ["RelianceDecision"]
+  },
+  "measurementModel": {
+    "intendedConstruct": "AI uncertainty representation",
+    "role": "manipulated"
+  }
+}

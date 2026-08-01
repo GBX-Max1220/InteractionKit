@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "pattern": "RelianceDecision",
+  "version": "1.0.0",
+  "construct": "Behavioral reliance on AI",
+  "constructDefinition": "A participant's observable choice to accept or reject an AI recommendation.",
+  "input": {
+    "type": "object",
+    "properties": {
+      "trialIndex": { "type": "integer", "minimum": 0 },
+      "scenarioId": { "type": "string" },
+      "aiOutput": { "type": "string" },
+      "aiIsCorrect": { "type": "boolean" }
+    },
+    "required": ["trialIndex", "scenarioId", "aiOutput", "aiIsCorrect"],
+    "additionalProperties": true
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "patternName": { "const": "RelianceDecision", "description": "Pattern that emitted this row." },
+      "patternVersion": { "const": "1.0.0", "description": "Semantic version of the pattern contract." },
+      "trialIndex": { "type": "integer", "minimum": 0, "description": "Zero-based trial index." },
+      "scenarioId": { "type": "string", "description": "Stable scenario identifier." },
+      "aiIsCorrect": { "type": "boolean", "description": "Ground-truth correctness of the AI recommendation." },
+      "humanDecision": { "enum": ["rely", "reject"], "description": "Participant reliance choice." },
+      "decisionType": { "const": "binary", "description": "Response scale used by this pattern instance." },
+      "responseTimeMs": { "type": "integer", "minimum": 0, "description": "Milliseconds from decision display to choice." },
+      "isOptimalReliance": { "type": "boolean", "description": "True when reliance matches AI correctness." },
+      "relianceClassification": { "enum": ["appropriate_reliance", "appropriate_rejection", "overreliance", "underreliance"], "description": "Behavioral calibration category." }
+    },
+    "required": ["patternName", "patternVersion", "trialIndex", "scenarioId", "aiIsCorrect", "humanDecision", "decisionType", "responseTimeMs", "isOptimalReliance", "relianceClassification"],
+    "additionalProperties": false
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "mode": { "const": "binary" }
+    },
+    "required": ["mode"],
+    "additionalProperties": false
+  },
+  "composition": {
+    "allowedAfter": ["ConfidenceDisplay"],
+    "allowedBefore": ["OutcomeFeedback"]
+  },
+  "measurementModel": {
+    "intendedConstruct": "Behavioral reliance on AI",
+    "role": "measured"
+  }
+}

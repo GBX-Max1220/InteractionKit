@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "pattern": "OutcomeFeedback",
+  "version": "1.0.0",
+  "construct": "Decision outcome feedback",
+  "constructDefinition": "Information shown after a reliance decision that reveals whether the selected action was correct.",
+  "input": {
+    "type": "object",
+    "properties": {
+      "trialIndex": { "type": "integer", "minimum": 0 },
+      "scenarioId": { "type": "string" },
+      "humanDecision": { "enum": ["rely", "reject"] },
+      "aiIsCorrect": { "type": "boolean" }
+    },
+    "required": ["trialIndex", "scenarioId", "humanDecision", "aiIsCorrect"],
+    "additionalProperties": true
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "patternName": { "const": "OutcomeFeedback", "description": "Pattern that emitted this row." },
+      "patternVersion": { "const": "1.0.0", "description": "Semantic version of the pattern contract." },
+      "trialIndex": { "type": "integer", "minimum": 0, "description": "Zero-based trial index." },
+      "scenarioId": { "type": "string", "description": "Stable scenario identifier." },
+      "humanDecision": { "enum": ["rely", "reject"], "description": "Participant reliance choice receiving feedback." },
+      "aiIsCorrect": { "type": "boolean", "description": "Ground-truth correctness of the AI recommendation." },
+      "feedbackFormat": { "const": "immediate", "description": "Timing assigned to this feedback instance." },
+      "feedbackOutcome": { "enum": ["correct", "incorrect"], "description": "Outcome communicated to the participant." },
+      "decisionCorrectness": { "type": "boolean", "description": "Whether the participant's reliance choice was optimal." },
+      "feedbackShownAt": { "type": "string", "format": "date-time", "description": "ISO 8601 timestamp when feedback was acknowledged." }
+    },
+    "required": ["patternName", "patternVersion", "trialIndex", "scenarioId", "humanDecision", "aiIsCorrect", "feedbackFormat", "feedbackOutcome", "decisionCorrectness", "feedbackShownAt"],
+    "additionalProperties": false
+  },
+  "params": {
+    "type": "object",
+    "properties": {
+      "timing": { "const": "immediate" }
+    },
+    "required": ["timing"],
+    "additionalProperties": false
+  },
+  "composition": {
+    "allowedAfter": ["RelianceDecision"],
+    "allowedBefore": []
+  },
+  "measurementModel": {
+    "intendedConstruct": "Decision outcome feedback",
+    "role": "outcome"
+  }
+}
