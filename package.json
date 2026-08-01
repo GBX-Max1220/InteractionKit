@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:patterns": "tsx --test test/pattern-system.test.ts"
+    "test:patterns": "tsx --test test/pattern-system.test.ts",
+    "test:study2": "tsx --test test/study2-schedule.test.ts",
+    "test": "npm run test:patterns && npm run test:study2"
   },
   "dependencies": {
     "ajv": "^8.20.0",
