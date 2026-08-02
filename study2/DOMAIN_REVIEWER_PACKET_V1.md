@@ -46,7 +46,7 @@ The supplied sources are insufficient, outdated, mismatched to the population/ou
 ## Reviewer response schema
 
 ```text
-schemaVersion: study2-domain-review-submission-v2
+schemaVersion: study2-domain-review-submission-v3
 materialVersion: copied from the packet
 reviewerId: copied from the packet
 packetSeed: copied from the packet
@@ -59,6 +59,7 @@ items:
     supportLevel: strong_consensus | mixed_or_conditional | unresolved
     decisionBoundary:
     numericalGranularity:
+    sourceConcernIdentified: true | false
     sourceConcern: enter "None identified" when there is none
     recommendation: retain | revise | reject
     rationale:

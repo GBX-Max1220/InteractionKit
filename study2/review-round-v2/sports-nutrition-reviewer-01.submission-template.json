@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "study2-domain-review-submission-v2",
+  "schemaVersion": "study2-domain-review-submission-v3",
   "materialVersion": "study2-candidates-v0.6",
   "reviewerId": "sports-nutrition-reviewer-01",
   "packetSeed": "study2-domain-review-v2-2026-08-02",
@@ -13,6 +13,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -23,6 +24,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -33,6 +35,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -43,6 +46,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -53,6 +57,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -63,6 +68,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -73,6 +79,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""
@@ -83,6 +90,7 @@
       "supportLevel": "unresolved",
       "decisionBoundary": "",
       "numericalGranularity": "",
+      "sourceConcernIdentified": true,
       "sourceConcern": "",
       "recommendation": "revise",
       "rationale": ""

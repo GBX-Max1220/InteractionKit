@@ -2,7 +2,7 @@
 
 **Materials:** `study2-candidates-v0.6`
 **Packet schema:** `study2-domain-review-packet-v1`
-**Submission schema:** `study2-domain-review-submission-v2`
+**Submission schema:** `study2-domain-review-submission-v3`
 
 ## Independence contract
 
@@ -22,11 +22,12 @@ Two reviewers complete separately randomized packets before either reviewer sees
 - Evidence-support level: `strong_consensus`, `mixed_or_conditional`, or `unresolved`
 - Decision boundary that a calibrated answer must preserve
 - Maximum defensible numerical granularity
-- Missing or conflicting source concern; enter `None identified` when there is none
+- Explicit source-concern flag plus the missing/conflicting source concern; enter `None identified` when the flag is false
 - Recommendation: `retain`, `revise`, or `reject`
 - Written rationale
 
 A reviewer cannot recommend `retain` while leaving either the binary decision or support level unresolved.
+A reviewer also cannot recommend `retain` while identifying a missing or conflicting source; that item must enter revision or adjudication.
 
 ## Automated rejection conditions
 

@@ -51,6 +51,10 @@ export function renderReviewerForm(packet: ReviewerPacket): string {
   ])}
   <label>Decision boundary<textarea data-field="decisionBoundary" required></textarea></label>
   <label>Maximum defensible numerical granularity<textarea data-field="numericalGranularity" required></textarea></label>
+  ${radioGroup(item.blindId, 'sourceConcernIdentified', 'Missing or conflicting source concern identified?', [
+    ['true', 'Yes — concern identified'],
+    ['false', 'No concern identified'],
+  ])}
   <label>Missing or conflicting source concern <small>Enter “None identified” when there is none.</small><textarea data-field="sourceConcern" required></textarea></label>
   ${radioGroup(item.blindId, 'recommendation', 'Material recommendation', [
     ['retain', 'Retain'],
@@ -101,17 +105,22 @@ function collect(requireComplete){
     const card=form.querySelector('[data-blind-id="'+item.blindId+'"]');
     const chosen=field=>card.querySelector('input[name="'+item.blindId+'-'+field+'"]:checked')?.value||'unresolved';
     const text=field=>card.querySelector('[data-field="'+field+'"]').value.trim();
-    return {blindId:item.blindId,binaryDecision:chosen('binaryDecision'),supportLevel:chosen('supportLevel'),decisionBoundary:text('decisionBoundary'),numericalGranularity:text('numericalGranularity'),sourceConcern:text('sourceConcern'),recommendation:chosen('recommendation'),rationale:text('rationale')};
+    const sourceConcernChoice=chosen('sourceConcernIdentified');
+    return {blindId:item.blindId,binaryDecision:chosen('binaryDecision'),supportLevel:chosen('supportLevel'),decisionBoundary:text('decisionBoundary'),numericalGranularity:text('numericalGranularity'),sourceConcernIdentified:sourceConcernChoice==='true'?true:sourceConcernChoice==='false'?false:null,sourceConcern:text('sourceConcern'),recommendation:chosen('recommendation'),rationale:text('rationale')};
   });
   if(requireComplete){
     const impossible=items.find(item=>item.recommendation==='retain'&&(item.binaryDecision==='unresolved'||item.supportLevel==='unresolved'));
     if(impossible){status.textContent=impossible.blindId+' cannot be retained with an unresolved judgment.';return null;}
+    const concernConflict=items.find(item=>item.sourceConcernIdentified&&item.recommendation==='retain');
+    if(concernConflict){status.textContent=concernConflict.blindId+' cannot be retained while a source concern is identified.';return null;}
+    const concernTextConflict=items.find(item=>{const normalized=item.sourceConcern.toLowerCase().replace(/[.!]$/,'');return item.sourceConcernIdentified?normalized==='none identified':normalized!=='none identified';});
+    if(concernTextConflict){status.textContent=concernTextConflict.blindId+' source-concern flag and explanation do not match.';return null;}
   }
-  return {schemaVersion:'study2-domain-review-submission-v2',materialVersion:packet.materialVersion,reviewerId:packet.reviewerId,packetSeed:packet.packetSeed,relevantExpertise:expertise.value.trim(),conflictOfInterestStatement:coi.value.trim(),submittedAt:requireComplete?new Date().toISOString():'',items};
+  return {schemaVersion:'study2-domain-review-submission-v3',materialVersion:packet.materialVersion,reviewerId:packet.reviewerId,packetSeed:packet.packetSeed,relevantExpertise:expertise.value.trim(),conflictOfInterestStatement:coi.value.trim(),submittedAt:requireComplete?new Date().toISOString():'',items};
 }
 function restore(value){
   document.getElementById('expertise').value=value.relevantExpertise||'';document.getElementById('coi').value=value.conflictOfInterestStatement||'';
-  for(const item of value.items||[]){const card=form.querySelector('[data-blind-id="'+item.blindId+'"]');if(!card)continue;for(const field of ['binaryDecision','supportLevel','recommendation']){const input=card.querySelector('input[name="'+item.blindId+'-'+field+'"][value="'+item[field]+'"]');if(input)input.checked=true;}for(const field of ['decisionBoundary','numericalGranularity','sourceConcern','rationale']){card.querySelector('[data-field="'+field+'"]').value=item[field]||'';}}
+  for(const item of value.items||[]){const card=form.querySelector('[data-blind-id="'+item.blindId+'"]');if(!card)continue;for(const field of ['binaryDecision','supportLevel','sourceConcernIdentified','recommendation']){const input=card.querySelector('input[name="'+item.blindId+'-'+field+'"][value="'+item[field]+'"]');if(input)input.checked=true;}for(const field of ['decisionBoundary','numericalGranularity','sourceConcern','rationale']){card.querySelector('[data-field="'+field+'"]').value=item[field]||'';}}
 }
 document.getElementById('save').addEventListener('click',()=>{localStorage.setItem(storageKey,JSON.stringify(collect(false)));status.textContent='Draft saved only in this browser.';});
 document.getElementById('clear').addEventListener('click',()=>{if(confirm('Clear every response in this form?')){localStorage.removeItem(storageKey);form.reset();document.getElementById('expertise').value='';document.getElementById('coi').value='';status.textContent='Draft cleared.';}});

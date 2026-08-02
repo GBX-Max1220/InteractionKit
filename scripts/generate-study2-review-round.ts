@@ -87,7 +87,7 @@ async function main(): Promise<void> {
         seed,
       });
       const submissionTemplate: ReviewSubmission = {
-        schemaVersion: 'study2-domain-review-submission-v2',
+        schemaVersion: 'study2-domain-review-submission-v3',
         materialVersion: generated.packet.materialVersion,
         reviewerId,
         packetSeed: seed,
@@ -100,6 +100,7 @@ async function main(): Promise<void> {
           supportLevel: 'unresolved',
           decisionBoundary: '',
           numericalGranularity: '',
+          sourceConcernIdentified: true,
           sourceConcern: '',
           recommendation: 'revise',
           rationale: '',
@@ -181,7 +182,7 @@ async function main(): Promise<void> {
     roundId,
     materialVersion: reviewableCandidates[0].materialVersion,
     packetSchemaVersion: 'study2-domain-review-packet-v1',
-    submissionSchemaVersion: 'study2-domain-review-submission-v2',
+    submissionSchemaVersion: 'study2-domain-review-submission-v3',
     packetSeed: seed,
     generatedAt: '2026-08-02T00:00:00Z',
     candidateCount: reviewableCandidates.length,

@@ -20,6 +20,7 @@ type SubmissionTemplate = {
     blindId: string;
     binaryDecision: string;
     supportLevel: string;
+    sourceConcernIdentified: boolean;
     sourceConcern: string;
     recommendation: string;
   }>;
@@ -126,6 +127,7 @@ test('submission templates are blank human-input forms without answer leakage', 
     assert.equal(parsed.submittedAt, '');
     assert.ok(parsed.items.every((item) => item.binaryDecision === 'unresolved'));
     assert.ok(parsed.items.every((item) => item.supportLevel === 'unresolved'));
+    assert.ok(parsed.items.every((item) => item.sourceConcernIdentified));
     assert.ok(parsed.items.every((item) => item.sourceConcern === ''));
     assert.ok(parsed.items.every((item) => item.recommendation === 'revise'));
     assert.doesNotMatch(serialized, /\b(?:strong|mixed)_\d{2}\b/);
@@ -190,7 +192,7 @@ test('manifest binds every expertise-stratified artifact to its committed bytes'
     assert.equal(sha256(template.serialized), entry.submissionTemplateSha256);
     assert.equal(sha256(reviewerForm), entry.reviewerFormSha256);
     assert.match(reviewerForm, /This file sends no data to a server/);
-    assert.match(reviewerForm, /study2-domain-review-submission-v2/);
+    assert.match(reviewerForm, /study2-domain-review-submission-v3/);
     assert.equal(
       (reviewerForm.match(/<section class="card"/g) ?? []).length,
       entry.itemCount,
@@ -201,7 +203,7 @@ test('manifest binds every expertise-stratified artifact to its committed bytes'
     );
     assert.equal(
       (reviewerForm.match(/type="radio"/g) ?? []).length,
-      entry.itemCount * 9,
+      entry.itemCount * 11,
     );
     assert.doesNotMatch(
       reviewerForm,

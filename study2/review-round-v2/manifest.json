@@ -2,7 +2,7 @@
   "roundId": "study2-domain-review-round-v2",
   "materialVersion": "study2-candidates-v0.6",
   "packetSchemaVersion": "study2-domain-review-packet-v1",
-  "submissionSchemaVersion": "study2-domain-review-submission-v2",
+  "submissionSchemaVersion": "study2-domain-review-submission-v3",
   "packetSeed": "study2-domain-review-v2-2026-08-02",
   "generatedAt": "2026-08-02T00:00:00Z",
   "candidateCount": 27,
@@ -28,8 +28,8 @@
       "submissionTemplateFile": "exercise-physiology-reviewer-01.submission-template.json",
       "reviewerFormFile": "exercise-physiology-reviewer-01.review-form.html",
       "packetSha256": "2e38675b59fda12d772028ca303789bef2c9f7d96b4b88137b17eb58613d0511",
-      "submissionTemplateSha256": "73ab67d37ed825feaafe2463b78cf1c117c3a29cfb4f521774c3bca873683d9a",
-      "reviewerFormSha256": "b5d08174c0f911d61e7ce28763774c79664a9bc1569b797b3d31e944d1ccc8c8",
+      "submissionTemplateSha256": "b8c9fcf12a0cbe06cefde1e28931fb3ec7fa2f9bd320c1cb5f21edbd24eca20d",
+      "reviewerFormSha256": "bd10d792fe408b22b505bab4483be9eabf1ced1b4b9b41231a4c1d4f69e00987",
       "privateCrosswalkSha256": "30db97a82dd4d148eb1ffd3601758d5c1864d14fb64eef6244201764f0ee1477"
     },
     {
@@ -45,8 +45,8 @@
       "submissionTemplateFile": "exercise-physiology-reviewer-02.submission-template.json",
       "reviewerFormFile": "exercise-physiology-reviewer-02.review-form.html",
       "packetSha256": "0b65402372996d2dac8402deb4c65eb68094e11ca5e94155412c0235f01b451f",
-      "submissionTemplateSha256": "42d3a423ad3fcfae0b1af7c08214f8e1a14d66128cbc4f9320e8a4c1cf0df676",
-      "reviewerFormSha256": "54a1633a5d18986128a40a14fc4493cd8b58424a073f9e126c01bf0497c20372",
+      "submissionTemplateSha256": "276b60e00313959f220285b004b6d6f7993b9155e35caf510aae45c3682e4cfa",
+      "reviewerFormSha256": "89f4b5fe139c168a650f999b972738fceb6a1dd4ec937beed3da59e5cff2394a",
       "privateCrosswalkSha256": "3f09f9f913808a666d595670b174e40511274520c98d8f09c9352a367364883b"
     },
     {
@@ -60,8 +60,8 @@
       "submissionTemplateFile": "sports-nutrition-reviewer-01.submission-template.json",
       "reviewerFormFile": "sports-nutrition-reviewer-01.review-form.html",
       "packetSha256": "2ebe0aec6b2b85c4efaf5124494937aad02742196b4cc178a44062c6c0d71a0e",
-      "submissionTemplateSha256": "f96105bd58e96d811747dba262035469fac9c7e46b08d50de9e6dad7142634c7",
-      "reviewerFormSha256": "464b9078318a5a64b662ae9faa285a931fb7d03ed8f9215c6a83849553c1dab8",
+      "submissionTemplateSha256": "3f26f80cf03ed348dffb3ef9f0f282f8d05afab71cf4c231ea580d3049b0d3d0",
+      "reviewerFormSha256": "766a1bb4ee19e131b6072bc9ed6d141cd63e90df74603351df0ec857c3177a96",
       "privateCrosswalkSha256": "00a31324c0754ed233f17f508a4e8a9cfb4b91514c2bc3596a984d90fe7483e3"
     },
     {
@@ -75,8 +75,8 @@
       "submissionTemplateFile": "sports-nutrition-reviewer-02.submission-template.json",
       "reviewerFormFile": "sports-nutrition-reviewer-02.review-form.html",
       "packetSha256": "06f4e78529c8e5c6ecb956201d251ee1d68168d89de0b8431af2765b670df611",
-      "submissionTemplateSha256": "64c1404c97d1f1bd2fef1c07a997a0f141b71515550ba096650515b85bc1bcd7",
-      "reviewerFormSha256": "71d0784ccf1a5299e4072d454b7ea5052bd8ae33a1c9a38977fe655baba9cea8",
+      "submissionTemplateSha256": "1df24ddbe44d1955cc62184f28f6b568eb25d584f4eeb301f54ef95554c302f1",
+      "reviewerFormSha256": "8e5cf510fc7f81d80e8551dc55e1afceef570990022374fef45d701d9e1f2f0f",
       "privateCrosswalkSha256": "1f5c4c6748782270dd8653d9d8e741295f46c113d89174d43d66e9967a3a395a"
     },
     {
@@ -90,8 +90,8 @@
       "submissionTemplateFile": "sports-medicine-reviewer-01.submission-template.json",
       "reviewerFormFile": "sports-medicine-reviewer-01.review-form.html",
       "packetSha256": "9804b16aa01326bad0ced53c4b65e37de3b3791894e1e88c39b51588693c8e88",
-      "submissionTemplateSha256": "50dfe8fa95672e70b7c643cd9d03fbee5a5a2304389e48f70780efc255c56f80",
-      "reviewerFormSha256": "e323718a3e3a0fde0132fba415bce8a43daab7103fedd751155e517a7af8ca9f",
+      "submissionTemplateSha256": "8d439b7147ed213c47c47d107e721350695233e6ccbf17718200ef0062347091",
+      "reviewerFormSha256": "82bcdea8ff5835e730df28526b89302517aa46f84584b40961cf42370510f12c",
       "privateCrosswalkSha256": "6adfd0a3255d3f6803c2cc502baec01ab3b65919f7579857f2143d5723009d27"
     },
     {
@@ -105,8 +105,8 @@
       "submissionTemplateFile": "sports-medicine-reviewer-02.submission-template.json",
       "reviewerFormFile": "sports-medicine-reviewer-02.review-form.html",
       "packetSha256": "9918656adeb4a70952480af81264bfba746e0b2b76dedce4996f8fe8fb4823a8",
-      "submissionTemplateSha256": "7f83142a6774224fcdee64d4d96b220fab439693c8c8328ab952864cb98312ed",
-      "reviewerFormSha256": "b511f65599aa79ebd747108700a131ca6ac25aaef2b01a15a0239c67e04d429b",
+      "submissionTemplateSha256": "ff40233247cb6f45ca921b1ff9b33add0b1f9ffceb1da1d2e764962e4234c92d",
+      "reviewerFormSha256": "f38c55fbf9426e129a0111030aad313cd079d5dc0321148dafb3e7fefbe77cbf",
       "privateCrosswalkSha256": "a3425aa07713bc69091b079d4e73d90eaf03d0ea3cc0e1c9ac164632096dad50"
     }
   ]

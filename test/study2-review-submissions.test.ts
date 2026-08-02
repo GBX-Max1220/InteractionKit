@@ -19,7 +19,7 @@ function submissionFor(
   items: { blindId: string }[],
 ): ReviewSubmission {
   return {
-    schemaVersion: 'study2-domain-review-submission-v2',
+    schemaVersion: 'study2-domain-review-submission-v3',
     materialVersion: 'study2-candidates-v0.6',
     reviewerId,
     packetSeed,
@@ -32,7 +32,8 @@ function submissionFor(
       supportLevel: 'strong_consensus',
       decisionBoundary: 'Boundary supplied independently by reviewer.',
       numericalGranularity: 'Direction only.',
-      sourceConcern: 'None identified in this test fixture.',
+      sourceConcernIdentified: false,
+      sourceConcern: 'None identified.',
       recommendation: 'retain',
       rationale: 'Evidence and scenario context support this judgment.',
     })),
@@ -78,6 +79,23 @@ test('review submission must exactly cover its blinded packet', () => {
   assert.match(
     validateReviewSubmission(missingSourceConcern, generated.packet).errors.join('\n'),
     /S\d+ is missing required written justification/,
+  );
+
+  const unsafeRetain = {
+    ...submission,
+    items: submission.items.map((item, index) =>
+      index === 0
+        ? {
+            ...item,
+            sourceConcernIdentified: true,
+            sourceConcern: 'The supplied source does not match the target population.',
+          }
+        : item,
+    ),
+  };
+  assert.match(
+    validateReviewSubmission(unsafeRetain, generated.packet).errors.join('\n'),
+    /cannot be retained while a source concern is identified/,
   );
 });
 

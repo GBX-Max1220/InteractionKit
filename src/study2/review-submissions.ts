@@ -15,13 +15,14 @@ export interface ReviewSubmissionItem {
   supportLevel: ReviewSupportLevel;
   decisionBoundary: string;
   numericalGranularity: string;
+  sourceConcernIdentified: boolean;
   sourceConcern: string;
   recommendation: ReviewRecommendation;
   rationale: string;
 }
 
 export interface ReviewSubmission {
-  schemaVersion: 'study2-domain-review-submission-v2';
+  schemaVersion: 'study2-domain-review-submission-v3';
   materialVersion: CandidateScenario['materialVersion'];
   reviewerId: string;
   packetSeed: string;
@@ -53,6 +54,7 @@ const allowedItemKeys = new Set([
   'supportLevel',
   'decisionBoundary',
   'numericalGranularity',
+  'sourceConcernIdentified',
   'sourceConcern',
   'recommendation',
   'rationale',
@@ -78,7 +80,7 @@ export function validateReviewSubmission(
   if (extraTopLevelKeys.length > 0) {
     errors.push(`Submission contains unexpected fields: ${extraTopLevelKeys.join(', ')}.`);
   }
-  if (submission.schemaVersion !== 'study2-domain-review-submission-v2') {
+  if (submission.schemaVersion !== 'study2-domain-review-submission-v3') {
     errors.push('Unsupported review-submission schema version.');
   }
   if (submission.materialVersion !== packet.materialVersion) {
@@ -161,6 +163,9 @@ export function validateReviewSubmission(
     ) {
       errors.push(`${itemLabel} has an invalid recommendation.`);
     }
+    if (typeof item.sourceConcernIdentified !== 'boolean') {
+      errors.push(`${itemLabel} must explicitly state whether a source concern was identified.`);
+    }
     if (
       ![
         item.decisionBoundary,
@@ -176,6 +181,19 @@ export function validateReviewSubmission(
       (item.binaryDecision === 'unresolved' || item.supportLevel === 'unresolved')
     ) {
       errors.push(`${itemLabel} cannot be retained with an unresolved judgment.`);
+    }
+    const normalizedSourceConcern =
+      typeof item.sourceConcern === 'string'
+        ? item.sourceConcern.trim().toLocaleLowerCase().replace(/[.!]$/, '')
+        : '';
+    if (item.sourceConcernIdentified === false && normalizedSourceConcern !== 'none identified') {
+      errors.push(`${itemLabel} must enter "None identified" when no source concern exists.`);
+    }
+    if (item.sourceConcernIdentified === true && normalizedSourceConcern === 'none identified') {
+      errors.push(`${itemLabel} marks a source concern but does not describe one.`);
+    }
+    if (item.sourceConcernIdentified === true && item.recommendation === 'retain') {
+      errors.push(`${itemLabel} cannot be retained while a source concern is identified.`);
     }
   }
 
