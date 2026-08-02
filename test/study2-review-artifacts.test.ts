@@ -33,8 +33,10 @@ type Manifest = {
     reviewerId: string;
     packetFile: string;
     submissionTemplateFile: string;
+    reviewerFormFile: string;
     packetSha256: string;
     submissionTemplateSha256: string;
+    reviewerFormSha256: string;
     privateCrosswalkSha256: string;
   }>;
 };
@@ -108,10 +110,29 @@ test('manifest binds both public packets to their committed bytes', async () => 
   for (const entry of manifest.entries) {
     const packet = await readArtifact<Packet>(entry.packetFile);
     const template = await readArtifact<SubmissionTemplate>(entry.submissionTemplateFile);
+    const reviewerForm = await readFile(
+      path.join(artifactDirectory, entry.reviewerFormFile),
+      'utf8',
+    );
     assert.equal(packet.parsed.reviewerId, entry.reviewerId);
     assert.equal(template.parsed.reviewerId, entry.reviewerId);
     assert.equal(sha256(packet.serialized), entry.packetSha256);
     assert.equal(sha256(template.serialized), entry.submissionTemplateSha256);
+    assert.equal(sha256(reviewerForm), entry.reviewerFormSha256);
+    assert.match(reviewerForm, /This file sends no data to a server/);
+    assert.match(reviewerForm, /study2-domain-review-submission-v2/);
+    assert.equal((reviewerForm.match(/<section class="card"/g) ?? []).length, 27);
+    assert.equal((reviewerForm.match(/<textarea data-field=/g) ?? []).length, 108);
+    assert.equal((reviewerForm.match(/type="radio"/g) ?? []).length, 243);
+    assert.doesNotMatch(
+      reviewerForm,
+      /\b(?:fetch|XMLHttpRequest|WebSocket|sendBeacon)\b/,
+    );
+    assert.match(reviewerForm, /connect-src 'none'/);
+    assert.doesNotMatch(reviewerForm, /\b(?:strong|mixed)_\d{2}\b/);
+    for (const forbidden of forbiddenPublicFields) {
+      assert.equal(reviewerForm.includes(`\"${forbidden}\"`), false, forbidden);
+    }
     assert.match(entry.privateCrosswalkSha256, /^[a-f0-9]{64}$/);
   }
 });

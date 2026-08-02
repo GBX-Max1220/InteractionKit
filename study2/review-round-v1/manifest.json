@@ -13,16 +13,20 @@
       "reviewerId": "domain-reviewer-01",
       "packetFile": "domain-reviewer-01.packet.json",
       "submissionTemplateFile": "domain-reviewer-01.submission-template.json",
+      "reviewerFormFile": "domain-reviewer-01.review-form.html",
       "packetSha256": "2d88d0c0c97719ad77a2d204a414b57da5ed181ca86999668dd3967b0e8efc47",
       "submissionTemplateSha256": "08acb8b6a0354137d65502228ca238d3df8dbe4373cf7ce51c86644ec361f3f7",
+      "reviewerFormSha256": "17cf2fbec956d4bf1069d7af0a25e736aeeebcd1ef258f4606b9d2e48486e583",
       "privateCrosswalkSha256": "1459972dbb3d46f1c0722e4ac64ada300f900bc8373fdbebfc709da969b5c5fd"
     },
     {
       "reviewerId": "domain-reviewer-02",
       "packetFile": "domain-reviewer-02.packet.json",
       "submissionTemplateFile": "domain-reviewer-02.submission-template.json",
+      "reviewerFormFile": "domain-reviewer-02.review-form.html",
       "packetSha256": "16e1948db7c03087e854301ddf80d0731d8e9fd4d6437859d37ebb0ff91ce005",
       "submissionTemplateSha256": "9124ca850b7ee7c86c9fffaa05fe5eef6dce795034751c3c187c2852d73ff8d7",
+      "reviewerFormSha256": "a66c9c3eea0d05b0f322afe96b8e226bcde8b03f737f3f8a704cad8f17a8b816",
       "privateCrosswalkSha256": "945cbe55db8f298c9671c1960a60c2f1327f6cb6fc266af91ccaf58ac9bdf68a"
     }
   ]

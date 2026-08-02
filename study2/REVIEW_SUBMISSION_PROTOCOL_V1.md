@@ -49,7 +49,7 @@ The repository provides packets, validation, unblinding, and disagreement detect
 
 ## Generated round artifacts
 
-Run `npm run study2:review-round` from the repository root. Public-safe packets, blank submission templates, and an integrity manifest are written to `study2/review-round-v1/`. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v1/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
+Run `npm run study2:review-round` from the repository root. Public-safe packets, offline reviewer forms, blank submission templates, and an integrity manifest are written to `study2/review-round-v1/`. Each reviewer can open their assigned `.review-form.html` locally, save a browser-local draft, and download a schema-valid completed JSON without sending form data to a server. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v1/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, forms, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
 
 ## Receipt and pair audit
 

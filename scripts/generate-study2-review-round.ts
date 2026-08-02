@@ -4,6 +4,7 @@ import path from 'node:path';
 
 import { STUDY2_CANDIDATES } from '../src/study2/candidate-registry';
 import { generateReviewerPacket } from '../src/study2/review-packets';
+import { renderReviewerForm } from '../src/study2/reviewer-form';
 import type { ReviewSubmission } from '../src/study2/review-submissions';
 
 const roundId = 'study2-domain-review-round-v1';
@@ -35,8 +36,10 @@ async function main(): Promise<void> {
     reviewerId: string;
     packetFile: string;
     submissionTemplateFile: string;
+    reviewerFormFile: string;
     packetSha256: string;
     submissionTemplateSha256: string;
+    reviewerFormSha256: string;
     privateCrosswalkSha256: string;
   }> = [];
 
@@ -68,6 +71,7 @@ async function main(): Promise<void> {
     const packetFile = `${reviewerId}.packet.json`;
     const submissionTemplateFile = `${reviewerId}.submission-template.json`;
     const crosswalkFile = `${reviewerId}.crosswalk.json`;
+    const reviewerFormFile = `${reviewerId}.review-form.html`;
     const packetSerialized = serialize(generated.packet);
     const submissionSerialized = serialize(submissionTemplate);
     const crosswalkSerialized = serialize({
@@ -77,6 +81,7 @@ async function main(): Promise<void> {
       packetSeed: seed,
       crosswalk: generated.crosswalk,
     });
+    const reviewerFormSerialized = renderReviewerForm(generated.packet);
     await writeFile(path.join(publicDirectory, packetFile), packetSerialized, 'utf8');
     await writeFile(
       path.join(publicDirectory, submissionTemplateFile),
@@ -84,12 +89,15 @@ async function main(): Promise<void> {
       'utf8',
     );
     await writeFile(path.join(privateDirectory, crosswalkFile), crosswalkSerialized, 'utf8');
+    await writeFile(path.join(publicDirectory, reviewerFormFile), reviewerFormSerialized, 'utf8');
     manifestEntries.push({
       reviewerId,
       packetFile,
       submissionTemplateFile,
+      reviewerFormFile,
       packetSha256: sha256(packetSerialized),
       submissionTemplateSha256: sha256(submissionSerialized),
+      reviewerFormSha256: sha256(reviewerFormSerialized),
       privateCrosswalkSha256: sha256(crosswalkSerialized),
     });
   }
