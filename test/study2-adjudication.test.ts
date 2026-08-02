@@ -123,6 +123,15 @@ test('adjudication queue preserves the exact disagreement and source-concern tri
       ?.disposition,
     'revise_and_re_review',
   );
+
+  resolution.items[0] = {
+    ...resolution.items[0],
+    finalBinaryDecision: 'option_a',
+  };
+  assert.match(
+    validateAdjudicationResolution(resolution, queue).errors.join('\n'),
+    /non-retention outcomes must leave final labels/,
+  );
 });
 
 test('full agreement produces an empty adjudication queue', () => {

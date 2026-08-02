@@ -86,3 +86,16 @@ test('every eligible reserve exclusion requires a recorded reason', () => {
   assert.equal(audit.valid, false);
   assert.match(audit.errors.join('\n'), /requires an exclusion reason/);
 });
+
+test('malformed disk JSON fails validation without throwing', () => {
+  const audit = auditFinalFreeze({
+    candidates: STUDY2_CANDIDATES,
+    outcomes: [null, { candidateId: 7 }],
+    selection: { selectedCandidateIds: [null], exclusions: [{}] },
+    expectedRoundId: 'study2-domain-review-round-v2',
+  });
+  assert.equal(audit.valid, false);
+  assert.match(audit.errors.join('\n'), /outcome schema/);
+  assert.match(audit.errors.join('\n'), /Selected candidate IDs/);
+  assert.match(audit.errors.join('\n'), /Exclusions/);
+});

@@ -35,19 +35,66 @@ function duplicates(values: string[]): string[] {
   return [...new Set(values.filter((value) => (seen.has(value) ? true : !seen.add(value))))];
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function nonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && Boolean(value.trim());
+}
+
+function isFinalReviewOutcome(value: unknown): value is FinalReviewOutcome {
+  return (
+    isRecord(value) &&
+    nonEmptyString(value.candidateId) &&
+    ['retain', 'revise_and_re_review', 'reject'].includes(String(value.disposition)) &&
+    ['option_a', 'option_b', 'unresolved'].includes(String(value.finalBinaryDecision)) &&
+    [...SUPPORT_LEVELS, 'unresolved'].includes(String(value.finalSupportLevel) as SupportLevel) &&
+    typeof value.finalDecisionBoundary === 'string' &&
+    typeof value.finalNumericalGranularity === 'string' &&
+    ['full_reviewer_agreement', 'adjudication'].includes(String(value.basis))
+  );
+}
+
 export function auditFinalFreeze(options: {
   candidates: CandidateScenario[];
-  outcomes: FinalReviewOutcome[];
-  selection: FinalFreezeSelection;
+  outcomes: unknown;
+  selection: unknown;
   expectedRoundId: string;
 }): FinalFreezeAudit {
   const errors: string[] = [];
+  const rawOutcomes = Array.isArray(options.outcomes) ? options.outcomes : [];
+  if (!Array.isArray(options.outcomes)) errors.push('Final review outcomes must be an array.');
+  const outcomes = rawOutcomes.filter(isFinalReviewOutcome);
+  if (outcomes.length !== rawOutcomes.length) {
+    errors.push('Every final review outcome must satisfy the outcome schema.');
+  }
+  const rawSelection = isRecord(options.selection) ? options.selection : {};
+  if (!isRecord(options.selection)) errors.push('Final-freeze selection must be a JSON object.');
+  const selectedCandidateIds = Array.isArray(rawSelection.selectedCandidateIds)
+    ? rawSelection.selectedCandidateIds.filter(nonEmptyString)
+    : [];
+  if (
+    !Array.isArray(rawSelection.selectedCandidateIds) ||
+    selectedCandidateIds.length !== rawSelection.selectedCandidateIds.length
+  ) {
+    errors.push('Selected candidate IDs must be an array of non-empty strings.');
+  }
+  const rawExclusions = Array.isArray(rawSelection.exclusions) ? rawSelection.exclusions : [];
+  const exclusions = rawExclusions.flatMap((value): FreezeExclusion[] =>
+    isRecord(value) && nonEmptyString(value.candidateId) && nonEmptyString(value.reason)
+      ? [{ candidateId: value.candidateId, reason: value.reason }]
+      : [],
+  );
+  if (!Array.isArray(rawSelection.exclusions) || exclusions.length !== rawExclusions.length) {
+    errors.push('Exclusions must contain non-empty candidate IDs and reasons.');
+  }
   const sourceComplete = options.candidates.filter(
     (candidate) => candidate.status === 'source_dossier_complete',
   );
   const candidateById = new Map(sourceComplete.map((candidate) => [candidate.id, candidate]));
-  const outcomeById = new Map(options.outcomes.map((outcome) => [outcome.candidateId, outcome]));
-  const duplicateOutcomeIds = duplicates(options.outcomes.map((outcome) => outcome.candidateId));
+  const outcomeById = new Map(outcomes.map((outcome) => [outcome.candidateId, outcome]));
+  const duplicateOutcomeIds = duplicates(outcomes.map((outcome) => outcome.candidateId));
   if (sourceComplete.length !== 27) errors.push(`Expected 27 source-complete candidates; found ${sourceComplete.length}.`);
   if (duplicateOutcomeIds.length > 0) errors.push(`Duplicate final outcomes: ${duplicateOutcomeIds.join(', ')}.`);
   if (
@@ -57,21 +104,21 @@ export function auditFinalFreeze(options: {
   ) {
     errors.push('Final outcomes must exactly cover the 27 source-complete candidates.');
   }
-  if (options.selection.schemaVersion !== 'study2-final-freeze-selection-v1') {
+  if (rawSelection.schemaVersion !== 'study2-final-freeze-selection-v1') {
     errors.push('Unsupported final-freeze selection schema.');
   }
-  if (options.selection.roundId !== options.expectedRoundId) {
+  if (rawSelection.roundId !== options.expectedRoundId) {
     errors.push('Final-freeze selection round ID is incorrect.');
   }
-  if (options.selection.materialVersion !== 'study2-candidates-v0.6') {
+  if (rawSelection.materialVersion !== 'study2-candidates-v0.6') {
     errors.push('Final-freeze selection material version is incorrect.');
   }
-  if (!options.selection.selectionRule.trim()) errors.push('A predeclared selection rule is required.');
-  if (!options.selection.selectedBy.trim()) errors.push('Final-freeze selector identity is required.');
-  if (!Number.isFinite(Date.parse(options.selection.selectedAt))) {
+  if (!nonEmptyString(rawSelection.selectionRule)) errors.push('A predeclared selection rule is required.');
+  if (!nonEmptyString(rawSelection.selectedBy)) errors.push('Final-freeze selector identity is required.');
+  if (!nonEmptyString(rawSelection.selectedAt) || !Number.isFinite(Date.parse(rawSelection.selectedAt))) {
     errors.push('Final-freeze timestamp must be valid ISO-8601.');
   }
-  const selectedIds = options.selection.selectedCandidateIds;
+  const selectedIds = selectedCandidateIds;
   const duplicateSelectedIds = duplicates(selectedIds);
   if (selectedIds.length !== 24) errors.push(`Expected 24 selected candidates; received ${selectedIds.length}.`);
   if (duplicateSelectedIds.length > 0) errors.push(`Duplicate selected candidates: ${duplicateSelectedIds.join(', ')}.`);
@@ -96,13 +143,13 @@ export function auditFinalFreeze(options: {
     return [outcome];
   });
 
-  const eligibleUnselected = options.outcomes.filter(
+  const eligibleUnselected = outcomes.filter(
     (outcome) => outcome.disposition === 'retain' && !selectedIds.includes(outcome.candidateId),
   );
   const exclusionById = new Map(
-    options.selection.exclusions.map((exclusion) => [exclusion.candidateId, exclusion]),
+    exclusions.map((exclusion) => [exclusion.candidateId, exclusion]),
   );
-  if (exclusionById.size !== options.selection.exclusions.length) {
+  if (exclusionById.size !== exclusions.length) {
     errors.push('Final-freeze exclusions contain duplicate candidate IDs.');
   }
   for (const outcome of eligibleUnselected) {
@@ -111,7 +158,7 @@ export function auditFinalFreeze(options: {
       errors.push(`Eligible unselected candidate ${outcome.candidateId} requires an exclusion reason.`);
     }
   }
-  for (const exclusion of options.selection.exclusions) {
+  for (const exclusion of exclusions) {
     if (!eligibleUnselected.some((outcome) => outcome.candidateId === exclusion.candidateId)) {
       errors.push(`Exclusion ${exclusion.candidateId} does not describe an eligible unselected candidate.`);
     }

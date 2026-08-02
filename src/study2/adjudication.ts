@@ -224,6 +224,14 @@ export function validateAdjudicationResolution(
       ) {
         errors.push(`${label} retention requires final boundary and granularity text.`);
       }
+    } else if (
+      ['revise_and_re_review', 'reject'].includes(String(rawItem.disposition)) &&
+      (rawItem.finalBinaryDecision !== 'unresolved' ||
+        rawItem.finalSupportLevel !== 'unresolved' ||
+        rawItem.finalDecisionBoundary !== '' ||
+        rawItem.finalNumericalGranularity !== '')
+    ) {
+      errors.push(`${label} non-retention outcomes must leave final labels and calibration text unresolved.`);
     }
   }
   for (const candidateId of expectedByCandidateId.keys()) {

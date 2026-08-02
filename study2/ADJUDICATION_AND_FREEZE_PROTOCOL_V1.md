@@ -45,3 +45,21 @@ The code audits the constraints but does not choose the 24 candidates. This prev
 ## Freeze boundary
 
 Passing final-freeze audit establishes only a review-complete, structurally balanced material set. It does not establish wording equivalence, failure-family validity, intervention-card equivalence, ethics approval, pilot usability, or participant-study readiness. Those remain separate gates.
+
+## Private operator commands
+
+After all three pair audits exist, place each completed resolution beside its queue as `<panel-id>.adjudication-resolution.json` inside `study2/private-review-artifacts/review-round-v2/`. Do not create a resolution for a panel whose queue is empty. Then run:
+
+```text
+npm run study2:finalize-reviews
+```
+
+The command requires exact panel and 27-candidate coverage, reconstructs every adjudication queue from its locked pair audit, rejects an edited or mismatched queue, validates every required resolution, and writes `final-review-outcomes.json` only in the gitignored private directory. It fails instead of generating partial outcomes.
+
+Create a private `study2-final-freeze-selection-v1` JSON record only after reviewing the eligible outcomes and applying the predeclared selection rule without participant or pilot-outcome information. The repository never auto-selects candidates. Audit that record with:
+
+```text
+npm run study2:audit-final-freeze -- --selection <private-selection.json>
+```
+
+The command writes `final-freeze-audit.json` in the private directory and exits nonzero for an invalid selection. A written audit file is diagnostic evidence; only `valid: true` establishes that the structural freeze gate passed.
