@@ -22,6 +22,8 @@ export interface Study2PublicRuntimeView {
   phase: Study2RunnerStep['phase'];
   trialIndex: number | null;
   totalTrials: 16;
+  comprehensionAttempt: 1 | 2 | null;
+  completionStatus: 'in_progress' | 'completed' | 'terminated';
   trial: Study2RunnerStep['trial'];
 }
 
@@ -82,7 +84,10 @@ function duration(value: unknown): value is number {
   return Number.isInteger(value) && Number(value) >= 0;
 }
 
-export function deriveStudy2PublicRuntimeView(step: Study2RunnerStep): Study2PublicRuntimeView {
+export function deriveStudy2PublicRuntimeView(step: Study2RunnerStep, options: {
+  comprehensionAttempt?: 1 | 2 | null;
+  completionStatus?: Study2PublicRuntimeView['completionStatus'];
+} = {}): Study2PublicRuntimeView {
   const serialized = JSON.stringify(step.trial);
   for (const forbidden of [
     'variantId', 'cardId', 'citationSourceId', 'scenarioId', 'failureFamily',
@@ -95,6 +100,8 @@ export function deriveStudy2PublicRuntimeView(step: Study2RunnerStep): Study2Pub
     phase: step.phase,
     trialIndex: step.trialIndex,
     totalTrials: 16,
+    comprehensionAttempt: options.comprehensionAttempt ?? null,
+    completionStatus: options.completionStatus ?? 'in_progress',
     trial: structuredClone(step.trial),
   };
 }

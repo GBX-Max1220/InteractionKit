@@ -63,10 +63,19 @@ async function responseFor(
     bundle: state.bundle,
     frozen: state.frozen,
   });
+  const comprehensionCount = state.store.records.filter((record) => record.event.eventType === 'comprehension_attempt').length;
+  const lastEventType = state.store.records.at(-1)?.event.eventType;
   const response: Study2RuntimeResponse = {
     schemaVersion: 'study2-runtime-response-v1',
     revision: versioned.revision,
-    view: deriveStudy2PublicRuntimeView(step),
+    view: deriveStudy2PublicRuntimeView(step, {
+      comprehensionAttempt: step.phase === 'comprehension' ? (Math.min(2, comprehensionCount + 1) as 1 | 2) : null,
+      completionStatus: lastEventType === 'session_completed'
+        ? 'completed'
+        : lastEventType === 'session_terminated'
+          ? 'terminated'
+          : 'in_progress',
+    }),
     receipt: { eventCount: audit.eventCount, chainTipHash: audit.chainTipHash },
   };
   const serialized = JSON.stringify(response);
