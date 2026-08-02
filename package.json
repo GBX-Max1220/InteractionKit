@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:patterns": "tsx --test test/pattern-system.test.ts",
-    "test:study2": "tsx --test test/study2-schedule.test.ts test/study2-materials.test.ts test/study2-review-packets.test.ts test/study2-evidence-paths.test.ts",
+    "test:study2": "tsx --test test/study2-schedule.test.ts test/study2-materials.test.ts test/study2-review-packets.test.ts test/study2-evidence-paths.test.ts test/study2-evidence-dossiers.test.ts",
     "test": "npm run test:patterns && npm run test:study2"
   },
   "dependencies": {
