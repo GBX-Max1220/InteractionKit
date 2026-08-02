@@ -35,7 +35,7 @@ function path(
   sources: CandidateEvidencePath['sources'],
   mappingNote: string,
 ): CandidateEvidencePath {
-  return { candidateId, materialVersion: 'study2-candidates-v0.5', sources, mappingNote };
+  return { candidateId, materialVersion: 'study2-candidates-v0.6', sources, mappingNote };
 }
 
 export const STUDY2_EVIDENCE_PATHS: CandidateEvidencePath[] = [
@@ -47,7 +47,7 @@ export const STUDY2_EVIDENCE_PATHS: CandidateEvidencePath[] = [
   path('strong_07', [source('10.1249/JSR.0000000000001058', '37036463', 'guideline'), source('10.1080/10903127.2017.1392666', '29336710', 'position_stand')], 'Recognition and immediate management of suspected exertional heat stroke.'),
   path('strong_08', [source('10.1136/bjsports-2015-094915', '26069301', 'position_stand'), source('10.1007/s40279-023-01972-4', '38051495', 'meta_analysis')], 'Repeated managed heat exposure and physiological strain.'),
   path('strong_09', [source('10.1136/bjsports-2020-102955', '33239350', 'guideline'), source('10.3389/fpubh.2025.1624562', '40746688', 'meta_analysis', 'bounded')], 'Aerobic activity for inactive adults; modality claims remain bounded.'),
-  path('strong_11', [source('10.1249/MSS.0000000000003897', '41843416', 'position_stand', 'bounded'), source('10.1249/MSS.0b013e3181915670', '19204579', 'position_stand', 'bounded')], 'General progression guidance does not directly establish a universal technique gate.'),
+  path('strong_11', [source('10.1519/JSC.0b013e31819df407', '19620931', 'position_stand'), source('10.1136/bjsports-2013-092952', '24055781', 'position_stand')], 'Technique, qualified supervision, and gradual progression in adolescent resistance training.'),
   path('strong_12', [source('10.1161/01.cir.0000437739.71477.ee', '24222017', 'guideline'), source('10.1093/nutrit/nuaf056', '40367516', 'meta_analysis')], 'Sustained energy restriction and weight loss.'),
   path('strong_13', [source('10.1136/bjsports-2023-106898', '37316210', 'position_stand'), source('10.1136/bjsports-2022-106682', '37316183', 'meta_analysis')], 'Staged return after sport-related concussion.'),
   path('strong_14', [source('10.1007/s40279-024-02123-z', '39405023', 'meta_analysis'), source('10.1093/ageing/afy009', '29471456', 'meta_analysis')], 'Resistance training for strength and function in older adults.'),
@@ -88,7 +88,7 @@ export function auditEvidencePaths(
     if (pathIds.has(evidencePath.candidateId)) errors.push(`Duplicate evidence path for ${evidencePath.candidateId}.`);
     pathIds.add(evidencePath.candidateId);
     if (!candidateIds.has(evidencePath.candidateId)) errors.push(`Unknown candidate ${evidencePath.candidateId}.`);
-    if (evidencePath.materialVersion !== 'study2-candidates-v0.5') errors.push(`${evidencePath.candidateId} uses a stale material version.`);
+    if (evidencePath.materialVersion !== 'study2-candidates-v0.6') errors.push(`${evidencePath.candidateId} uses a stale material version.`);
     if (evidencePath.sources.length < 2) errors.push(`${evidencePath.candidateId} has fewer than two source locators.`);
 
     const dois = new Set(evidencePath.sources.map((item) => item.doi.toLowerCase()));

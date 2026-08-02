@@ -1,7 +1,7 @@
 # Study 2 Independent Domain Reviewer Packet
 
 **Packet version:** `study2-domain-review-v1`
-**Materials under review:** `study2-candidates-v0.5`
+**Materials under review:** `study2-candidates-v0.6`
 
 ## Purpose
 
