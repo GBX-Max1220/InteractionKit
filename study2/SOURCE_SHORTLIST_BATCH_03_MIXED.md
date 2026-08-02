@@ -4,7 +4,7 @@
 **Status:** metadata and abstract-level relevance checked; independent domain review pending
 **Access date:** 2026-08-02
 
-**Subsequent change:** `mixed_03`, `mixed_09`, and `mixed_14` were repaired in `study2-candidates-v0.2`; see `CANDIDATE_REPAIR_V0_2.md`. Their v0.1 hold decisions below are retained as an audit trail.
+**Subsequent changes:** `mixed_03`, `mixed_09`, and `mixed_14` were repaired in `study2-candidates-v0.2`; `mixed_08` and `mixed_13` were replaced with evidence-path reserves in `study2-candidates-v0.3`. See `CANDIDATE_REPAIR_V0_2.md` and `CANDIDATE_RESERVES_V0_3.md`. The earlier hold decisions below are retained as an audit trail.
 
 Mixed evidence is not permission to use an unscorable question. Every retained scenario still needs one adjudicated correct decision for its stated context. Candidates whose options are evidentially equivalent are held even when the topic is scientifically interesting.
 
