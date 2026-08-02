@@ -12,11 +12,12 @@
     "start": "next start",
     "lint": "eslint",
     "test:patterns": "tsx --test test/pattern-system.test.ts",
-    "test:study2": "tsx --test test/study2-schedule.test.ts test/study2-materials.test.ts test/study2-review-packets.test.ts test/study2-review-submissions.test.ts test/study2-reviewer-roster.test.ts test/study2-adjudication.test.ts test/study2-round-finalization.test.ts test/study2-final-freeze.test.ts test/study2-review-artifacts.test.ts test/study2-evidence-paths.test.ts test/study2-evidence-dossiers.test.ts",
+    "test:study2": "tsx --test test/study2-schedule.test.ts test/study2-materials.test.ts test/study2-review-packets.test.ts test/study2-review-submissions.test.ts test/study2-reviewer-roster.test.ts test/study2-adjudication.test.ts test/study2-round-finalization.test.ts test/study2-final-freeze.test.ts test/study2-frozen-materials.test.ts test/study2-review-artifacts.test.ts test/study2-evidence-paths.test.ts test/study2-evidence-dossiers.test.ts",
     "study2:review-round": "tsx scripts/generate-study2-review-round.ts",
     "study2:audit-reviews": "tsx scripts/audit-study2-review-round.ts",
     "study2:finalize-reviews": "tsx scripts/finalize-study2-review-round.ts",
     "study2:audit-final-freeze": "tsx scripts/audit-study2-final-freeze.ts",
+    "study2:export-frozen-materials": "tsx scripts/export-study2-frozen-materials.ts",
     "test": "npm run test:patterns && npm run test:study2"
   },
   "dependencies": {

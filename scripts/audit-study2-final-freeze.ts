@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -21,15 +22,22 @@ function requiredArgument(name: string): string {
   return path.resolve(value);
 }
 
-async function readJson<T>(file: string): Promise<T> {
-  return JSON.parse(await readFile(file, 'utf8')) as T;
+async function readJson<T>(file: string): Promise<{ parsed: T; serialized: string }> {
+  const serialized = await readFile(file, 'utf8');
+  return { parsed: JSON.parse(serialized) as T, serialized };
+}
+
+function sha256(value: string): string {
+  return createHash('sha256').update(value).digest('hex');
 }
 
 async function main(): Promise<void> {
   const selectionPath = requiredArgument('--selection');
-  const outcomeArtifact = await readJson<OutcomeArtifact>(
-    path.join(privateDirectory, 'final-review-outcomes.json'),
+  const outcomeFile = path.join(privateDirectory, 'final-review-outcomes.json');
+  const outcomeSource = await readJson<OutcomeArtifact>(
+    outcomeFile,
   );
+  const outcomeArtifact = outcomeSource.parsed;
   if (
     outcomeArtifact.schemaVersion !== 'study2-final-review-outcomes-v1' ||
     outcomeArtifact.materialVersion !== 'study2-candidates-v0.6' ||
@@ -37,7 +45,8 @@ async function main(): Promise<void> {
   ) {
     throw new Error('Private final-review outcome artifact is invalid or mismatched.');
   }
-  const selection = await readJson<FinalFreezeSelection>(selectionPath);
+  const selectionSource = await readJson<FinalFreezeSelection>(selectionPath);
+  const selection = selectionSource.parsed;
   const audit = auditFinalFreeze({
     candidates: STUDY2_CANDIDATES,
     outcomes: outcomeArtifact.outcomes,
@@ -53,7 +62,10 @@ async function main(): Promise<void> {
         roundId: outcomeArtifact.roundId,
         materialVersion: outcomeArtifact.materialVersion,
         auditedAt: new Date().toISOString(),
+        sourceOutcomeFile: path.basename(outcomeFile),
+        sourceOutcomeSha256: sha256(outcomeSource.serialized),
         sourceSelectionFile: path.basename(selectionPath),
+        sourceSelectionSha256: sha256(selectionSource.serialized),
         ...audit,
       },
       null,

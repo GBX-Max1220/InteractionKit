@@ -63,3 +63,11 @@ npm run study2:audit-final-freeze -- --selection <private-selection.json>
 ```
 
 The command writes `final-freeze-audit.json` in the private directory and exits nonzero for an invalid selection. A written audit file is diagnostic evidence; only `valid: true` establishes that the structural freeze gate passed.
+
+Both finalization stages bind their inputs with SHA-256 hashes. After a valid freeze, export the exact 24-item, reviewer-identity-free material set with:
+
+```text
+npm run study2:export-frozen-materials
+```
+
+The exporter re-reads and re-audits the outcome and selection files, verifies their hashes against the freeze audit, rejects path traversal or replaced inputs, and writes `frozen-materials-v1.json` in the private directory. It includes final labels and calibration boundaries but excludes reviewer IDs, adjudicator IDs, conflicts, rationales, and selector identity. Moving that artifact into a public or participant-facing location remains a separate preregistration and release decision.
