@@ -1,8 +1,8 @@
 {
   "schemaVersion": "study2-domain-review-submission-v2",
   "materialVersion": "study2-candidates-v0.6",
-  "reviewerId": "domain-reviewer-02",
-  "packetSeed": "study2-domain-review-v1-2026-08-02",
+  "reviewerId": "exercise-physiology-reviewer-02",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
   "relevantExpertise": "",
   "conflictOfInterestStatement": "",
   "submittedAt": "",
@@ -149,126 +149,6 @@
     },
     {
       "blindId": "S15",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S16",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S17",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S18",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S19",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S20",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S21",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S22",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S23",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S24",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S25",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S26",
-      "binaryDecision": "unresolved",
-      "supportLevel": "unresolved",
-      "decisionBoundary": "",
-      "numericalGranularity": "",
-      "sourceConcern": "",
-      "recommendation": "revise",
-      "rationale": ""
-    },
-    {
-      "blindId": "S27",
       "binaryDecision": "unresolved",
       "supportLevel": "unresolved",
       "decisionBoundary": "",

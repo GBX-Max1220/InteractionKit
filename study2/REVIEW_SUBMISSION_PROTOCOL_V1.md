@@ -47,16 +47,26 @@ Only candidates with the same non-unresolved decision, the same non-unresolved s
 
 The repository provides packets, validation, unblinding, and disagreement detection. It does not fabricate reviewer identities or judgments. Human reviewers must complete the two independent submissions before adjudication and final material freeze.
 
+## Expertise-stratified assignments
+
+Round v2 blocks candidate assignment by required expertise instead of assuming two generalists can validly review every topic. Each candidate is assigned to exactly two independent reviewers within one panel:
+
+- Exercise physiology: exercise training, recovery, and environment (15 candidates)
+- Sports nutrition: nutrition (8 candidates)
+- Sports medicine: injury risk (4 candidates)
+
+The reviewer is the unit of independent replication for each item. A person may not fill both reviewer assignments within the same panel. Relevant expertise and conflicts remain mandatory disclosures; a reviewer who cannot defend the assigned panel scope should decline or flag the affected item as unresolved.
+
 ## Generated round artifacts
 
-Run `npm run study2:review-round` from the repository root. Public-safe packets, offline reviewer forms, blank submission templates, and an integrity manifest are written to `study2/review-round-v1/`. Each reviewer can open their assigned `.review-form.html` locally, save a browser-local draft, and download a schema-valid completed JSON without sending form data to a server. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v1/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, forms, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
+Run `npm run study2:review-round` from the repository root. Public-safe packets, offline reviewer forms, blank submission templates, and an integrity manifest are written to `study2/review-round-v2/`. Each reviewer can open their assigned `.review-form.html` locally, save a browser-local draft, and download a schema-valid completed JSON without sending form data to a server. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v2/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, forms, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
 
 ## Receipt and pair audit
 
-Save completed reviewer files under `study2/private-review-artifacts/review-round-v1/`. Do not rename or edit the assigned packet, and do not place completed submissions in the public artifact directory. After both files arrive independently, run:
+Save completed reviewer files under `study2/private-review-artifacts/review-round-v2/`. Do not rename or edit the assigned packet, and do not place completed submissions in the public artifact directory. After both files for one panel arrive independently, run:
 
 ```text
 npm run study2:audit-reviews -- --first <reviewer-01-submission.json> --second <reviewer-02-submission.json>
 ```
 
-The command binds each submission to its reviewer-specific packet, verifies the committed packet and private crosswalk hashes, applies all submission and independence checks, and writes the unblinded `pair-audit.json` only inside the gitignored private directory. A valid pair may still require adjudication; the command reports the exact count and does not promote any candidate to `retained_v1`.
+The command binds each submission to its reviewer-specific packet and expertise panel, verifies the committed packet and private crosswalk hashes, applies all submission and independence checks, and writes the unblinded `<panel-id>.pair-audit.json` only inside the gitignored private directory. Run it once for each of the three panels. After every panel has a valid pair audit, `round-audit-summary.json` verifies that all 27 candidates are covered exactly once at the unblinded pair level. A valid pair or complete round may still require adjudication; the command reports the exact count and does not promote any candidate to `retained_v1`.

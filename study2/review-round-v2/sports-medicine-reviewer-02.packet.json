@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "study2-domain-review-packet-v1",
+  "materialVersion": "study2-candidates-v0.6",
+  "reviewerId": "sports-medicine-reviewer-02",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
+  "items": [
+    {
+      "blindId": "S01",
+      "domain": "injury_risk",
+      "decisionPrompt": "An athlete is recovering after sport-related concussion. Which return-to-sport approach is better?",
+      "optionA": "Use a staged progression with symptom monitoring and appropriate professional oversight.",
+      "optionB": "Resume full training once resting symptoms have improved, then monitor the response.",
+      "targetPopulation": "Athletes with suspected or diagnosed concussion",
+      "evidenceSources": [
+        {
+          "citation": "Patricios JS, et al. Consensus statement on concussion in sport: the 6th International Conference on Concussion in Sport—Amsterdam, October 2022. British Journal of Sports Medicine. 2023;57(11):695-711. doi:10.1136/bjsports-2023-106898.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2023-106898",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Putukian M, et al. Clinical recovery from concussion—return to school and sport: a systematic review and meta-analysis. British Journal of Sports Medicine. 2023;57(12):798-809. doi:10.1136/bjsports-2022-106682.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2022-106682",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S02",
+      "domain": "injury_risk",
+      "decisionPrompt": "An adult has chronic non-specific low-back pain, no red flags, and tolerates modified movement. Which training response is preferable?",
+      "optionA": "Temporarily stop loaded trunk and lower-body exercise.",
+      "optionB": "Continue symptom-guided training with modified load and range.",
+      "targetPopulation": "Adults with chronic non-specific low-back pain and no emergency signs",
+      "evidenceSources": [
+        {
+          "citation": "Oliveira CB, et al. Clinical practice guidelines for the management of non-specific low back pain in primary care: an updated overview. European Spine Journal. 2018;27(11):2791-2803. doi:10.1007/s00586-018-5673-2.",
+          "urlOrDoi": "https://doi.org/10.1007/s00586-018-5673-2",
+          "authorityType": "systematic_review"
+        },
+        {
+          "citation": "Rodríguez-Domínguez ÁJ, et al. Does resistance training improve pain intensity, quality of life, and disability in people with chronic nonspecific low back pain? A systematic review and meta-analysis. Disability and Rehabilitation. 2026. doi:10.1080/09638288.2025.2566275.",
+          "urlOrDoi": "https://doi.org/10.1080/09638288.2025.2566275",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S03",
+      "domain": "injury_risk",
+      "decisionPrompt": "During strenuous exercise in the heat, a person becomes confused and collapses. What is the better immediate action?",
+      "optionA": "Stop exercise, begin rapid cooling, and activate emergency care.",
+      "optionB": "Move to shade, offer fluid, and resume if alertness improves.",
+      "targetPopulation": "People with altered mental status and collapse during strenuous exercise in heat",
+      "evidenceSources": [
+        {
+          "citation": "Roberts WO, et al. ACSM Expert Consensus Statement on Exertional Heat Illness: Recognition, Management, and Return to Activity. Current Sports Medicine Reports. 2023;22(4):134-149. doi:10.1249/JSR.0000000000001058.",
+          "urlOrDoi": "https://doi.org/10.1249/JSR.0000000000001058",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Belval LN, et al. Consensus Statement—Prehospital Care of Exertional Heat Stroke. Prehospital Emergency Care. 2018;22(3):392-397. doi:10.1080/10903127.2017.1392666.",
+          "urlOrDoi": "https://doi.org/10.1080/10903127.2017.1392666",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S04",
+      "domain": "injury_risk",
+      "decisionPrompt": "A novice adolescent cannot perform a resistance exercise with stable technique at the current load. Which progression is preferable?",
+      "optionA": "Use a manageable load with qualified instruction until technique is consistent.",
+      "optionB": "Increase the load and correct technique during the heavier attempts.",
+      "targetPopulation": "Healthy adolescent novices participating in supervised resistance training",
+      "evidenceSources": [
+        {
+          "citation": "Faigenbaum AD, et al. Youth resistance training: updated position statement paper from the National Strength and Conditioning Association. Journal of Strength and Conditioning Research. 2009;23(5 Suppl):S60-S79. doi:10.1519/JSC.0b013e31819df407.",
+          "urlOrDoi": "https://doi.org/10.1519/JSC.0b013e31819df407",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Lloyd RS, et al. Position statement on youth resistance training: the 2014 International Consensus. British Journal of Sports Medicine. 2014;48(7):498-505. doi:10.1136/bjsports-2013-092952.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2013-092952",
+          "authorityType": "position_stand"
+        }
+      ]
+    }
+  ]
+}

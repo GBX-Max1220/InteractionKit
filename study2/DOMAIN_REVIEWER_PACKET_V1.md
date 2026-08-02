@@ -5,7 +5,7 @@
 
 ## Purpose
 
-Review whether each candidate scenario has a defensible binary decision and whether its evidence support is best described as `strong_consensus` or `mixed_or_conditional`. This review does not assess the P/O interface manipulation, answer prose, or study hypotheses.
+Review whether each candidate scenario in the assigned expertise panel has a defensible binary decision and whether its evidence support is best described as `strong_consensus` or `mixed_or_conditional`. This review does not assess the P/O interface manipulation, answer prose, or study hypotheses.
 
 ## Independence and blinding
 
@@ -15,6 +15,7 @@ Review whether each candidate scenario has a defensible binary decision and whet
 4. Candidate order must be independently randomized for each reviewer.
 5. Reviewers may inspect linked sources and may nominate replacements.
 6. Record conflicts of interest and relevant domain expertise before coding.
+7. Do not review a panel outside your defensible expertise; decline the assignment or mark affected items unresolved.
 
 ## Required decision for every scenario
 
@@ -79,9 +80,10 @@ Accuracy, evidence support, and communication failure are separate variables. A 
 ## Handoff checklist
 
 - [ ] Reviewer identities and expertise recorded outside the blinded response file.
-- [ ] Two independently randomized, label-blinded packets generated.
+- [ ] Two independently randomized, label-blinded packets generated per expertise panel.
 - [ ] Source links resolve and source metadata match the dossier.
-- [ ] All required fields completed for all 27 source-dossier-complete candidates.
+- [ ] All required fields completed for every assigned candidate.
+- [ ] Across panels, all 27 source-dossier-complete candidates receive exactly two reviews.
 - [ ] Raw reviewer files preserved unchanged.
 - [ ] Agreement statistics and disagreement list computed before adjudication.
 - [ ] Every post-review wording change versioned and re-reviewed when substantive.

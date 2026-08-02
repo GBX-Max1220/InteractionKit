@@ -10,6 +10,9 @@ import {
 
 type ManifestEntry = {
   reviewerId: string;
+  panelId: string;
+  requiredDomains: string[];
+  itemCount: number;
   packetFile: string;
   submissionTemplateFile: string;
   packetSha256: string;
@@ -32,8 +35,17 @@ type CrosswalkArtifact = {
   crosswalk: ReviewerCrosswalkItem[];
 };
 
-const publicDirectory = path.resolve('study2', 'review-round-v1');
-const privateDirectory = path.resolve('study2', 'private-review-artifacts', 'review-round-v1');
+type StoredPairAudit = {
+  schemaVersion: 'study2-domain-review-pair-audit-v1';
+  roundId: string;
+  materialVersion: string;
+  valid: boolean;
+  counts: { reviewed: number; fullAgreement: number; adjudicationRequired: number };
+  items: Array<{ candidateId: string }>;
+};
+
+const publicDirectory = path.resolve('study2', 'review-round-v2');
+const privateDirectory = path.resolve('study2', 'private-review-artifacts', 'review-round-v2');
 
 function sha256(value: string): string {
   return createHash('sha256').update(value).digest('hex');
@@ -70,6 +82,16 @@ async function loadAssignment(
   if (sha256(packetArtifact.serialized) !== entry.packetSha256) {
     throw new Error(`Packet hash mismatch for ${submission.reviewerId}.`);
   }
+  if (packetArtifact.parsed.items.length !== entry.itemCount) {
+    throw new Error(`Packet item-count mismatch for ${submission.reviewerId}.`);
+  }
+  if (
+    packetArtifact.parsed.items.some(
+      (item) => !entry.requiredDomains.includes(item.domain),
+    )
+  ) {
+    throw new Error(`Packet domain assignment mismatch for ${submission.reviewerId}.`);
+  }
 
   const crosswalkFile = path.join(privateDirectory, `${submission.reviewerId}.crosswalk.json`);
   const crosswalkArtifact = await readJson<CrosswalkArtifact>(crosswalkFile);
@@ -102,6 +124,11 @@ async function main(): Promise<void> {
   const secondSubmission = (await readJson<ReviewSubmission>(secondPath)).parsed;
   const firstAssignment = await loadAssignment(manifest, firstSubmission);
   const secondAssignment = await loadAssignment(manifest, secondSubmission);
+  const firstEntry = entryForReviewer(manifest, firstSubmission.reviewerId);
+  const secondEntry = entryForReviewer(manifest, secondSubmission.reviewerId);
+  if (firstEntry.panelId !== secondEntry.panelId) {
+    throw new Error('Review submissions must belong to the same expertise panel.');
+  }
   const audit = auditIndependentReviewPair({
     firstSubmission,
     firstPacket: firstAssignment.packet,
@@ -120,12 +147,78 @@ async function main(): Promise<void> {
     ...audit,
   };
   await mkdir(privateDirectory, { recursive: true });
-  const outputPath = path.join(privateDirectory, 'pair-audit.json');
+  const outputPath = path.join(privateDirectory, `${firstEntry.panelId}.pair-audit.json`);
   await writeFile(outputPath, `${JSON.stringify(auditArtifact, null, 2)}\n`, 'utf8');
 
   if (!audit.valid) {
     throw new Error(`Review pair is invalid; private diagnostic written to ${outputPath}.`);
   }
+
+  const expectedPanels = [...new Set(manifest.entries.map((entry) => entry.panelId))].sort();
+  const completedAudits: StoredPairAudit[] = [];
+  const completedPanels: string[] = [];
+  for (const panelId of expectedPanels) {
+    try {
+      const stored = (
+        await readJson<StoredPairAudit>(path.join(privateDirectory, `${panelId}.pair-audit.json`))
+      ).parsed;
+      if (
+        stored.schemaVersion === 'study2-domain-review-pair-audit-v1' &&
+        stored.roundId === manifest.roundId &&
+        stored.materialVersion === manifest.materialVersion &&
+        stored.valid
+      ) {
+        completedAudits.push(stored);
+        completedPanels.push(panelId);
+      }
+    } catch {
+      // A missing or unreadable panel audit remains incomplete; it is not synthesized.
+    }
+  }
+  const candidateCoverage = new Map<string, number>();
+  for (const stored of completedAudits) {
+    for (const item of stored.items) {
+      candidateCoverage.set(item.candidateId, (candidateCoverage.get(item.candidateId) ?? 0) + 1);
+    }
+  }
+  const allPanelsComplete = completedPanels.length === expectedPanels.length;
+  const coverageValid =
+    allPanelsComplete &&
+    candidateCoverage.size === manifest.candidateCount &&
+    [...candidateCoverage.values()].every((count) => count === 1);
+  if (allPanelsComplete && !coverageValid) {
+    throw new Error('All panel audits exist, but round-level candidate coverage is invalid.');
+  }
+  const roundSummaryPath = path.join(privateDirectory, 'round-audit-summary.json');
+  await writeFile(
+    roundSummaryPath,
+    `${JSON.stringify(
+      {
+        schemaVersion: 'study2-domain-review-round-audit-v1',
+        roundId: manifest.roundId,
+        materialVersion: manifest.materialVersion,
+        auditedAt: new Date().toISOString(),
+        expectedPanels,
+        completedPanels,
+        allPanelsComplete,
+        candidateCoverageValid: coverageValid,
+        counts: {
+          reviewed: completedAudits.reduce((sum, stored) => sum + stored.counts.reviewed, 0),
+          fullAgreement: completedAudits.reduce(
+            (sum, stored) => sum + stored.counts.fullAgreement,
+            0,
+          ),
+          adjudicationRequired: completedAudits.reduce(
+            (sum, stored) => sum + stored.counts.adjudicationRequired,
+            0,
+          ),
+        },
+      },
+      null,
+      2,
+    )}\n`,
+    'utf8',
+  );
   console.log(
     JSON.stringify(
       {
@@ -134,6 +227,10 @@ async function main(): Promise<void> {
         fullAgreement: audit.counts.fullAgreement,
         adjudicationRequired: audit.counts.adjudicationRequired,
         privateAudit: outputPath,
+        completedPanels,
+        allPanelsComplete,
+        roundCoverageValid: coverageValid,
+        privateRoundSummary: roundSummaryPath,
       },
       null,
       2,

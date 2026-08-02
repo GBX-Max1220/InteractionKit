@@ -59,8 +59,8 @@ test('reviewer-visible packet excludes provisional labels and author judgments',
 
 test('review packet generation rejects incomplete pools and missing identities', () => {
   assert.throws(
-    () => generateReviewerPacket({ candidates: REVIEWABLE_CANDIDATES.slice(1), reviewerId: 'r', seed: 's' }),
-    /exactly 27/,
+    () => generateReviewerPacket({ candidates: [], reviewerId: 'r', seed: 's' }),
+    /at least one/,
   );
   assert.throws(
     () => generateReviewerPacket({ candidates: REVIEWABLE_CANDIDATES, reviewerId: '', seed: 's' }),
@@ -69,7 +69,7 @@ test('review packet generation rejects incomplete pools and missing identities',
   assert.throws(
     () =>
       generateReviewerPacket({
-        candidates: [...REVIEWABLE_CANDIDATES.slice(0, 26), STUDY2_CANDIDATES.find((candidate) => candidate.status === 'candidate_unreviewed')!],
+        candidates: [STUDY2_CANDIDATES.find((candidate) => candidate.status === 'candidate_unreviewed')!],
         reviewerId: 'r',
         seed: 's',
       }),

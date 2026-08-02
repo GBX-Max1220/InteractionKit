@@ -38,7 +38,7 @@ export function generateReviewerPacket(options: {
   const { candidates, reviewerId, seed } = options;
   if (!reviewerId.trim()) throw new Error('Reviewer ID is required.');
   if (!seed.trim()) throw new Error('Packet seed is required.');
-  if (candidates.length !== 27) throw new Error('A reviewer packet requires exactly 27 source-complete candidates.');
+  if (candidates.length === 0) throw new Error('A reviewer packet requires at least one source-complete candidate.');
   if (new Set(candidates.map((candidate) => candidate.id)).size !== candidates.length) {
     throw new Error('Candidate IDs must be unique.');
   }
