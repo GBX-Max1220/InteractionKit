@@ -46,3 +46,11 @@ next-env.d.ts
 # blinded Study 2 crosswalks, completed submissions, and unblinded audits
 # (must never be committed)
 /study2/private-review-artifacts/
+
+# study backend: local SQLite DB + demo exports (never commit study data)
+/backend/data/
+/backend/demo_exports/
+
+# python
+__pycache__/
+*.py[cod]
