@@ -37,6 +37,7 @@ export type Study2RunnerPhase =
   | 'trial_completion'
   | 'post_task_response'
   | 'session_completion'
+  | 'session_termination'
   | 'completed';
 
 export interface Study2ParticipantTrialView {
@@ -72,6 +73,7 @@ const PHASE_FOR_NEXT_EVENT: Record<Study2EventType, Study2RunnerPhase> = {
   trial_completed: 'trial_completion',
   post_task_response: 'post_task_response',
   session_completed: 'session_completion',
+  session_terminated: 'session_termination',
 };
 
 function nonEmpty(value: string, label: string): void {

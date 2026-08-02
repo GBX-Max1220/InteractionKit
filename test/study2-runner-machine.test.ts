@@ -82,6 +82,7 @@ function payloadFor(eventType: Study2EventType): Record<string, unknown> {
     case 'trial_completed': return { totalTrialDurationMs: 5000 };
     case 'post_task_response': return { numericalCardRelevance: 5, boundaryCardRelevance: 5, attentionCheckPassed: true };
     case 'session_completed': return {};
+    case 'session_terminated': return { reason: 'comprehension_failed' };
   }
 }
 
@@ -148,4 +149,23 @@ test('runner rejects out-of-order input, forbidden payload fields, identity drif
     deriveStudy2RunnerStep({ store, allocation, bundle: driftedBundle, frozen }),
     /material versions do not match/,
   );
+});
+
+test('runner records two failed comprehension attempts and terminates without fabricating eligibility', async () => {
+  const bundle = completedBundle();
+  let store = await createStudy2SessionStore(allocation, 0);
+  const append = async (eventType: Study2EventType, payload: Record<string, unknown>, second: number) => {
+    store = await appendStudy2RunnerEvent({ store, allocation, bundle, frozen, identity, eventType, payload, timestamp: new Date(Date.UTC(2026, 7, 3, 1, 0, second)).toISOString() });
+  };
+  await append('session_started', payloadFor('session_started'), 0);
+  await append('comprehension_attempt', { attempt: 1, passed: false }, 1);
+  await append('comprehension_attempt', { attempt: 2, passed: false }, 2);
+  const termination = await deriveStudy2RunnerStep({ store, allocation, bundle, frozen });
+  assert.equal(termination.nextEventType, 'session_terminated');
+  assert.equal(termination.phase, 'session_termination');
+  await append('session_terminated', { reason: 'comprehension_failed' }, 3);
+  const final = await deriveStudy2RunnerStep({ store, allocation, bundle, frozen });
+  assert.equal(final.phase, 'completed');
+  assert.equal(final.nextEventType, null);
+  assert.equal(store.records.some((record) => record.event.eventType === 'participant_profile'), false);
 });

@@ -182,3 +182,27 @@ test('validated event prefixes derive the only permissible recovery step', () =>
   assert.equal(invalid.nextEventType, null);
   assert.match(invalid.errors.join('\n'), /not the next event in the frozen procedure/);
 });
+
+test('two failed comprehension attempts require an explicit fail-safe termination event', () => {
+  const trace = completeTrace();
+  const prefix = trace.slice(0, 1);
+  const add = (attempt: number, passed: boolean, eventType: Study2Event['eventType'] = 'comprehension_attempt') => {
+    prefix.push({
+      ...trace[0],
+      eventIndex: prefix.length,
+      timestamp: new Date(Date.UTC(2026, 7, 2, 17, 0, prefix.length)).toISOString(),
+      eventType,
+      context: null,
+      payload: eventType === 'session_terminated' ? { reason: 'comprehension_failed' } : { attempt, passed },
+    });
+  };
+  add(1, false);
+  add(2, false);
+  const beforeTermination = auditStudy2SessionPrefix({ events: prefix, allocation, participantIndex: 0 });
+  assert.equal(beforeTermination.valid, true, beforeTermination.errors.join('\n'));
+  assert.equal(beforeTermination.nextEventType, 'session_terminated');
+  add(0, false, 'session_terminated');
+  const terminated = auditStudy2SessionPrefix({ events: prefix, allocation, participantIndex: 0 });
+  assert.equal(terminated.valid, true, terminated.errors.join('\n'));
+  assert.equal(terminated.nextEventType, null);
+});

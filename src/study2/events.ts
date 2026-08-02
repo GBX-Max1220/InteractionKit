@@ -16,6 +16,7 @@ export const STUDY2_EVENT_TYPES = [
   'trial_completed',
   'post_task_response',
   'session_completed',
+  'session_terminated',
 ] as const;
 
 export type Study2EventType = (typeof STUDY2_EVENT_TYPES)[number];
@@ -109,6 +110,7 @@ const payloadKeys: Record<Study2EventType, Set<string>> = {
     'attentionCheckPassed',
   ]),
   session_completed: new Set([]),
+  session_terminated: new Set(['reason']),
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -190,6 +192,9 @@ function validatePayload(eventType: Study2EventType, value: unknown): string[] {
     if (!inRange(value.boundaryCardRelevance, 1, 7) || !Number.isInteger(value.boundaryCardRelevance)) errors.push('Boundary-card relevance must be an integer 1-7.');
     if (typeof value.attentionCheckPassed !== 'boolean') errors.push('Post-task response requires attention-check result.');
   }
+  if (eventType === 'session_terminated' && value.reason !== 'comprehension_failed') {
+    errors.push('Session termination reason must be comprehension_failed.');
+  }
   return errors;
 }
 
@@ -245,6 +250,7 @@ function sequenceForSession(
   assignments: Study2TrialAssignment[],
   recognitionProbeTrialIndices: number[],
   comprehensionAttempts: number,
+  comprehensionFailed: boolean,
 ): Array<{ eventType: Study2EventType; trialIndex: number | null }> {
   const sequence: Array<{ eventType: Study2EventType; trialIndex: number | null }> = [
     { eventType: 'session_started', trialIndex: null },
@@ -252,8 +258,12 @@ function sequenceForSession(
       eventType: 'comprehension_attempt' as const,
       trialIndex: null,
     })),
-    { eventType: 'participant_profile', trialIndex: null },
   ];
+  if (comprehensionFailed) {
+    sequence.push({ eventType: 'session_terminated', trialIndex: null });
+    return sequence;
+  }
+  sequence.push({ eventType: 'participant_profile', trialIndex: null });
   for (const assignment of assignments) {
     for (const eventType of [
       'trial_started',
@@ -303,14 +313,14 @@ export function auditStudy2SessionPrefix(options: {
   if (comprehension[0]?.payload.passed === false) expectedComprehensionAttempts = 2;
   if (comprehension.length > 2) errors.push('Session prefix has more than two comprehension attempts.');
   if (comprehension[0]?.payload.passed === true && comprehension.length > 1) errors.push('Session prefix continues comprehension after a pass.');
-  if (comprehension[1]?.payload.passed !== undefined && comprehension[1].payload.passed !== true) errors.push('A completed second comprehension attempt must pass before the study can continue.');
+  const comprehensionFailed = comprehension[1]?.payload.passed === false;
   comprehension.forEach((event, index) => {
     if (event.payload.attempt !== index + 1) errors.push('Session prefix has invalid comprehension numbering.');
   });
   const probes = assignments[0]
     ? selectRecognitionProbeTrials(options.allocation.seed, options.participantIndex)
     : [];
-  const expected = sequenceForSession(assignments, probes, expectedComprehensionAttempts);
+  const expected = sequenceForSession(assignments, probes, expectedComprehensionAttempts, comprehensionFailed);
   if (events.length > expected.length) errors.push('Session prefix contains events after completion.');
   for (const [index, event] of events.entries()) {
     const expectedEvent = expected[index];

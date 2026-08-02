@@ -19,6 +19,8 @@ Every completed session contains:
 5. one post-task response with the attention-check result and one relevance rating per card type;
 6. one `session_completed` event.
 
+If both permitted comprehension attempts fail, the normal procedure cannot continue. The second failed attempt is preserved, followed by `session_terminated` with the sole allowed reason `comprehension_failed`; no profile, trial, or completion event may follow. This fail-safe path prevents the runner from fabricating eligibility or trapping an ineligible participant in an impossible state.
+
 Each trial emits `trial_started`, `initial_response`, `ai_answer_shown`, `intervention_shown`, `post_ai_probability`, `final_response`, an optional scheduled `recognition_probe`, and `trial_completed`, in that order. Four probe indices are selected deterministically from the allocation seed and participant index so refresh recovery cannot resample them.
 
 ## Data minimization and leakage boundary
