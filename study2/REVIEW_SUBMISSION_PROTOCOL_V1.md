@@ -2,7 +2,7 @@
 
 **Materials:** `study2-candidates-v0.6`
 **Packet schema:** `study2-domain-review-packet-v1`
-**Submission schema:** `study2-domain-review-submission-v1`
+**Submission schema:** `study2-domain-review-submission-v2`
 
 ## Independence contract
 
@@ -22,6 +22,7 @@ Two reviewers complete separately randomized packets before either reviewer sees
 - Evidence-support level: `strong_consensus`, `mixed_or_conditional`, or `unresolved`
 - Decision boundary that a calibrated answer must preserve
 - Maximum defensible numerical granularity
+- Missing or conflicting source concern; enter `None identified` when there is none
 - Recommendation: `retain`, `revise`, or `reject`
 - Written rationale
 

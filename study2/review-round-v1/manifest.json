@@ -2,7 +2,7 @@
   "roundId": "study2-domain-review-round-v1",
   "materialVersion": "study2-candidates-v0.6",
   "packetSchemaVersion": "study2-domain-review-packet-v1",
-  "submissionSchemaVersion": "study2-domain-review-submission-v1",
+  "submissionSchemaVersion": "study2-domain-review-submission-v2",
   "packetSeed": "study2-domain-review-v1-2026-08-02",
   "generatedAt": "2026-08-02T00:00:00Z",
   "candidateCount": 27,
@@ -14,7 +14,7 @@
       "packetFile": "domain-reviewer-01.packet.json",
       "submissionTemplateFile": "domain-reviewer-01.submission-template.json",
       "packetSha256": "2d88d0c0c97719ad77a2d204a414b57da5ed181ca86999668dd3967b0e8efc47",
-      "submissionTemplateSha256": "beebcb23b2c4655a10796b79df0575d5092fa0b52833dafbe95c4c0aa5555165",
+      "submissionTemplateSha256": "08acb8b6a0354137d65502228ca238d3df8dbe4373cf7ce51c86644ec361f3f7",
       "privateCrosswalkSha256": "1459972dbb3d46f1c0722e4ac64ada300f900bc8373fdbebfc709da969b5c5fd"
     },
     {
@@ -22,7 +22,7 @@
       "packetFile": "domain-reviewer-02.packet.json",
       "submissionTemplateFile": "domain-reviewer-02.submission-template.json",
       "packetSha256": "16e1948db7c03087e854301ddf80d0731d8e9fd4d6437859d37ebb0ff91ce005",
-      "submissionTemplateSha256": "196a4b9eff2d5596f6d39659e4dac506aa5b707111c19ae6be4a84718271f36d",
+      "submissionTemplateSha256": "9124ca850b7ee7c86c9fffaa05fe5eef6dce795034751c3c187c2852d73ff8d7",
       "privateCrosswalkSha256": "945cbe55db8f298c9671c1960a60c2f1327f6cb6fc266af91ccaf58ac9bdf68a"
     }
   ]

@@ -20,6 +20,7 @@ type SubmissionTemplate = {
     blindId: string;
     binaryDecision: string;
     supportLevel: string;
+    sourceConcern: string;
     recommendation: string;
   }>;
 };
@@ -88,6 +89,7 @@ test('submission templates are blank human-input forms without answer leakage', 
     assert.equal(parsed.submittedAt, '');
     assert.ok(parsed.items.every((item) => item.binaryDecision === 'unresolved'));
     assert.ok(parsed.items.every((item) => item.supportLevel === 'unresolved'));
+    assert.ok(parsed.items.every((item) => item.sourceConcern === ''));
     assert.ok(parsed.items.every((item) => item.recommendation === 'revise'));
     assert.doesNotMatch(serialized, /\b(?:strong|mixed)_\d{2}\b/);
     for (const forbidden of forbiddenPublicFields) {

@@ -19,7 +19,7 @@ function submissionFor(
   items: { blindId: string }[],
 ): ReviewSubmission {
   return {
-    schemaVersion: 'study2-domain-review-submission-v1',
+    schemaVersion: 'study2-domain-review-submission-v2',
     materialVersion: 'study2-candidates-v0.6',
     reviewerId,
     packetSeed,
@@ -32,6 +32,7 @@ function submissionFor(
       supportLevel: 'strong_consensus',
       decisionBoundary: 'Boundary supplied independently by reviewer.',
       numericalGranularity: 'Direction only.',
+      sourceConcern: 'None identified in this test fixture.',
       recommendation: 'retain',
       rationale: 'Evidence and scenario context support this judgment.',
     })),
@@ -66,6 +67,17 @@ test('review submission must exactly cover its blinded packet', () => {
   assert.match(
     validateReviewSubmission(leaking, generated.packet).errors.join('\n'),
     /unexpected fields: candidateId/,
+  );
+
+  const missingSourceConcern = {
+    ...submission,
+    items: submission.items.map(({ sourceConcern, ...item }, index) =>
+      index === 0 ? item : { ...item, sourceConcern },
+    ),
+  };
+  assert.match(
+    validateReviewSubmission(missingSourceConcern, generated.packet).errors.join('\n'),
+    /S\d+ is missing required written justification/,
   );
 });
 

@@ -15,12 +15,13 @@ export interface ReviewSubmissionItem {
   supportLevel: ReviewSupportLevel;
   decisionBoundary: string;
   numericalGranularity: string;
+  sourceConcern: string;
   recommendation: ReviewRecommendation;
   rationale: string;
 }
 
 export interface ReviewSubmission {
-  schemaVersion: 'study2-domain-review-submission-v1';
+  schemaVersion: 'study2-domain-review-submission-v2';
   materialVersion: CandidateScenario['materialVersion'];
   reviewerId: string;
   packetSeed: string;
@@ -52,6 +53,7 @@ const allowedItemKeys = new Set([
   'supportLevel',
   'decisionBoundary',
   'numericalGranularity',
+  'sourceConcern',
   'recommendation',
   'rationale',
 ]);
@@ -76,7 +78,7 @@ export function validateReviewSubmission(
   if (extraTopLevelKeys.length > 0) {
     errors.push(`Submission contains unexpected fields: ${extraTopLevelKeys.join(', ')}.`);
   }
-  if (submission.schemaVersion !== 'study2-domain-review-submission-v1') {
+  if (submission.schemaVersion !== 'study2-domain-review-submission-v2') {
     errors.push('Unsupported review-submission schema version.');
   }
   if (submission.materialVersion !== packet.materialVersion) {
@@ -163,6 +165,7 @@ export function validateReviewSubmission(
       ![
         item.decisionBoundary,
         item.numericalGranularity,
+        item.sourceConcern,
         item.rationale,
       ].every((value) => typeof value === 'string' && value.trim())
     ) {

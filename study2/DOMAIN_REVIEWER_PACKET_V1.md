@@ -45,18 +45,22 @@ The supplied sources are insufficient, outdated, mismatched to the population/ou
 ## Reviewer response schema
 
 ```text
-reviewer_id:
-relevant_expertise:
-conflict_of_interest:
-scenario_blind_id:
-binary_decision: option_a | option_b | unresolved
-support_level: strong_consensus | mixed_or_conditional | unresolved
-decision_boundary:
-numerical_granularity:
-material_action: retain | revise | reject
-rationale:
-missing_or_conflicting_source:
-reviewed_at:
+schemaVersion: study2-domain-review-submission-v2
+materialVersion: copied from the packet
+reviewerId: copied from the packet
+packetSeed: copied from the packet
+relevantExpertise:
+conflictOfInterestStatement:
+submittedAt: ISO-8601 timestamp
+items:
+  - blindId: copied from the packet item
+    binaryDecision: option_a | option_b | unresolved
+    supportLevel: strong_consensus | mixed_or_conditional | unresolved
+    decisionBoundary:
+    numericalGranularity:
+    sourceConcern: enter "None identified" when there is none
+    recommendation: retain | revise | reject
+    rationale:
 ```
 
 ## Acceptance and adjudication rules
