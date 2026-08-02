@@ -22,6 +22,20 @@ class FakePostgres implements Study2PostgresClient {
     this.calls.push({ text, values });
     const digest = String(values[0]);
     if (text.includes('INSERT INTO')) {
+      if (!text.includes('ON CONFLICT')) {
+        for (let index = 0; index < values.length; index += 3) {
+          const batchDigest = String(values[index]);
+          if (this.rows.has(batchDigest)) throw new Error('duplicate key');
+        }
+        for (let index = 0; index < values.length; index += 3) {
+          this.rows.set(String(values[index]), {
+            revision: 0,
+            state_ciphertext: String(values[index + 1]),
+            state_iv: String(values[index + 2]),
+          });
+        }
+        return { rows: [], rowCount: values.length / 3 };
+      }
       if (this.rows.has(digest)) return { rows: [], rowCount: 0 };
       this.rows.set(digest, { revision: 0, state_ciphertext: String(values[1]), state_iv: String(values[2]) });
       return { rows: [], rowCount: 1 };
@@ -62,6 +76,7 @@ test('repository stores only token hash and authenticated ciphertext, then decry
   assert.equal(digest.includes(token), false);
   assert.equal(row.state_ciphertext.includes('private-session'), false);
   assert.equal(row.state_ciphertext.includes('private-seed'), false);
+  assert.ok(row.state_ciphertext.length < Buffer.byteLength(JSON.stringify(state), 'utf8') * 2);
   const loaded = await repository.loadByAccessToken(token);
   assert.deepEqual(loaded, { revision: 0, state });
 });
@@ -103,4 +118,24 @@ test('encryption key parsing is strict and duplicate token creation fails closed
   const repository = new PostgresStudy2RuntimeRepository(client, key);
   await repository.create({ accessToken: token, state });
   await assert.rejects(repository.create({ accessToken: token, state }), /already identifies/);
+});
+
+test('repository creates an encrypted runtime batch with one atomic insert', async () => {
+  const client = new FakePostgres();
+  const repository = new PostgresStudy2RuntimeRepository(client, key);
+  const secondToken = 'second_opaque_runtime_token_123456789';
+  await repository.createMany([
+    { accessToken: token, state },
+    { accessToken: secondToken, state: { ...state, recruitmentSource: 'second-source' } },
+  ]);
+  assert.equal(client.rows.size, 2);
+  assert.equal(client.calls.length, 1);
+  assert.deepEqual(await repository.loadByAccessToken(secondToken), {
+    revision: 0,
+    state: { ...state, recruitmentSource: 'second-source' },
+  });
+  await assert.rejects(
+    repository.createMany([{ accessToken: token, state }, { accessToken: token, state }]),
+    /duplicate access tokens/u,
+  );
 });

@@ -1,4 +1,5 @@
 import { createHash, randomBytes, webcrypto } from 'node:crypto';
+import { gunzipSync, gzipSync } from 'node:zlib';
 
 import type {
   Study2RuntimeRepository,
@@ -62,7 +63,7 @@ async function encryptState(options: {
       tagLength: 128,
     },
     await importKey(options.rawKey),
-    new TextEncoder().encode(JSON.stringify(options.state)),
+    gzipSync(Buffer.from(JSON.stringify(options.state), 'utf8')),
   );
   return { ciphertext: base64(new Uint8Array(ciphertext)), iv: base64(iv) };
 }
@@ -84,7 +85,7 @@ async function decryptState(options: {
       await importKey(options.rawKey),
       fromBase64(options.ciphertext),
     );
-    const parsed: unknown = JSON.parse(new TextDecoder().decode(plaintext));
+    const parsed: unknown = JSON.parse(gunzipSync(Buffer.from(plaintext)).toString('utf8'));
     if (
       typeof parsed !== 'object' || parsed === null ||
       (parsed as { schemaVersion?: unknown }).schemaVersion !== 'study2-server-runtime-state-v1'
@@ -117,6 +118,33 @@ export class PostgresStudy2RuntimeRepository implements Study2RuntimeRepository 
       [digest, encrypted.ciphertext, encrypted.iv],
     );
     if (result.rowCount !== 1) throw new Error('Study 2 access token already identifies a runtime session.');
+  }
+
+  async createMany(entries: Array<{
+    accessToken: string;
+    state: Study2ServerRuntimeState;
+  }>): Promise<void> {
+    if (entries.length === 0) throw new Error('Study 2 runtime batch must contain at least one session.');
+    const digests = entries.map((entry) => tokenHash(entry.accessToken));
+    if (new Set(digests).size !== digests.length) throw new Error('Study 2 runtime batch contains duplicate access tokens.');
+    const encrypted = await Promise.all(entries.map((entry, index) => encryptState({
+      state: entry.state,
+      rawKey: this.rawEncryptionKey,
+      tokenDigest: digests[index],
+    })));
+    const values: unknown[] = [];
+    const rows = entries.map((_, index) => {
+      const offset = index * 3;
+      values.push(digests[index], encrypted[index].ciphertext, encrypted[index].iv);
+      return `($${offset + 1}, 0, $${offset + 2}, $${offset + 3}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`;
+    });
+    const result = await this.client.query(
+      `INSERT INTO study2_runtime_sessions
+        (access_token_hash, revision, state_ciphertext, state_iv, created_at, updated_at)
+       VALUES ${rows.join(',\n')}`,
+      values,
+    );
+    if (result.rowCount !== entries.length) throw new Error('Study 2 runtime batch was not inserted atomically.');
   }
 
   async loadByAccessToken(accessToken: string): Promise<VersionedStudy2RuntimeState | null> {
