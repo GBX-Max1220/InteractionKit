@@ -27,6 +27,8 @@ Each trial emits `trial_started`, `initial_response`, `ai_answer_shown`, `interv
 
 The event and nested payload schemas use strict field allowlists. Ground truth, provisional answer labels, authoring notes, reviewer identity, adjudication rationale, and hidden correctness feedback are not valid runtime fields. Ground truth remains outside the participant event stream until debrief generation. Material and allocation versions, trial context, phase-specific durations, initial/final decisions, confidence, AI-correct probability, familiarity, recognition, and post-task measures are retained because they are required by the frozen analysis or integrity audit.
 
+The full allocation, delivery bundle, frozen artifact, semantic answer/card IDs, and stored event context are coordinator/server-side objects. They must not be serialized into a participant JavaScript bundle or browser journal. The browser receives only `study2-public-runtime-view-v1`, whose trial content omits scenario, variant, card, source, failure-family, accuracy, support, match, and ground-truth identities. Participant actions cross a strict server boundary: action type must match the server-derived phase, exact request keys are enforced, and comprehension/attention outcomes are computed server-side rather than accepted as client booleans. The server then constructs and appends the canonical event.
+
 ## Recovery rule
 
 Recovery must persist the append-only event prefix, not a freely editable phase number. `auditStudy2SessionPrefix` validates every event, binds it to the complete audited allocation and material version, and derives the only permissible next event. A malformed, reordered, skipped, cross-participant, or cross-version prefix has no resumable next step.
