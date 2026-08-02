@@ -9,8 +9,8 @@ test('evidence-path registry has unique verified provenance for all triaged cand
 
   assert.equal(audit.valid, true, audit.errors.join('\n'));
   assert.equal(audit.counts.registered, 27);
-  assert.equal(audit.counts.readyForDossier, 23);
-  assert.deepEqual(audit.sourceGapCandidateIds, ['strong_03', 'strong_05', 'strong_07', 'strong_11']);
+  assert.equal(audit.counts.readyForDossier, 26);
+  assert.deepEqual(audit.sourceGapCandidateIds, ['strong_11']);
 });
 
 test('evidence-path audit rejects duplicate or non-supporting provenance', () => {

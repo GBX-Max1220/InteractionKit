@@ -35,16 +35,16 @@ function path(
   sources: CandidateEvidencePath['sources'],
   mappingNote: string,
 ): CandidateEvidencePath {
-  return { candidateId, materialVersion: 'study2-candidates-v0.4', sources, mappingNote };
+  return { candidateId, materialVersion: 'study2-candidates-v0.5', sources, mappingNote };
 }
 
 export const STUDY2_EVIDENCE_PATHS: CandidateEvidencePath[] = [
   path('strong_01', [source('10.1249/MSS.0000000000003897', '41843416', 'position_stand'), source('10.1249/MSS.0b013e3181915670', '19204579', 'position_stand')], 'Resistance-training progression in healthy adults.'),
   path('strong_02', [source('10.1249/MSS.0000000000003897', '41843416', 'position_stand'), source('10.1249/MSS.0b013e3181915670', '19204579', 'position_stand')], 'Whole-body resistance-training prescription.'),
-  path('strong_03', [source('10.1007/s40279-022-01706-y', '35708888', 'meta_analysis', 'bounded'), source('10.2147/NSS.S467531', '39006249', 'meta_analysis', 'bounded')], 'Both syntheses emphasize acute loss; repeated-restriction wording still needs repair.'),
+  path('strong_03', [source('10.1007/s40279-022-01706-y', '35708888', 'meta_analysis'), source('10.2147/NSS.S467531', '39006249', 'meta_analysis')], 'Acute sleep loss and physical or sporting performance.'),
   path('strong_04', [source('10.1186/s12970-017-0177-8', '28642676', 'position_stand'), source('10.1136/bjsports-2017-097608', '28698222', 'meta_analysis')], 'Daily protein and resistance-training adaptation.'),
-  path('strong_05', [source('10.1186/s12970-017-0173-z', '28615996', 'position_stand'), source('10.1519/JSC.0000000000004862', '39074168', 'meta_analysis', 'adjacent')], 'The second synthesis emphasizes body composition rather than the strength outcome.'),
-  path('strong_07', [source('10.1249/JSR.0000000000001058', '37036463', 'guideline', 'bounded'), source('10.1080/10903127.2017.1392666', '29336710', 'position_stand', 'bounded')], 'Sources focus on exertional heat illness or heat stroke; prompt breadth needs adjudication.'),
+  path('strong_05', [source('10.1186/s12970-017-0173-z', '28615996', 'position_stand'), source('10.3390/nu16213665', '39519498', 'meta_analysis')], 'Creatine monohydrate and resistance-training strength gains in healthy adults.'),
+  path('strong_07', [source('10.1249/JSR.0000000000001058', '37036463', 'guideline'), source('10.1080/10903127.2017.1392666', '29336710', 'position_stand')], 'Recognition and immediate management of suspected exertional heat stroke.'),
   path('strong_08', [source('10.1136/bjsports-2015-094915', '26069301', 'position_stand'), source('10.1007/s40279-023-01972-4', '38051495', 'meta_analysis')], 'Repeated managed heat exposure and physiological strain.'),
   path('strong_09', [source('10.1136/bjsports-2020-102955', '33239350', 'guideline'), source('10.3389/fpubh.2025.1624562', '40746688', 'meta_analysis', 'bounded')], 'Aerobic activity for inactive adults; modality claims remain bounded.'),
   path('strong_11', [source('10.1249/MSS.0000000000003897', '41843416', 'position_stand', 'bounded'), source('10.1249/MSS.0b013e3181915670', '19204579', 'position_stand', 'bounded')], 'General progression guidance does not directly establish a universal technique gate.'),
@@ -88,7 +88,7 @@ export function auditEvidencePaths(
     if (pathIds.has(evidencePath.candidateId)) errors.push(`Duplicate evidence path for ${evidencePath.candidateId}.`);
     pathIds.add(evidencePath.candidateId);
     if (!candidateIds.has(evidencePath.candidateId)) errors.push(`Unknown candidate ${evidencePath.candidateId}.`);
-    if (evidencePath.materialVersion !== 'study2-candidates-v0.4') errors.push(`${evidencePath.candidateId} uses a stale material version.`);
+    if (evidencePath.materialVersion !== 'study2-candidates-v0.5') errors.push(`${evidencePath.candidateId} uses a stale material version.`);
     if (evidencePath.sources.length < 2) errors.push(`${evidencePath.candidateId} has fewer than two source locators.`);
 
     const dois = new Set(evidencePath.sources.map((item) => item.doi.toLowerCase()));

@@ -31,7 +31,7 @@ export interface DomainReviewRecord {
 
 export interface CandidateScenario {
   id: string;
-  materialVersion: 'study2-candidates-v0.4';
+  materialVersion: 'study2-candidates-v0.5';
   status: MaterialStatus;
   domain: 'exercise_training' | 'recovery' | 'nutrition' | 'injury_risk' | 'environment';
   provisionalSupportLevel: SupportLevel;

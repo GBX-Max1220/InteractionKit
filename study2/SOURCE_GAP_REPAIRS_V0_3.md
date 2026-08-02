@@ -4,6 +4,8 @@
 **Access date:** 2026-08-02
 **Status:** metadata and source-to-outcome mapping checked; independent domain review pending
 
+**Subsequent change:** `strong_03`, `strong_05`, and `strong_07` were repaired in `study2-candidates-v0.5`; see `CANDIDATE_REPAIR_V0_5.md`. Only `strong_11` remains an open source gap in the current machine-readable registry. The v0.3 findings below remain as an audit trail.
+
 This audit replaces sources whose topic was adjacent to, but did not directly support, the candidate's stated decision outcome. Counting an adjacent source toward the two-source threshold would create false provenance completeness.
 
 ## Closed gap: `mixed_04`
