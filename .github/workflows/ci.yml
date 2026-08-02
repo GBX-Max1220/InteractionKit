@@ -1,0 +1,54 @@
+name: CI
+
+"on":
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run automated tests
+        run: npm test
+
+      - name: Check TypeScript
+        run: npx tsc --noEmit
+
+      - name: Regenerate Study 2 review artifacts
+        run: npm run study2:review-round
+
+      - name: Verify committed review artifacts are reproducible
+        shell: bash
+        run: |
+          git diff --exit-code -- study2/review-round-v2
+          test -z "$(git status --porcelain --untracked-files=all -- study2/review-round-v2)"
+
+      - name: Build production application
+        run: npm run build
+
+      - name: Check patch whitespace
+        run: git diff --check
