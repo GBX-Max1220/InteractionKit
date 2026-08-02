@@ -5,11 +5,11 @@ import { STUDY2_CANDIDATES } from '../src/study2/candidate-registry';
 import { auditEvidenceDossiers, STUDY2_EVIDENCE_DOSSIERS } from '../src/study2/evidence-dossiers';
 import { STUDY2_EVIDENCE_PATHS } from '../src/study2/evidence-paths';
 
-test('first evidence-dossier batch has complete source-to-claim mappings', () => {
+test('strong evidence dossiers have complete source-to-claim mappings', () => {
   const audit = auditEvidenceDossiers(STUDY2_EVIDENCE_DOSSIERS, STUDY2_CANDIDATES, STUDY2_EVIDENCE_PATHS);
 
   assert.equal(audit.valid, true, audit.errors.join('\n'));
-  assert.deepEqual(audit.counts, { complete: 5, strong: 5, mixed: 0 });
+  assert.deepEqual(audit.counts, { complete: 13, strong: 13, mixed: 0 });
 });
 
 test('dossier audit rejects a source not registered in provenance', () => {
