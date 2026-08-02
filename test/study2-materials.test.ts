@@ -59,3 +59,85 @@ test('retained status cannot bypass evidence and independent review gates', () =
   assert.match(audit.errors.join('\n'), /marked retained_v1 without complete, agreeing evidence/);
   assert.equal(audit.pilotReady, false);
 });
+
+test('retained status requires distinct supporting sources and distinct agreeing reviewers', () => {
+  const base = STUDY2_CANDIDATES[0];
+  const source = {
+    id: 'source_1',
+    citation: 'Verified source 1',
+    urlOrDoi: 'https://doi.org/10.0000/source-1',
+    authorityType: 'systematic_review' as const,
+    supportsBinaryDecision: true,
+    supportsEvidenceLevel: true,
+    verifiedBy: 'metadata-auditor',
+    verifiedAt: '2026-08-02T00:00:00Z',
+  };
+  const review = {
+    reviewerId: 'reviewer_1',
+    independent: true,
+    binaryDecision: base.provisionalCorrectOption,
+    supportLevel: base.provisionalSupportLevel,
+    decisionBoundary: base.intendedDecisionBoundary,
+    numericalGranularity: base.intendedNumericalGranularity,
+    reviewedAt: '2026-08-02T00:00:00Z',
+  };
+  const retained = {
+    ...base,
+    status: 'retained_v1' as const,
+    evidenceSources: [
+      source,
+      {
+        ...source,
+        id: 'source_2',
+        citation: 'Verified source 2',
+        urlOrDoi: 'https://doi.org/10.0000/source-2',
+      },
+    ],
+    domainReviews: [review, { ...review, reviewerId: 'reviewer_2' }],
+  };
+
+  const supportingAudit = auditCandidatePool([
+    retained,
+    ...STUDY2_CANDIDATES.slice(1),
+  ]);
+  assert.doesNotMatch(
+    supportingAudit.errors.join('\n'),
+    /marked retained_v1 without complete, agreeing evidence/,
+  );
+
+  const unsupportedAudit = auditCandidatePool([
+    {
+      ...retained,
+      evidenceSources: [source, { ...source, supportsBinaryDecision: false }],
+    },
+    ...STUDY2_CANDIDATES.slice(1),
+  ]);
+  assert.match(
+    unsupportedAudit.errors.join('\n'),
+    /marked retained_v1 without complete, agreeing evidence/,
+  );
+
+  const duplicateReviewerAudit = auditCandidatePool([
+    { ...retained, domainReviews: [review, { ...review }] },
+    ...STUDY2_CANDIDATES.slice(1),
+  ]);
+  assert.match(
+    duplicateReviewerAudit.errors.join('\n'),
+    /marked retained_v1 without complete, agreeing evidence/,
+  );
+
+  const mismatchedReviewAudit = auditCandidatePool([
+    {
+      ...retained,
+      domainReviews: [
+        { ...review, binaryDecision: 'option_b' as const },
+        { ...review, reviewerId: 'reviewer_2', binaryDecision: 'option_b' as const },
+      ],
+    },
+    ...STUDY2_CANDIDATES.slice(1),
+  ]);
+  assert.match(
+    mismatchedReviewAudit.errors.join('\n'),
+    /marked retained_v1 without complete, agreeing evidence/,
+  );
+});

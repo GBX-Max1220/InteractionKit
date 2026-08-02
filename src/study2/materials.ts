@@ -101,19 +101,37 @@ export function auditCandidatePool(candidates: CandidateScenario[]): CandidatePo
 
     if (scenario.status === 'retained_v1') {
       const independent = scenario.domainReviews.filter((review) => review.independent);
+      const independentReviewerIds = new Set(independent.map((review) => review.reviewerId));
       const decisions = new Set(independent.map((review) => review.binaryDecision));
       const supports = new Set(independent.map((review) => review.supportLevel));
-      const sourcesVerified = scenario.evidenceSources.every(
-        (source) => source.verifiedBy && source.verifiedAt,
+      const sourcesComplete = scenario.evidenceSources.every(
+        (source) =>
+          source.verifiedBy &&
+          source.verifiedAt &&
+          source.supportsBinaryDecision &&
+          source.supportsEvidenceLevel,
+      );
+      const sourceIds = new Set(scenario.evidenceSources.map((source) => source.id));
+      const sourceLocations = new Set(
+        scenario.evidenceSources.map((source) => source.urlOrDoi.trim().toLowerCase()),
+      );
+      const reviewsMatchRegistry = independent.every(
+        (review) =>
+          review.binaryDecision === scenario.provisionalCorrectOption &&
+          review.supportLevel === scenario.provisionalSupportLevel,
       );
       if (
         scenario.evidenceSources.length < 2 ||
-        !sourcesVerified ||
+        sourceIds.size < 2 ||
+        sourceLocations.size < 2 ||
+        !sourcesComplete ||
         independent.length < 2 ||
+        independentReviewerIds.size < 2 ||
         decisions.size !== 1 ||
         supports.size !== 1 ||
         decisions.has('unresolved') ||
-        supports.has('unresolved')
+        supports.has('unresolved') ||
+        !reviewsMatchRegistry
       ) {
         errors.push(
           `${scenario.id} is marked retained_v1 without complete, agreeing evidence and reviews.`,
