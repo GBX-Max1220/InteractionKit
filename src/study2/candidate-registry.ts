@@ -31,7 +31,7 @@ function candidate(
     ...seed,
     optionA: displayedOptionA,
     optionB: displayedOptionB,
-    materialVersion: 'study2-candidates-v0.3',
+    materialVersion: 'study2-candidates-v0.4',
     status: 'candidate_unreviewed',
     provisionalSupportLevel: support,
     provisionalCorrectOption: displayedCorrectOption,
@@ -76,7 +76,7 @@ const mixed: Seed[] = [
   { id: 'mixed_12', domain: 'recovery', decisionPrompt: 'After a demanding team-sport match, which recovery plan is preferable when comfort is the main outcome?', optionA: 'Wear compression garments during recovery.', optionB: 'Recover without compression garments.', targetPopulation: 'Healthy adult athletes', intendedDecisionBoundary: 'Outcome, pressure, exercise type, and expectation may matter.', intendedNumericalGranularity: 'No universal recovery percentage.' },
   { id: 'mixed_13', domain: 'exercise_training', decisionPrompt: 'A trained athlete has a strength-focused program and day-to-day readiness varies. Which loading method is preferable?', optionA: 'Adjust working loads with predefined performance-feedback rules.', optionB: 'Use the scheduled percentage loads without a session-level adjustment.', targetPopulation: 'Resistance-trained adult athletes pursuing maximal strength', intendedDecisionBoundary: 'Training status, exercise, feedback method, measurement quality, and program duration alter the expected advantage.', intendedNumericalGranularity: 'No universal effect size or adjustment threshold.' },
   { id: 'mixed_14', domain: 'injury_risk', decisionPrompt: 'An adult has chronic non-specific low-back pain, no red flags, and tolerates modified movement. Which training response is preferable?', optionA: 'Continue symptom-guided training with modified load and range.', optionB: 'Temporarily stop loaded trunk and lower-body exercise.', targetPopulation: 'Adults with chronic non-specific low-back pain and no emergency signs', intendedDecisionBoundary: 'Red flags, diagnosis, symptom response, and prior loading tolerance alter advice.', intendedNumericalGranularity: 'No universal activity dose or pain threshold.' },
-  { id: 'mixed_15', domain: 'environment', decisionPrompt: 'For a long endurance event in variable weather, which hydration strategy is preferable?', optionA: 'Follow a precomputed drinking plan based on expected sweat loss.', optionB: 'Drink according to thirst during the event.', targetPopulation: 'Adult athletes during exercise', intendedDecisionBoundary: 'Heat, duration, sweat rate, hyponatremia risk, and access matter.', intendedNumericalGranularity: 'Reject a universal hourly volume.' },
+  { id: 'mixed_15', domain: 'nutrition', decisionPrompt: 'An endurance athlete prioritizes performance in an event lasting more than 90 minutes and tolerates carbohydrate during exercise. Which fueling plan is preferable?', optionA: 'Consume carbohydrate during the event.', optionB: 'Use water without carbohydrate during the event.', targetPopulation: 'Healthy endurance athletes in prolonged performance events who tolerate carbohydrate intake', intendedDecisionBoundary: 'Event duration and intensity, gastrointestinal tolerance, pre-event nutrition, and carbohydrate form alter the plan.', intendedNumericalGranularity: 'Use an evidence-supported range after individualization; no universal intake rate.' },
   { id: 'mixed_16', domain: 'nutrition', decisionPrompt: 'A healthy athlete with an adequate diet begins a new endurance-training block. Which antioxidant strategy is preferable?', optionA: 'Add a high-dose antioxidant supplement immediately after training.', optionB: 'Rely on dietary sources unless a specific deficiency or indication is identified.', targetPopulation: 'Healthy adult athletes', intendedDecisionBoundary: 'Nutrient status, dose, and training goal matter.', intendedNumericalGranularity: 'No universal dose or adaptation effect.' },
 ];
 
@@ -101,7 +101,7 @@ export const STUDY2_CANDIDATES: CandidateScenario[] = [
         'option_a',
         'option_a',
         'option_a',
-        'unresolved',
+        'option_a',
         'option_b',
       ][index] as CandidateScenario['provisionalCorrectOption'],
       index % 2 === 1,

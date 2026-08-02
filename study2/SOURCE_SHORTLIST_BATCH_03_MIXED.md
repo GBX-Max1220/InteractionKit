@@ -4,7 +4,7 @@
 **Status:** metadata and abstract-level relevance checked; independent domain review pending
 **Access date:** 2026-08-02
 
-**Subsequent changes:** `mixed_03`, `mixed_09`, and `mixed_14` were repaired in `study2-candidates-v0.2`; `mixed_08` and `mixed_13` were replaced with evidence-path reserves in `study2-candidates-v0.3`. See `CANDIDATE_REPAIR_V0_2.md` and `CANDIDATE_RESERVES_V0_3.md`. The earlier hold decisions below are retained as an audit trail.
+**Subsequent changes:** `mixed_03`, `mixed_09`, and `mixed_14` were repaired in `study2-candidates-v0.2`; `mixed_08` and `mixed_13` were replaced with evidence-path reserves in `study2-candidates-v0.3`; `mixed_15` was replaced in `study2-candidates-v0.4` because the hydration options still lacked a unique ground truth. See `CANDIDATE_REPAIR_V0_2.md`, `CANDIDATE_RESERVES_V0_3.md`, and `CANDIDATE_REPAIR_V0_4.md`. The earlier decisions below are retained as an audit trail.
 
 Mixed evidence is not permission to use an unscorable question. Every retained scenario still needs one adjudicated correct decision for its stated context. Candidates whose options are evidentially equivalent are held even when the topic is scientifically interesting.
 
@@ -27,9 +27,9 @@ Decision: advance. Recovery benefits and possible chronic adaptation costs make 
 ### `mixed_04` — static versus dynamic warm-up before sprint/jump tasks
 
 1. Behm DG, et al. “Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review.” *Applied Physiology, Nutrition, and Metabolism*. 2016. DOI: `10.1139/apnm-2015-0235`; PMID: `26642915`.
-2. Zheng Z, et al. “Effects of post-activation performance enhancement added to general warm-up on jump, sprint, and change-of-direction performance in competitive athletes: a systematic review and meta-analysis.” *BMC Sports Science, Medicine and Rehabilitation*. 2026. DOI: `10.1186/s13102-026-01758-x`; PMID: `42226251`.
+2. Li FY, et al. “A systematic review and net meta-analysis of the effects of different warm-up methods on the acute effects of lower limb explosive strength.” *BMC Sports Science, Medicine and Rehabilitation*. 2023;15:106. DOI: `10.1186/s13102-023-00703-6`; PMID: `37644585`; PMCID: `PMC10463540`.
 
-Decision: advance with replacement-source request. Source 1 directly compares stretching modes; source 2 concerns a different active warm-up mechanism. Retrieve a second direct static-versus-dynamic synthesis before completion.
+Decision: advance. The replacement network meta-analysis directly covers static and dynamic stretching for jump and sprint outcomes. It favors dynamic stretching overall but reports substantial moderation by duration, population, and age; those limits must remain in the dossier.
 
 ### `mixed_06` — failure versus near-failure hypertrophy training
 
@@ -55,9 +55,9 @@ Decision: advance. Performance benefit, dose-response variability, timing, sensi
 ### `mixed_12` — compression garments when comfort is primary
 
 1. Brown F, et al. “Compression Garments and Recovery from Exercise: A Meta-Analysis.” *Sports Medicine*. 2017. DOI: `10.1007/s40279-017-0728-9`; PMID: `28434152`.
-2. Li X, et al. “Effects of Compression Garments on Muscle Strength and Power Recovery Post-Exercise: A Systematic Review and Meta-Analysis.” *Life*. 2025. DOI: `10.3390/life15030438`; PMID: `40141783`.
+2. Dupuy O, et al. “An Evidence-Based Approach for Choosing Post-exercise Recovery Techniques to Reduce Markers of Muscle Damage, Soreness, Fatigue, and Inflammation: A Systematic Review With Meta-Analysis.” *Frontiers in Physiology*. 2018;9:403. DOI: `10.3389/fphys.2018.00403`; PMID: `29755363`; PMCID: `PMC5932411`.
 
-Decision: advance with outcome clarification. The current prompt specifies comfort, while source 2 emphasizes strength/power. Add a soreness/comfort-specific synthesis or change the outcome before completion.
+Decision: advance. The replacement synthesis directly covers delayed-onset muscle soreness and perceived fatigue, matching the prompt's comfort outcome. Effects remain heterogeneous by garment, pressure, exercise, timing, and expectancy.
 
 ### `mixed_15` — planned hydration versus thirst
 
