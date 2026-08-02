@@ -28,7 +28,8 @@
     "study2:prepare-card-safety-review": "tsx scripts/prepare-study2-card-safety-review.ts",
     "study2:audit-card-safety-review": "tsx scripts/audit-study2-card-safety-review.ts",
     "study2:audit-card-presentation": "tsx scripts/audit-study2-card-presentation.tsx",
-    "test": "npm run test:patterns && npm run test:study2"
+    "test:study2-client": "tsx --test test/study2-participant-client.test.ts",
+    "test": "npm run test:patterns && npm run test:study2 && npm run test:study2-client"
   },
   "dependencies": {
     "ajv": "^8.20.0",
