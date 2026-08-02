@@ -45,3 +45,7 @@ Only candidates with the same non-unresolved decision, the same non-unresolved s
 ## Human-work boundary
 
 The repository provides packets, validation, unblinding, and disagreement detection. It does not fabricate reviewer identities or judgments. Human reviewers must complete the two independent submissions before adjudication and final material freeze.
+
+## Generated round artifacts
+
+Run `npm run study2:review-round` from the repository root. Public-safe packets, blank submission templates, and an integrity manifest are written to `study2/review-round-v1/`. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v1/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
