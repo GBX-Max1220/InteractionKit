@@ -37,7 +37,7 @@ test('allocation generation is deterministic for a fixed seed', () => {
 });
 
 test('different seeds change trial order without changing balance', () => {
-  const scenarios = placeholderScenarioPool();
+  const scenarios = placeholderScenarioPool('v0');
   const first = generateAllocation({ participants: 24, scenarios, seed: 'a', materialVersion: 'v0' });
   const second = generateAllocation({ participants: 24, scenarios, seed: 'b', materialVersion: 'v0' });
 
@@ -47,6 +47,18 @@ test('different seeds change trial order without changing balance', () => {
   );
   assert.equal(auditAllocation(first).valid, true);
   assert.equal(auditAllocation(second).valid, true);
+});
+
+test('allocation rejects a scenario pool from a different material version', () => {
+  assert.throws(
+    () => generateAllocation({
+      participants: 24,
+      scenarios: placeholderScenarioPool('materials-v1'),
+      seed: 'lineage',
+      materialVersion: 'materials-v2',
+    }),
+    /match the allocation material version/,
+  );
 });
 
 test('participant counts that cannot guarantee exact balance are rejected', () => {
@@ -60,4 +72,47 @@ test('participant counts that cannot guarantee exact balance are rejected', () =
       }),
     /multiple of 24/,
   );
+});
+
+test('every participant order satisfies the frozen run-length and half-session constraints', () => {
+  const allocation = generateAllocation({
+    participants: 240,
+    scenarios: placeholderScenarioPool('study2-candidates-v0.6'),
+    seed: 'study2-order-constraints-v1',
+    materialVersion: 'study2-candidates-v0.6',
+  });
+  const audit = auditAllocation(allocation);
+  assert.equal(audit.valid, true, audit.errors.join('\n'));
+  for (let participantIndex = 0; participantIndex < 240; participantIndex += 1) {
+    const trials = allocation.trials
+      .filter((trial) => trial.participantIndex === participantIndex)
+      .sort((first, second) => first.trialIndex - second.trialIndex);
+    for (const field of ['accuracy', 'interventionType'] as const) {
+      let run = 1;
+      for (let index = 1; index < trials.length; index += 1) {
+        run = trials[index][field] === trials[index - 1][field] ? run + 1 : 1;
+        assert.ok(run <= 3, `${participantIndex} ${field} run ${run}`);
+      }
+    }
+    assert.equal(trials.slice(0, 8).filter((trial) => trial.matchStatus === 'matched').length, 4);
+    assert.equal(trials.slice(8).filter((trial) => trial.matchStatus === 'matched').length, 4);
+  }
+});
+
+test('allocation audit rejects an order that violates frozen sequence constraints', () => {
+  const allocation = generateAllocation({
+    participants: 24,
+    scenarios: placeholderScenarioPool('study2-candidates-v0.6'),
+    seed: 'study2-order-tamper-v1',
+    materialVersion: 'study2-candidates-v0.6',
+  });
+  const firstParticipant = allocation.trials
+    .filter((trial) => trial.participantIndex === 0)
+    .sort((first, second) => first.accuracy.localeCompare(second.accuracy));
+  firstParticipant.forEach((trial, trialIndex) => {
+    trial.trialIndex = trialIndex;
+  });
+  const audit = auditAllocation(allocation);
+  assert.equal(audit.valid, false);
+  assert.match(audit.errors.join('\n'), /more than three consecutive answers/);
 });
