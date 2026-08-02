@@ -29,6 +29,7 @@
     "study2:audit-card-safety-review": "tsx scripts/audit-study2-card-safety-review.ts",
     "study2:audit-card-presentation": "tsx scripts/audit-study2-card-presentation.tsx",
     "study2:seed-runtime": "tsx scripts/seed-study2-runtime.ts",
+    "study2:migrate-runtime": "tsx scripts/migrate-study2-runtime.ts",
     "test:study2-client": "tsx --test test/study2-participant-client.test.ts",
     "test:study2-seeding": "tsx --test test/study2-runtime-seeding.test.ts",
     "test": "npm run test:patterns && npm run test:study2 && npm run test:study2-client && npm run test:study2-seeding"

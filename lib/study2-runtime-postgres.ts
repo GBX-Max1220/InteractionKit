@@ -31,7 +31,7 @@ export function study2DatabaseSsl(options: {
   return { ca, rejectUnauthorized: true };
 }
 
-function pool(): Pool {
+export function study2PostgresPool(): Pool {
   if (!globalThis.__interactionKitStudy2Pool) {
     globalThis.__interactionKitStudy2Pool = new Pool({
       connectionString: databaseUrl(),
@@ -52,7 +52,7 @@ class PgClientAdapter implements Study2PostgresClient {
     text: string,
     values: unknown[] = [],
   ): Promise<Study2PostgresQueryResult<Row>> {
-    const response = await pool().query<Row & QueryResultRow>(text, values);
+    const response = await study2PostgresPool().query<Row & QueryResultRow>(text, values);
     return { rows: response.rows, rowCount: response.rowCount };
   }
 }

@@ -4,7 +4,13 @@ The participant runtime may be seeded only after the private deployment gate is 
 
 The seeder independently canonicalizes and hashes all six bound artifacts, requires the frozen 240-participant allocation, audits the allocation, resolves every one of the 3,840 participant-trial combinations, and rejects material-version drift. Missing, placeholder, modified, or differently serialized semantic content cannot silently pass an existing gate because hashes are computed over canonical JSON values.
 
-Run only against the migrated production PostgreSQL database:
+Apply the idempotent schema migration first, under an advisory transaction lock:
+
+```text
+npm run study2:migrate-runtime
+```
+
+Then seed only against that migrated production PostgreSQL database:
 
 ```text
 npm run study2:seed-runtime -- \
