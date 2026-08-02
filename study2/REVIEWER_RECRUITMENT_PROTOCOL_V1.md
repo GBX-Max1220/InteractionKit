@@ -52,6 +52,24 @@ Disclose the exact item count before consent: 15 items for exercise physiology, 
 5. Preserve the returned JSON unchanged in the gitignored private directory.
 6. Do not disclose another reviewer’s response or any crosswalk until the paired submissions validate.
 
+## Private operator workflow
+
+Generate a panel-specific invitation and offline screening form only after fixing the compensation terms and return contact:
+
+```text
+npm run study2:prepare-recruitment -- --panel <panel-id> --compensation "<final fixed or voluntary terms>" --contact "<private return contact>"
+```
+
+The command rejects placeholders, verifies the panel’s domain coverage and item count against the committed review manifest, and writes the invitation, offline form, and SHA-256 recruitment manifest under the gitignored private recruitment directory. It does not send messages or create reviewer identities.
+
+After a prospective reviewer returns the downloaded private JSON, run:
+
+```text
+npm run study2:audit-screening -- --response <private-screening-response.json>
+```
+
+This validates completeness, panel/domain coverage, material-contribution exclusion, independence, and the exact dispatched compensation statement. A valid screening response remains `requires_manual_verification`: independently check the public credential, assess disclosed conflicts, assign a stable private person ID, and complete the roster. Never copy the applicant’s name, contact details, profile URL, or response into the repository.
+
 ## Prohibited claims
 
 Recruitment, roster completion, or credential verification does not establish construct validity or reviewer agreement. Those claims require valid completed submissions, the panel pair audits, adjudication where required, and the final round coverage audit.
