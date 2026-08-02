@@ -12,8 +12,12 @@
         "environment"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""
@@ -28,8 +32,12 @@
         "environment"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""
@@ -42,8 +50,12 @@
         "nutrition"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""
@@ -56,8 +68,12 @@
         "nutrition"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""
@@ -70,8 +86,12 @@
         "injury_risk"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""
@@ -84,8 +104,12 @@
         "injury_risk"
       ],
       "relevantQualifications": "",
+      "identityVerificationMethod": "",
       "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
       "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
       "eligibilityDecision": "ineligible",
       "verifiedBy": "",
       "verifiedAt": ""

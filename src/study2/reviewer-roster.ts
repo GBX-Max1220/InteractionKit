@@ -14,8 +14,12 @@ export interface ReviewerRosterEntry {
   stablePersonId: string;
   qualifiedDomains: CandidateDomain[];
   relevantQualifications: string;
+  identityVerificationMethod: string;
   conflictOfInterestStatement: string;
+  materialContributionConflict: boolean;
   independenceAttestation: string;
+  compensationStatement: string;
+  outcomeContingentCompensation: boolean;
   eligibilityDecision: 'eligible' | 'ineligible';
   verifiedBy: string;
   verifiedAt: string;
@@ -121,8 +125,10 @@ export function validateReviewerRoster(
     }
     for (const field of [
       'relevantQualifications',
+      'identityVerificationMethod',
       'conflictOfInterestStatement',
       'independenceAttestation',
+      'compensationStatement',
       'verifiedBy',
     ] as const) {
       if (typeof rawEntry[field] !== 'string' || !rawEntry[field].trim()) {
@@ -131,6 +137,12 @@ export function validateReviewerRoster(
     }
     if (rawEntry.eligibilityDecision !== 'eligible') {
       errors.push(`${label} is not marked eligible.`);
+    }
+    if (rawEntry.materialContributionConflict !== false) {
+      errors.push(`${label} must not have contributed to the reviewed materials or dossiers.`);
+    }
+    if (rawEntry.outcomeContingentCompensation !== false) {
+      errors.push(`${label} compensation must not depend on judgments or retention outcomes.`);
     }
     if (
       typeof rawEntry.verifiedAt !== 'string' ||

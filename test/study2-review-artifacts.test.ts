@@ -156,6 +156,8 @@ test('manifest binds every expertise-stratified artifact to its committed bytes'
       reviewerId: string;
       stablePersonId: string;
       eligibilityDecision: string;
+      materialContributionConflict: boolean;
+      outcomeContingentCompensation: boolean;
     }>;
   }>(manifest.reviewerRosterTemplateFile);
   assert.equal(sha256(rosterTemplate.serialized), manifest.reviewerRosterTemplateSha256);
@@ -167,6 +169,12 @@ test('manifest binds every expertise-stratified artifact to its committed bytes'
     rosterTemplate.parsed.entries.every(
       (entry) => entry.eligibilityDecision === 'ineligible',
     ),
+  );
+  assert.ok(
+    rosterTemplate.parsed.entries.every((entry) => entry.materialContributionConflict),
+  );
+  assert.ok(
+    rosterTemplate.parsed.entries.every((entry) => entry.outcomeContingentCompensation),
   );
 
   for (const entry of manifest.entries) {

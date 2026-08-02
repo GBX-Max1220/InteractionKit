@@ -10,7 +10,7 @@
   "reviewsPerCandidate": 2,
   "reviewerRosterSchemaVersion": "study2-reviewer-roster-v1",
   "reviewerRosterTemplateFile": "reviewer-roster.template.json",
-  "reviewerRosterTemplateSha256": "7de2eb20648c93c90972a14662de19ac6c8a1e3239eed435e117291f98e0dec5",
+  "reviewerRosterTemplateSha256": "8a633346e3e2224301e8592bc653115c7597c4e6a1efaf1145aff7690d405623",
   "completedReviewerRosterLocation": "study2/private-review-artifacts/review-round-v2/reviewer-roster.completed.json (gitignored)",
   "publicSafe": true,
   "crosswalkLocation": "study2/private-review-artifacts/review-round-v2 (gitignored)",
