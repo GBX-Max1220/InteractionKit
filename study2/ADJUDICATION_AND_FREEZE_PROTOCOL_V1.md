@@ -48,7 +48,17 @@ Passing final-freeze audit establishes only a review-complete, structurally bala
 
 ## Private operator commands
 
-After all three pair audits exist, place each completed resolution beside its queue as `<panel-id>.adjudication-resolution.json` inside `study2/private-review-artifacts/review-round-v2/`. Do not create a resolution for a panel whose queue is empty. Then run:
+After all three pair audits exist, adjudicate only panels with a non-empty queue. Do not create a resolution for a panel whose queue is empty.
+
+For a panel with a non-empty queue, first generate its private offline worksheet:
+
+```text
+npm run study2:prepare-adjudication -- --panel <panel-id> --method <third_expert|reviewer_consensus_after_lock>
+```
+
+The command reconstructs the queue from the locked pair audit before writing anything. It produces a fail-safe JSON template and a self-contained HTML form only inside the gitignored private directory. The form shows the two original locked judgments, scenario text, evidence sources, and trigger reasons; it excludes author-side provisional labels, sends no data to a server, and blocks `retain_without_change` whenever either reviewer recorded a source concern. The default template is deliberately incomplete, marks material contribution as a conflict, and assigns every item to revision rather than pre-filling a favorable outcome.
+
+After the eligible resolver completes the form, save the downloaded file as `<panel-id>.adjudication-resolution.json`. Then run:
 
 ```text
 npm run study2:finalize-reviews
