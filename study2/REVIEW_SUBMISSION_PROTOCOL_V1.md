@@ -57,6 +57,8 @@ Round v2 blocks candidate assignment by required expertise instead of assuming t
 
 The reviewer is the unit of independent replication for each item. A person may not fill both reviewer assignments within the same panel. Relevant expertise and conflicts remain mandatory disclosures; a reviewer who cannot defend the assigned panel scope should decline or flag the affected item as unresolved.
 
+Before dispatch, copy `reviewer-roster.template.json` to the gitignored private path `study2/private-review-artifacts/review-round-v2/reviewer-roster.completed.json`. Bind every assignment alias to a private stable person ID, document the required expertise, COI, independence attestation, eligibility decision, verifier, and timestamp. The audit command fails closed when this roster is absent or invalid, and rejects the same person occupying both independent seats in one panel. Do not commit the completed roster or replace the stable private ID with public contact information.
+
 ## Generated round artifacts
 
 Run `npm run study2:review-round` from the repository root. Public-safe packets, offline reviewer forms, blank submission templates, and an integrity manifest are written to `study2/review-round-v2/`. Each reviewer can open their assigned `.review-form.html` locally, save a browser-local draft, and download a schema-valid completed JSON without sending form data to a server. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v2/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, forms, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.

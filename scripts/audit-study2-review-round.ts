@@ -7,6 +7,10 @@ import {
   auditIndependentReviewPair,
   type ReviewSubmission,
 } from '../src/study2/review-submissions';
+import {
+  validateReviewerRoster,
+  type ReviewerRoster,
+} from '../src/study2/reviewer-roster';
 
 type ManifestEntry = {
   reviewerId: string;
@@ -24,6 +28,9 @@ type Manifest = {
   roundId: string;
   materialVersion: string;
   candidateCount: number;
+  reviewerRosterSchemaVersion: string;
+  reviewerRosterTemplateFile: string;
+  reviewerRosterTemplateSha256: string;
   entries: ManifestEntry[];
 };
 
@@ -120,6 +127,26 @@ async function main(): Promise<void> {
   const manifest = (
     await readJson<Manifest>(path.join(publicDirectory, 'manifest.json'))
   ).parsed;
+  const completedRosterPath = path.join(privateDirectory, 'reviewer-roster.completed.json');
+  let completedRoster: ReviewerRoster;
+  try {
+    completedRoster = (await readJson<ReviewerRoster>(completedRosterPath)).parsed;
+  } catch {
+    throw new Error(
+      `A completed private reviewer roster is required at ${completedRosterPath}.`,
+    );
+  }
+  const rosterValidation = validateReviewerRoster(completedRoster, {
+    roundId: manifest.roundId,
+    assignments: manifest.entries.map((entry) => ({
+      reviewerId: entry.reviewerId,
+      panelId: entry.panelId,
+      requiredDomains: entry.requiredDomains as ReviewerRoster['entries'][number]['qualifiedDomains'],
+    })),
+  });
+  if (!rosterValidation.valid) {
+    throw new Error(`Reviewer roster is invalid:\n${rosterValidation.errors.join('\n')}`);
+  }
   const firstSubmission = (await readJson<ReviewSubmission>(firstPath)).parsed;
   const secondSubmission = (await readJson<ReviewSubmission>(secondPath)).parsed;
   const firstAssignment = await loadAssignment(manifest, firstSubmission);

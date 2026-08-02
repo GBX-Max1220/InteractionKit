@@ -8,6 +8,10 @@
   "candidateCount": 27,
   "assignmentCount": 6,
   "reviewsPerCandidate": 2,
+  "reviewerRosterSchemaVersion": "study2-reviewer-roster-v1",
+  "reviewerRosterTemplateFile": "reviewer-roster.template.json",
+  "reviewerRosterTemplateSha256": "7de2eb20648c93c90972a14662de19ac6c8a1e3239eed435e117291f98e0dec5",
+  "completedReviewerRosterLocation": "study2/private-review-artifacts/review-round-v2/reviewer-roster.completed.json (gitignored)",
   "publicSafe": true,
   "crosswalkLocation": "study2/private-review-artifacts/review-round-v2 (gitignored)",
   "entries": [

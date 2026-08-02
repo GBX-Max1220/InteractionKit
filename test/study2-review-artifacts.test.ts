@@ -30,6 +30,9 @@ type Manifest = {
   candidateCount: number;
   assignmentCount: number;
   reviewsPerCandidate: number;
+  reviewerRosterSchemaVersion: string;
+  reviewerRosterTemplateFile: string;
+  reviewerRosterTemplateSha256: string;
   publicSafe: boolean;
   entries: Array<{
     reviewerId: string;
@@ -138,11 +141,32 @@ test('manifest binds every expertise-stratified artifact to its committed bytes'
   assert.equal(manifest.candidateCount, 27);
   assert.equal(manifest.assignmentCount, 6);
   assert.equal(manifest.reviewsPerCandidate, 2);
+  assert.equal(manifest.reviewerRosterSchemaVersion, 'study2-reviewer-roster-v1');
   assert.equal(manifest.publicSafe, true);
   assert.equal(manifest.entries.length, 6);
   assert.deepEqual(
     new Set(manifest.entries.map((entry) => entry.panelId)),
     new Set(['exercise-physiology', 'sports-nutrition', 'sports-medicine']),
+  );
+
+  const rosterTemplate = await readArtifact<{
+    schemaVersion: string;
+    roundId: string;
+    entries: Array<{
+      reviewerId: string;
+      stablePersonId: string;
+      eligibilityDecision: string;
+    }>;
+  }>(manifest.reviewerRosterTemplateFile);
+  assert.equal(sha256(rosterTemplate.serialized), manifest.reviewerRosterTemplateSha256);
+  assert.equal(rosterTemplate.parsed.schemaVersion, 'study2-reviewer-roster-v1');
+  assert.equal(rosterTemplate.parsed.roundId, manifest.roundId);
+  assert.equal(rosterTemplate.parsed.entries.length, manifest.assignmentCount);
+  assert.ok(rosterTemplate.parsed.entries.every((entry) => entry.stablePersonId === ''));
+  assert.ok(
+    rosterTemplate.parsed.entries.every(
+      (entry) => entry.eligibilityDecision === 'ineligible',
+    ),
   );
 
   for (const entry of manifest.entries) {

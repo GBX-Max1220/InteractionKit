@@ -150,6 +150,29 @@ async function main(): Promise<void> {
     throw new Error('Every source-complete candidate must receive exactly two assignments.');
   }
 
+  const reviewerRosterTemplateFile = 'reviewer-roster.template.json';
+  const reviewerRosterTemplateSerialized = serialize({
+    schemaVersion: 'study2-reviewer-roster-v1',
+    roundId,
+    entries: manifestEntries.map((entry) => ({
+      reviewerId: entry.reviewerId,
+      panelId: entry.panelId,
+      stablePersonId: '',
+      qualifiedDomains: entry.requiredDomains,
+      relevantQualifications: '',
+      conflictOfInterestStatement: '',
+      independenceAttestation: '',
+      eligibilityDecision: 'ineligible',
+      verifiedBy: '',
+      verifiedAt: '',
+    })),
+  });
+  await writeFile(
+    path.join(publicDirectory, reviewerRosterTemplateFile),
+    reviewerRosterTemplateSerialized,
+    'utf8',
+  );
+
   const manifest = {
     roundId,
     materialVersion: reviewableCandidates[0].materialVersion,
@@ -160,6 +183,11 @@ async function main(): Promise<void> {
     candidateCount: reviewableCandidates.length,
     assignmentCount: manifestEntries.length,
     reviewsPerCandidate: 2,
+    reviewerRosterSchemaVersion: 'study2-reviewer-roster-v1',
+    reviewerRosterTemplateFile,
+    reviewerRosterTemplateSha256: sha256(reviewerRosterTemplateSerialized),
+    completedReviewerRosterLocation:
+      'study2/private-review-artifacts/review-round-v2/reviewer-roster.completed.json (gitignored)',
     publicSafe: true,
     crosswalkLocation: 'study2/private-review-artifacts/review-round-v2 (gitignored)',
     entries: manifestEntries,
