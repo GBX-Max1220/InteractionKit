@@ -1,7 +1,7 @@
 # Study 2 Domain Reviewer Recruitment Protocol v1
 
-**Round:** `study2-domain-review-round-v2`  
-**Unit requiring independence:** one reviewer judgment per candidate scenario  
+**Round:** `study2-domain-review-round-v2`
+**Unit requiring independence:** one reviewer judgment per candidate scenario
 **Required replication:** two distinct qualified people per candidate within the assigned expertise panel
 
 ## Recruitment rule
