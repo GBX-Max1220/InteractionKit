@@ -45,7 +45,10 @@ test('reviewer-visible packet excludes provisional labels and author judgments',
   });
   const serialized = JSON.stringify(packet);
 
-  assert.doesNotMatch(serialized, /provisionalSupportLevel|authoringNotes|intendedDecisionBoundary/);
+  assert.doesNotMatch(
+    serialized,
+    /provisionalSupportLevel|provisionalCorrectOption|authoringNotes|intendedDecisionBoundary/,
+  );
   assert.doesNotMatch(serialized, /intendedNumericalGranularity|candidate_unreviewed/);
   assert.doesNotMatch(serialized, /strong_\d|mixed_\d/);
 });

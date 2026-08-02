@@ -1,4 +1,4 @@
-import { SupportLevel } from './types';
+import { SUPPORT_LEVELS, SupportLevel } from './types';
 
 export type MaterialStatus =
   | 'candidate_unreviewed'
@@ -31,10 +31,11 @@ export interface DomainReviewRecord {
 
 export interface CandidateScenario {
   id: string;
-  materialVersion: 'study2-candidates-v0';
+  materialVersion: 'study2-candidates-v0.1';
   status: MaterialStatus;
   domain: 'exercise_training' | 'recovery' | 'nutrition' | 'injury_risk' | 'environment';
   provisionalSupportLevel: SupportLevel;
+  provisionalCorrectOption: 'option_a' | 'option_b' | 'unresolved';
   decisionPrompt: string;
   optionA: string;
   optionB: string;
@@ -74,6 +75,22 @@ export function auditCandidatePool(candidates: CandidateScenario[]): CandidatePo
     }
     if (!scenario.intendedNumericalGranularity.trim()) {
       errors.push(`${scenario.id} is missing intended numerical granularity.`);
+    }
+    const participantVisibleText = [scenario.decisionPrompt, scenario.optionA, scenario.optionB].join(
+      ' ',
+    );
+    const shortcutCue = participantVisibleText.match(
+      /\b(always|every|everyone|sole|solely|mandatory|ignore|inactive indefinitely)\b/i,
+    );
+    if (shortcutCue) {
+      errors.push(`${scenario.id} contains participant-visible shortcut cue "${shortcutCue[0]}".`);
+    }
+    const optionAWordCount = scenario.optionA.trim().split(/\s+/).length;
+    const optionBWordCount = scenario.optionB.trim().split(/\s+/).length;
+    if (Math.abs(optionAWordCount - optionBWordCount) > 8) {
+      warnings.push(
+        `${scenario.id} has an option-length difference greater than eight words (${optionAWordCount} vs ${optionBWordCount}).`,
+      );
     }
     if (scenario.evidenceSources.length < 2) {
       warnings.push(`${scenario.id} has fewer than two evidence sources.`);
@@ -123,15 +140,37 @@ export function auditCandidatePool(candidates: CandidateScenario[]): CandidatePo
   const retainedMixed = retained.filter(
     (item) => item.provisionalSupportLevel === 'mixed_or_conditional',
   ).length;
+  const retainedDecisionCounts = Object.fromEntries(
+    SUPPORT_LEVELS.map((supportLevel) => {
+      const supportScenarios = retained.filter(
+        (scenario) => scenario.provisionalSupportLevel === supportLevel,
+      );
+      const optionACount = supportScenarios.filter((scenario) => {
+        const independent = scenario.domainReviews.filter((review) => review.independent);
+        return independent.length >= 2 && independent.every((review) => review.binaryDecision === 'option_a');
+      }).length;
+      const optionBCount = supportScenarios.filter((scenario) => {
+        const independent = scenario.domainReviews.filter((review) => review.independent);
+        return independent.length >= 2 && independent.every((review) => review.binaryDecision === 'option_b');
+      }).length;
+      return [supportLevel, { option_a: optionACount, option_b: optionBCount }];
+    }),
+  ) as Record<SupportLevel, { option_a: number; option_b: number }>;
+  const retainedDecisionSidesBalanced = SUPPORT_LEVELS.every(
+    (supportLevel) =>
+      retainedDecisionCounts[supportLevel].option_a === 6 &&
+      retainedDecisionCounts[supportLevel].option_b === 6,
+  );
   const pilotReady =
     errors.length === 0 &&
     retained.length === 24 &&
     retainedStrong === 12 &&
-    retainedMixed === 12;
+    retainedMixed === 12 &&
+    retainedDecisionSidesBalanced;
 
   if (!pilotReady) {
     warnings.push(
-      'Pool is not pilot-ready: exactly 24 adjudicated scenarios (12 per support level) are required.',
+      'Pool is not pilot-ready: exactly 24 adjudicated scenarios (12 per support level) with 6 option-A and 6 option-B ground truths inside each support level are required.',
     );
   }
 

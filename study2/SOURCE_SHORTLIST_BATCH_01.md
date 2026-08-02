@@ -2,7 +2,7 @@
 
 **Status:** metadata verified; substantive domain review pending
 **Access date:** 2026-08-02
-**Scope:** five high-priority strong-consensus candidates
+**Scope:** five high-priority strong-consensus candidates in `study2-candidates-v0.1`
 
 This shortlist establishes reproducible source provenance. It does not itself validate a scenario, determine its final support level, or satisfy either independent domain-review requirement.
 
