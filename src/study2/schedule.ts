@@ -11,6 +11,7 @@ import {
   Study2TrialAssignment,
   SUPPORT_LEVELS,
 } from './types';
+import { seededShuffle } from './random';
 
 const TRIALS_PER_PARTICIPANT = 16;
 const SCENARIOS_PER_SUPPORT_LEVEL = 12;
@@ -39,36 +40,6 @@ export function matchStatus(
     (failureFamily === 'omitted_decision_boundary' &&
       interventionType === 'boundary_condition_card');
   return matched ? 'matched' : 'mismatched';
-}
-
-function hash32(value: string): number {
-  let hash = 2166136261;
-  for (let i = 0; i < value.length; i += 1) {
-    hash ^= value.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
-}
-
-function mulberry32(seed: number): () => number {
-  let state = seed >>> 0;
-  return () => {
-    state += 0x6d2b79f5;
-    let value = state;
-    value = Math.imul(value ^ (value >>> 15), value | 1);
-    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function shuffle<T>(values: T[], seed: string): T[] {
-  const result = [...values];
-  const random = mulberry32(hash32(seed));
-  for (let i = result.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
 }
 
 function validateScenarioPool(scenarios: Study2ScenarioRef[]): void {
@@ -120,7 +91,7 @@ export function generateAllocation(options: {
       } satisfies Study2TrialAssignment;
     });
 
-    const randomized = shuffle(assigned, `${seed}:participant:${participantIndex}`);
+    const randomized = seededShuffle(assigned, `${seed}:participant:${participantIndex}`);
     randomized.forEach((trial, trialIndex) => trials.push({ ...trial, trialIndex }));
   }
 
