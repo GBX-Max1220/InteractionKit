@@ -11,7 +11,7 @@ export const STUDY2_CARD_PRESENTATION_CSS = `
 @container(max-width:30rem){.s2-intervention-card{padding:16px}.s2-intervention-card__row{grid-template-columns:1fr;gap:4px;min-height:5.75rem}.s2-intervention-card__title{margin-bottom:12px}}
 `;
 
-export function Study2InterventionCard({ card }: { card: DeliveryInterventionCard }) {
+export function Study2InterventionCard({ card }: { card: Pick<DeliveryInterventionCard, 'rows'> }) {
   return (
     <section className="s2-intervention-card" aria-label="Evidence check">
       <h2 className="s2-intervention-card__title">Evidence check</h2>
