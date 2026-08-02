@@ -69,6 +69,26 @@ test('review submission must exactly cover its blinded packet', () => {
   );
 });
 
+test('malformed JSON values fail validation without throwing', () => {
+  const generated = generateReviewerPacket({
+    candidates: reviewable,
+    reviewerId: 'reviewer-a',
+    seed: 'review-v1',
+  });
+  assert.deepEqual(validateReviewSubmission(null, generated.packet), {
+    valid: false,
+    errors: ['Submission must be a JSON object.'],
+  });
+  const malformed = {
+    reviewerId: 'reviewer-a',
+    items: [null, { blindId: 4 }],
+  };
+  const validation = validateReviewSubmission(malformed, generated.packet);
+  assert.equal(validation.valid, false);
+  assert.match(validation.errors.join('\n'), /Review item 1 must be a JSON object/);
+  assert.match(validation.errors.join('\n'), /Item 2 has an invalid binary decision/);
+});
+
 test('review pair detects disagreements after reviewer-specific unblinding', () => {
   const first = generateReviewerPacket({
     candidates: reviewable,

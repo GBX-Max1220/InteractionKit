@@ -43,5 +43,6 @@ test/simulated-output.csv
 *.tsbuildinfo
 next-env.d.ts
 
-# blinded Study 2 reviewer crosswalks (must never be committed)
+# blinded Study 2 crosswalks, completed submissions, and unblinded audits
+# (must never be committed)
 /study2/private-review-artifacts/

@@ -14,6 +14,7 @@
     "test:patterns": "tsx --test test/pattern-system.test.ts",
     "test:study2": "tsx --test test/study2-schedule.test.ts test/study2-materials.test.ts test/study2-review-packets.test.ts test/study2-review-submissions.test.ts test/study2-review-artifacts.test.ts test/study2-evidence-paths.test.ts test/study2-evidence-dossiers.test.ts",
     "study2:review-round": "tsx scripts/generate-study2-review-round.ts",
+    "study2:audit-reviews": "tsx scripts/audit-study2-review-round.ts",
     "test": "npm run test:patterns && npm run test:study2"
   },
   "dependencies": {

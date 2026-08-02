@@ -49,3 +49,13 @@ The repository provides packets, validation, unblinding, and disagreement detect
 ## Generated round artifacts
 
 Run `npm run study2:review-round` from the repository root. Public-safe packets, blank submission templates, and an integrity manifest are written to `study2/review-round-v1/`. Reviewer-specific crosswalks are written to `study2/private-review-artifacts/review-round-v1/`, which is gitignored and must not be shared with reviewers or committed. The manifest records SHA-256 hashes for the public packets, submission templates, and private crosswalks so the protocol maintainer can detect accidental replacement.
+
+## Receipt and pair audit
+
+Save completed reviewer files under `study2/private-review-artifacts/review-round-v1/`. Do not rename or edit the assigned packet, and do not place completed submissions in the public artifact directory. After both files arrive independently, run:
+
+```text
+npm run study2:audit-reviews -- --first <reviewer-01-submission.json> --second <reviewer-02-submission.json>
+```
+
+The command binds each submission to its reviewer-specific packet, verifies the committed packet and private crosswalk hashes, applies all submission and independence checks, and writes the unblinded `pair-audit.json` only inside the gitignored private directory. A valid pair may still require adjudication; the command reports the exact count and does not promote any candidate to `retained_v1`.

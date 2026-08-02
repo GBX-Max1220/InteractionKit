@@ -60,11 +60,18 @@ function unknownKeys(value: object, allowed: Set<string>): string[] {
   return Object.keys(value).filter((key) => !allowed.has(key));
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 export function validateReviewSubmission(
-  submission: ReviewSubmission,
+  submission: unknown,
   packet: ReviewerPacket,
 ): SubmissionValidation {
   const errors: string[] = [];
+  if (!isRecord(submission)) {
+    return { valid: false, errors: ['Submission must be a JSON object.'] };
+  }
   const extraTopLevelKeys = unknownKeys(submission, allowedSubmissionKeys);
   if (extraTopLevelKeys.length > 0) {
     errors.push(`Submission contains unexpected fields: ${extraTopLevelKeys.join(', ')}.`);
@@ -81,20 +88,39 @@ export function validateReviewSubmission(
   if (submission.packetSeed !== packet.packetSeed) {
     errors.push('Submission packet seed does not match the reviewer packet.');
   }
-  if (!submission.relevantExpertise.trim()) errors.push('Relevant expertise is required.');
-  if (!submission.conflictOfInterestStatement.trim()) {
+  if (
+    typeof submission.relevantExpertise !== 'string' ||
+    !submission.relevantExpertise.trim()
+  ) {
+    errors.push('Relevant expertise is required.');
+  }
+  if (
+    typeof submission.conflictOfInterestStatement !== 'string' ||
+    !submission.conflictOfInterestStatement.trim()
+  ) {
     errors.push('Conflict-of-interest statement is required.');
   }
-  if (!Number.isFinite(Date.parse(submission.submittedAt))) {
+  if (
+    typeof submission.submittedAt !== 'string' ||
+    !Number.isFinite(Date.parse(submission.submittedAt))
+  ) {
     errors.push('Submission timestamp must be a valid ISO-8601 timestamp.');
   }
 
   const expectedBlindIds = new Set(packet.items.map((item) => item.blindId));
-  const submittedBlindIds = new Set(submission.items.map((item) => item.blindId));
-  if (submission.items.length !== packet.items.length) {
-    errors.push(`Expected ${packet.items.length} review items; received ${submission.items.length}.`);
+  const submittedItems = Array.isArray(submission.items) ? submission.items : [];
+  if (!Array.isArray(submission.items)) {
+    errors.push('Submission items must be an array.');
   }
-  if (submittedBlindIds.size !== submission.items.length) {
+  const submittedBlindIds = new Set(
+    submittedItems.flatMap((item) =>
+      isRecord(item) && typeof item.blindId === 'string' ? [item.blindId] : [],
+    ),
+  );
+  if (submittedItems.length !== packet.items.length) {
+    errors.push(`Expected ${packet.items.length} review items; received ${submittedItems.length}.`);
+  }
+  if (submittedBlindIds.size !== submittedItems.length) {
     errors.push('Submission contains duplicate blind IDs.');
   }
   for (const blindId of expectedBlindIds) {
@@ -104,19 +130,34 @@ export function validateReviewSubmission(
     if (!expectedBlindIds.has(blindId)) errors.push(`Submission contains unknown blind ID ${blindId}.`);
   }
 
-  for (const item of submission.items) {
+  for (const [index, rawItem] of submittedItems.entries()) {
+    if (!isRecord(rawItem)) {
+      errors.push(`Review item ${index + 1} must be a JSON object.`);
+      continue;
+    }
+    const item = rawItem;
+    const itemLabel = typeof item.blindId === 'string' ? item.blindId : `Item ${index + 1}`;
     const extraItemKeys = unknownKeys(item, allowedItemKeys);
     if (extraItemKeys.length > 0) {
-      errors.push(`${item.blindId} contains unexpected fields: ${extraItemKeys.join(', ')}.`);
+      errors.push(`${itemLabel} contains unexpected fields: ${extraItemKeys.join(', ')}.`);
     }
-    if (!['option_a', 'option_b', 'unresolved'].includes(item.binaryDecision)) {
-      errors.push(`${item.blindId} has an invalid binary decision.`);
+    if (
+      typeof item.binaryDecision !== 'string' ||
+      !['option_a', 'option_b', 'unresolved'].includes(item.binaryDecision)
+    ) {
+      errors.push(`${itemLabel} has an invalid binary decision.`);
     }
-    if (!['strong_consensus', 'mixed_or_conditional', 'unresolved'].includes(item.supportLevel)) {
-      errors.push(`${item.blindId} has an invalid support level.`);
+    if (
+      typeof item.supportLevel !== 'string' ||
+      !['strong_consensus', 'mixed_or_conditional', 'unresolved'].includes(item.supportLevel)
+    ) {
+      errors.push(`${itemLabel} has an invalid support level.`);
     }
-    if (!['retain', 'revise', 'reject'].includes(item.recommendation)) {
-      errors.push(`${item.blindId} has an invalid recommendation.`);
+    if (
+      typeof item.recommendation !== 'string' ||
+      !['retain', 'revise', 'reject'].includes(item.recommendation)
+    ) {
+      errors.push(`${itemLabel} has an invalid recommendation.`);
     }
     if (
       ![
@@ -125,13 +166,13 @@ export function validateReviewSubmission(
         item.rationale,
       ].every((value) => typeof value === 'string' && value.trim())
     ) {
-      errors.push(`${item.blindId} is missing required written justification.`);
+      errors.push(`${itemLabel} is missing required written justification.`);
     }
     if (
       item.recommendation === 'retain' &&
       (item.binaryDecision === 'unresolved' || item.supportLevel === 'unresolved')
     ) {
-      errors.push(`${item.blindId} cannot be retained with an unresolved judgment.`);
+      errors.push(`${itemLabel} cannot be retained with an unresolved judgment.`);
     }
   }
 
