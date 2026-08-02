@@ -4,29 +4,33 @@ import test from 'node:test';
 import { STUDY2_CANDIDATES } from '../src/study2/candidate-registry';
 import { generateReviewerPacket } from '../src/study2/review-packets';
 
+const REVIEWABLE_CANDIDATES = STUDY2_CANDIDATES.filter(
+  (candidate) => candidate.status === 'source_dossier_complete',
+);
+
 test('review packets are deterministic, complete, and crosswalk every candidate once', () => {
-  const options = { candidates: STUDY2_CANDIDATES, reviewerId: 'reviewer-a', seed: 'review-v1' };
+  const options = { candidates: REVIEWABLE_CANDIDATES, reviewerId: 'reviewer-a', seed: 'review-v1' };
   const first = generateReviewerPacket(options);
   const second = generateReviewerPacket(options);
 
   assert.deepEqual(first, second);
-  assert.equal(first.packet.items.length, 32);
-  assert.equal(new Set(first.packet.items.map((item) => item.blindId)).size, 32);
-  assert.equal(new Set(first.crosswalk.map((item) => item.candidateId)).size, 32);
+  assert.equal(first.packet.items.length, 27);
+  assert.equal(new Set(first.packet.items.map((item) => item.blindId)).size, 27);
+  assert.equal(new Set(first.crosswalk.map((item) => item.candidateId)).size, 27);
   assert.deepEqual(
     new Set(first.crosswalk.map((item) => item.candidateId)),
-    new Set(STUDY2_CANDIDATES.map((candidate) => candidate.id)),
+    new Set(REVIEWABLE_CANDIDATES.map((candidate) => candidate.id)),
   );
 });
 
 test('reviewer-specific randomization yields different candidate orders', () => {
   const first = generateReviewerPacket({
-    candidates: STUDY2_CANDIDATES,
+    candidates: REVIEWABLE_CANDIDATES,
     reviewerId: 'reviewer-a',
     seed: 'review-v1',
   });
   const second = generateReviewerPacket({
-    candidates: STUDY2_CANDIDATES,
+    candidates: REVIEWABLE_CANDIDATES,
     reviewerId: 'reviewer-b',
     seed: 'review-v1',
   });
@@ -39,7 +43,7 @@ test('reviewer-specific randomization yields different candidate orders', () => 
 
 test('reviewer-visible packet excludes provisional labels and author judgments', () => {
   const { packet } = generateReviewerPacket({
-    candidates: STUDY2_CANDIDATES,
+    candidates: REVIEWABLE_CANDIDATES,
     reviewerId: 'reviewer-a',
     seed: 'review-v1',
   });
@@ -55,11 +59,20 @@ test('reviewer-visible packet excludes provisional labels and author judgments',
 
 test('review packet generation rejects incomplete pools and missing identities', () => {
   assert.throws(
-    () => generateReviewerPacket({ candidates: STUDY2_CANDIDATES.slice(1), reviewerId: 'r', seed: 's' }),
-    /exactly 32/,
+    () => generateReviewerPacket({ candidates: REVIEWABLE_CANDIDATES.slice(1), reviewerId: 'r', seed: 's' }),
+    /exactly 27/,
   );
   assert.throws(
-    () => generateReviewerPacket({ candidates: STUDY2_CANDIDATES, reviewerId: '', seed: 's' }),
+    () => generateReviewerPacket({ candidates: REVIEWABLE_CANDIDATES, reviewerId: '', seed: 's' }),
     /Reviewer ID/,
+  );
+  assert.throws(
+    () =>
+      generateReviewerPacket({
+        candidates: [...REVIEWABLE_CANDIDATES.slice(0, 26), STUDY2_CANDIDATES.find((candidate) => candidate.status === 'candidate_unreviewed')!],
+        reviewerId: 'r',
+        seed: 's',
+      }),
+    /source-dossier-complete/,
   );
 });

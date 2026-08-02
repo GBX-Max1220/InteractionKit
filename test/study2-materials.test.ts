@@ -17,18 +17,26 @@ test('candidate registry freezes a structurally valid balanced pool of 32', () =
   );
 });
 
-test('unreviewed candidates cannot be mistaken for pilot-ready materials', () => {
+test('source-complete candidates cannot be mistaken for reviewed pilot materials', () => {
   const audit = auditCandidatePool(STUDY2_CANDIDATES);
 
   assert.equal(audit.pilotReady, false);
   assert.equal(
     audit.warnings.filter((warning) => warning.includes('fewer than two evidence sources')).length,
-    32,
+    5,
   );
   assert.equal(
     audit.warnings.filter((warning) => warning.includes('fewer than two independent domain reviews'))
       .length,
     32,
+  );
+  assert.equal(
+    STUDY2_CANDIDATES.filter((scenario) => scenario.status === 'source_dossier_complete').length,
+    27,
+  );
+  assert.equal(
+    STUDY2_CANDIDATES.filter((scenario) => scenario.status === 'candidate_unreviewed').length,
+    5,
   );
   assert.match(audit.warnings.at(-1) ?? '', /not pilot-ready/);
 });

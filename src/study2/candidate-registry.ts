@@ -1,5 +1,6 @@
 import { CandidateScenario } from './materials';
 import { SupportLevel } from './types';
+import { STUDY2_EVIDENCE_DOSSIERS } from './evidence-dossiers';
 
 type Seed = Pick<
   CandidateScenario,
@@ -80,7 +81,7 @@ const mixed: Seed[] = [
   { id: 'mixed_16', domain: 'nutrition', decisionPrompt: 'A healthy athlete with an adequate diet begins a new endurance-training block. Which antioxidant strategy is preferable?', optionA: 'Add a high-dose antioxidant supplement immediately after training.', optionB: 'Rely on dietary sources unless a specific deficiency or indication is identified.', targetPopulation: 'Healthy adult athletes', intendedDecisionBoundary: 'Nutrient status, dose, and training goal matter.', intendedNumericalGranularity: 'No universal dose or adaptation effect.' },
 ];
 
-export const STUDY2_CANDIDATES: CandidateScenario[] = [
+const candidatePool: CandidateScenario[] = [
   ...strong.map((seed, index) => candidate(seed, 'strong_consensus', 'option_a', index % 2 === 1)),
   ...mixed.map((seed, index) =>
     candidate(
@@ -108,3 +109,28 @@ export const STUDY2_CANDIDATES: CandidateScenario[] = [
     ),
   ),
 ];
+
+const dossiersByCandidateId = new Map(
+  STUDY2_EVIDENCE_DOSSIERS.map((dossier) => [dossier.candidateId, dossier]),
+);
+
+export const STUDY2_CANDIDATES: CandidateScenario[] = candidatePool.map((scenario) => {
+  const dossier = dossiersByCandidateId.get(scenario.id);
+  if (!dossier) return scenario;
+  return {
+    ...scenario,
+    status: 'source_dossier_complete',
+    evidenceSources: dossier.sources.map((source) => ({
+      id: source.id,
+      citation: source.fullCitation,
+      urlOrDoi: `https://doi.org/${source.doi}`,
+      authorityType: source.authorityType,
+      supportsBinaryDecision: source.supportsBinaryDecision !== 'no',
+      supportsEvidenceLevel: source.supportsEvidenceLevel !== 'no',
+      verifiedBy: source.metadataVerifiedBy,
+      verifiedAt: source.metadataVerifiedAt,
+    })),
+    authoringNotes:
+      'Source dossier complete. Requires two independent blinded domain reviews before retention.',
+  };
+});

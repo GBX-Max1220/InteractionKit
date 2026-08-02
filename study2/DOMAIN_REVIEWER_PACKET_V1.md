@@ -77,7 +77,7 @@ Accuracy, evidence support, and communication failure are separate variables. A 
 - [ ] Reviewer identities and expertise recorded outside the blinded response file.
 - [ ] Two independently randomized, label-blinded packets generated.
 - [ ] Source links resolve and source metadata match the dossier.
-- [ ] All required fields completed for all 32 candidates.
+- [ ] All required fields completed for all 27 source-dossier-complete candidates.
 - [ ] Raw reviewer files preserved unchanged.
 - [ ] Agreement statistics and disagreement list computed before adjudication.
 - [ ] Every post-review wording change versioned and re-reviewed when substantive.

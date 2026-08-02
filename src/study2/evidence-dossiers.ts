@@ -397,6 +397,104 @@ export const STUDY2_EVIDENCE_DOSSIERS: EvidenceDossier[] = [
       source('thomas_nutrition_2016_m08', 'Thomas DT, Erdman KA, Burke LM. American College of Sports Medicine Joint Position Statement. Nutrition and Athletic Performance. Medicine & Science in Sports & Exercise. 2016;48(3):543-568. doi:10.1249/MSS.0000000000000852.', '10.1249/MSS.0000000000000852', '26891166', 'position_stand', 'Athletes across training and competition settings requiring individualized nutrition strategies.', 'partial', 'yes', 'The statement supports matching food and nutrient timing to exercise duration, intensity, performance demands, and individual tolerance.', 'It is broader than a direct fasted-versus-fed meta-analysis and does not make one meal mandatory.'),
     ],
   ),
+  dossier(
+    'mixed_09',
+    'option_a',
+    'After substantial partial sleep restriction, a planned afternoon nap ending more than one hour before an evening performance test is preferable to remaining awake solely to avoid possible grogginess.',
+    'Remaining awake may be preferable for a person unable to sleep, highly susceptible to sleep inertia, too close to the event for recovery, or whose nap would disrupt subsequent nighttime sleep.',
+    'Daytime napping can improve performance or reduce fatigue, but benefit depends on prior sleep loss, nap duration, timing, and the wake interval.',
+    'Studies vary in nap opportunity, actual sleep, chronotype, athlete status, time of day, sleep-loss history, and performance outcome.',
+    'The prompt fixes prior sleep restriction and provides a wake-to-test buffer; it does not claim that every athlete must sleep for the full opportunity.',
+    'Use a duration and timing range; no guaranteed performance effect.',
+    [
+      source('mesas_nap_2023', 'Mesas AE, et al. Is daytime napping an effective strategy to improve sport-related cognitive and physical performance and reduce fatigue? A systematic review and meta-analysis of randomised controlled trials. British Journal of Sports Medicine. 2023;57(7):417-426. doi:10.1136/bjsports-2022-106355.', '10.1136/bjsports-2022-106355', '36690376', 'meta_analysis', 'Healthy and physically active participants completing randomized nap versus no-nap comparisons before sport-related outcomes.', 'yes', 'yes', 'Daytime naps improved several physical and cognitive performance outcomes and reduced fatigue, with timing and prior sleep considered.', 'Nap protocols and outcomes were heterogeneous, and publication count was limited for some domains.'),
+      source('souabni_nap_2021', 'Souabni M, et al. Benefits of Daytime Napping Opportunity on Physical and Cognitive Performances in Physically Active Participants: A Systematic Review. Sports Medicine. 2021;51(10):2115-2146. doi:10.1007/s40279-021-01482-1.', '10.1007/s40279-021-01482-1', '34043185', 'systematic_review', 'Physically active participants given daytime nap opportunities before physical or cognitive testing.', 'yes', 'yes', 'Nap opportunities can benefit performance, alertness, and fatigue, particularly after restricted sleep and with adequate time after waking.', 'Actual sleep and sleep inertia vary, and the evidence does not establish one optimal nap duration for every athlete.'),
+    ],
+  ),
+  dossier(
+    'mixed_11',
+    'option_b',
+    'For a caffeine-sensitive athlete competing in the evening, a lower dose or avoidance is preferable when protecting sleep and tolerability is part of the decision.',
+    'A standard performance-oriented dose can be appropriate when competition benefit clearly outweighs sleep cost, the athlete has tested the strategy, and sensitivity or contraindications are absent.',
+    'Caffeine is ergogenic, but the net recommendation is conditional on timing, sensitivity, dose, side effects, and the value assigned to subsequent sleep.',
+    'Individual response, habitual use, genotype, sex, anxiety, medication, event type, dose, and timing contribute to heterogeneous benefits and harms.',
+    'The scenario explicitly fixes evening competition and caffeine sensitivity; it is not a general claim that athletes should avoid caffeine.',
+    'Avoid a universal dose or cutoff time.',
+    [
+      source('guest_caffeine_2021', 'Guest NS, et al. International society of sports nutrition position stand: caffeine and exercise performance. Journal of the International Society of Sports Nutrition. 2021;18(1):1. doi:10.1186/s12970-020-00383-4.', '10.1186/s12970-020-00383-4', '33388079', 'position_stand', 'Healthy exercising adults and athletes using caffeine before diverse performance tasks.', 'yes', 'yes', 'Caffeine can improve multiple performance outcomes, but response and adverse effects vary and lower effective doses may reduce side effects.', 'The position stand covers broad populations and outcomes; it does not resolve the value tradeoff between one evening performance and later sleep for an individual.'),
+      source('gardiner_caffeine_sleep_2023', 'Gardiner C, et al. The effect of caffeine on subsequent sleep: A systematic review and meta-analysis. Sleep Medicine Reviews. 2023;69:101764. doi:10.1016/j.smrv.2023.101764.', '10.1016/j.smrv.2023.101764', '36870101', 'meta_analysis', 'Adults consuming caffeine before subsequent nocturnal sleep in controlled studies.', 'yes', 'yes', 'Caffeine reduced total sleep time and sleep efficiency and altered sleep architecture, with timing and dose informing the magnitude of disruption.', 'Sleep studies are not all athlete-specific, individual sensitivity varies, and average timing estimates are not a universal cutoff.'),
+    ],
+  ),
+  dossier(
+    'mixed_12',
+    'option_b',
+    'The displayed option B is wearing compression garments. When comfort is the primary recovery outcome after a demanding match, compression is preferable to no compression if the athlete tolerates it.',
+    'No garment is reasonable when the athlete dislikes compression, cost or heat burden matters, pressure is inappropriate, or objective performance rather than perceived comfort is the priority.',
+    'Compression shows more consistent benefit for perceived soreness or fatigue than for every objective recovery marker, making outcome specification essential.',
+    'Garment pressure and coverage, expectancy, exercise mode, training status, wear duration, and measurement time moderate effects.',
+    'The decision is limited to comfort as the main outcome and does not claim that compression accelerates all physiological recovery.',
+    'No universal pressure, wear duration, or recovery percentage.',
+    [
+      source('brown_compression_2017', 'Brown F, Gissane C, Howatson G, van Someren K, Pedlar C, Hill J. Compression Garments and Recovery from Exercise: A Meta-Analysis. Sports Medicine. 2017;47(11):2245-2267. doi:10.1007/s40279-017-0728-9.', '10.1007/s40279-017-0728-9', '28434152', 'meta_analysis', 'Healthy participants wearing compression garments after resistance, running, or endurance exercise.', 'yes', 'yes', 'Compression garments produced recovery benefits across some performance and perceptual outcomes, with effects differing by exercise modality.', 'The literature includes expectancy and blinding challenges, heterogeneous garments, and uncertain optimal pressure.'),
+      source('dupuy_recovery_2018', 'Dupuy O, Douzi W, Theurot D, Bosquet L, Dugué B. An Evidence-Based Approach for Choosing Post-exercise Recovery Techniques to Reduce Markers of Muscle Damage, Soreness, Fatigue, and Inflammation: A Systematic Review With Meta-Analysis. Frontiers in Physiology. 2018;9:403. doi:10.3389/fphys.2018.00403.', '10.3389/fphys.2018.00403', '29755363', 'meta_analysis', 'Healthy participants using post-exercise recovery interventions after fatiguing exercise.', 'yes', 'yes', 'Compression-based techniques reduced delayed-onset muscle soreness or perceived fatigue in pooled recovery comparisons.', 'The review combines several recovery techniques and exercise types, and perceptual improvements do not guarantee restored performance.'),
+    ],
+  ),
+  dossier(
+    'mixed_13',
+    'option_a',
+    'For a trained athlete with variable day-to-day readiness and maximal strength as the goal, predefined autoregulation using performance feedback is preferable to unadjusted scheduled percentage loads.',
+    'Fixed percentage loading can be appropriate when readiness is stable, monitoring is unreliable or unavailable, simplicity is essential, or the program intentionally controls exposure independent of daily performance.',
+    'Autoregulation can modestly improve strength in trained athletes, but its advantage depends on method, measurement quality, population, and program design.',
+    'APRE, RPE or repetitions-in-reserve, and velocity-based methods are not interchangeable; evidence is based on relatively small and short trials.',
+    'The prompt fixes trained status, strength priority, readiness variation, and predefined feedback rules rather than ad hoc load changes.',
+    'No universal adjustment threshold or expected effect size.',
+    [
+      source('zhang_velocity_2022', 'Zhang M, et al. Comparison of Velocity and Percentage-based Training on Maximal Strength: Meta-analysis. International Journal of Sports Medicine. 2022;43(12):981-995. doi:10.1055/a-1790-8546.', '10.1055/a-1790-8546', '35255509', 'meta_analysis', 'Athletes and non-athletes completing velocity-based or percentage-based resistance training.', 'yes', 'yes', 'Velocity-based training produced a small pooled strength advantage, with a clearer effect in athlete subgroups.', 'The synthesis included few studies and participants, and device quality, velocity rules, and training programs varied.'),
+      source('zhang_autoreg_2021', 'Zhang X, Li H, Bi S, Luo Y, Cao Y, Zhang G. Auto-Regulation Method vs. Fixed-Loading Method in Maximum Strength Training for Athletes: A Systematic Review and Meta-Analysis. Frontiers in Physiology. 2021;12:651112. doi:10.3389/fphys.2021.651112.', '10.3389/fphys.2021.651112', '33776802', 'meta_analysis', 'Athletes and resistance-trained participants completing APRE, RPE-based, or velocity-based autoregulation versus fixed loading.', 'yes', 'yes', 'Autoregulated methods produced greater pooled maximal-strength improvement than fixed-loading methods, with APRE ranking favorably.', 'Only eight studies and 166 participants were included, interventions were short, and subgroup estimates were imprecise.'),
+    ],
+  ),
+  dossier(
+    'mixed_14',
+    'option_b',
+    'The displayed option B is continuing symptom-guided training with modified load and range. For chronic non-specific low-back pain without red flags and with tolerable movement, continued individualized exercise is preferable to stopping loaded trunk and lower-body exercise.',
+    'Temporary cessation or clinical reassessment can be appropriate with new red flags, acute neurological change, intolerable symptom escalation, a different diagnosis, or failure to recover after modification.',
+    'Guidelines support remaining active and exercise-based management, while the exact mode and dose are individualized and no single exercise is universally superior.',
+    'Pain duration, baseline disability, exercise type, supervision, adherence, comparator, and risk of bias produce heterogeneous effects.',
+    'The prompt requires chronic non-specific pain, excludes red flags, and states that modified movement is tolerated.',
+    'No universal pain threshold, load, range, or recovery timeline.',
+    [
+      source('oliveira_lbp_2018', 'Oliveira CB, et al. Clinical practice guidelines for the management of non-specific low back pain in primary care: an updated overview. European Spine Journal. 2018;27(11):2791-2803. doi:10.1007/s00586-018-5673-2.', '10.1007/s00586-018-5673-2', '29971708', 'systematic_review', 'Adults with non-specific low-back pain managed in primary care across international clinical guidelines.', 'yes', 'yes', 'Guidelines consistently recommend advice to remain active and use exercise for persistent or chronic non-specific low-back pain.', 'Guideline recommendations differ in detail, and the overview does not select one loaded exercise prescription.'),
+      source('rodriguez_lbp_2026', 'Rodríguez-Domínguez ÁJ, et al. Does resistance training improve pain intensity, quality of life, and disability in people with chronic nonspecific low back pain? A systematic review and meta-analysis. Disability and Rehabilitation. 2026. doi:10.1080/09638288.2025.2566275.', '10.1080/09638288.2025.2566275', '41065407', 'meta_analysis', 'Adults with chronic non-specific low-back pain completing resistance-training interventions.', 'yes', 'yes', 'Resistance training improved pain or disability-related outcomes compared with control conditions, supporting appropriately modified loading.', 'Protocols and comparators varied, and pooled benefit does not establish that every loaded movement should continue during every flare.'),
+    ],
+  ),
+  dossier(
+    'mixed_15',
+    'option_a',
+    'For a tolerated endurance event lasting more than 90 minutes with performance prioritized, consuming carbohydrate during the event is preferable to water without carbohydrate.',
+    'Water alone can be appropriate for shorter or lower-intensity sessions, when gastrointestinal intolerance or medical constraints prevent carbohydrate intake, or when performance is not the target.',
+    'Carbohydrate during prolonged exercise has an overall performance benefit, but dose, form, duration, fitness, and gastrointestinal tolerance determine implementation.',
+    'Studies vary by beverage concentration, carbohydrate type, pre-event feeding, administration timing, event duration, and athlete fitness.',
+    'The item fixes more than 90 minutes, performance priority, and tolerance; it does not prescribe carbohydrate for every exercise bout.',
+    'Use an evidence-supported individualized range; no universal hourly rate.',
+    [
+      source('kerksick_timing_2017_m15', 'Kerksick CM, et al. International society of sports nutrition position stand: nutrient timing. Journal of the International Society of Sports Nutrition. 2017;14:33. doi:10.1186/s12970-017-0189-4.', '10.1186/s12970-017-0189-4', '28919842', 'position_stand', 'Healthy exercising and trained adults using nutrient timing during prolonged exercise.', 'yes', 'yes', 'The position stand supports carbohydrate intake during extended high-intensity exercise to sustain fuel availability and performance.', 'The statement provides population-level ranges that require adaptation to event demands, total diet, and tolerance.'),
+      source('pochmuller_carb_2021', 'Pöchmüller M, Schwingshackl L, Colombani PC, Hoffmann G. Meta-Analysis of Carbohydrate Solution Intake during Prolonged Exercise in Adults: From the Last 45+ Years\' Perspective. Nutrients. 2021;13(12):4223. doi:10.3390/nu13124223.', '10.3390/nu13124223', '34959776', 'meta_analysis', 'Adults completing prolonged exercise with carbohydrate solutions versus non-carbohydrate comparators.', 'yes', 'yes', 'Carbohydrate solution intake produced a significant pooled improvement in prolonged-exercise performance, with benefit varying by protocol.', 'Subgroup comparisons were heterogeneous, fitter athletes sometimes showed smaller effects, and solution evidence does not define all food forms.'),
+    ],
+  ),
+  dossier(
+    'mixed_16',
+    'option_a',
+    'The displayed option A is relying on dietary sources unless a deficiency or specific indication is identified. For a healthy athlete with an adequate diet beginning endurance training, routine high-dose antioxidant supplementation immediately after training is not preferable.',
+    'Targeted supplementation can be appropriate for a documented insufficiency, a medically indicated use, restricted intake, or a specific short-term recovery objective with evidence for that compound and dose.',
+    'Antioxidants are heterogeneous: some may reduce acute oxidative stress or soreness, while indiscriminate high doses can blunt signaling relevant to adaptation.',
+    'Compound, dose, duration, baseline status, training load, outcome, and study quality generate inconsistent results.',
+    'The decision concerns routine high-dose supplementation in a healthy, adequately nourished athlete, not correction of deficiency or food-derived antioxidants.',
+    'No universal supplement, dose, or adaptation effect.',
+    [
+      source('pastor_antioxidant_2019', 'Pastor R, Tur JA. Antioxidant Supplementation and Adaptive Response to Training: A Systematic Review. Current Pharmaceutical Design. 2019;25(16):1889-1912. doi:10.2174/1381612825666190701164923.', '10.2174/1381612825666190701164923', '31267859', 'systematic_review', 'Healthy and athletic populations using antioxidant supplements during exercise training.', 'yes', 'yes', 'High-dose antioxidant supplementation can attenuate molecular signaling or some adaptations, with effects differing by antioxidant and training context.', 'The literature is heterogeneous and does not justify treating all antioxidant compounds, doses, or food sources as equivalent.'),
+      source('chen_antioxidant_2025', 'Chen J, et al. Effects of different antioxidants on exercise-induced oxidative stress and muscle damage in athletes: a systematic review and meta-analysis. BMC Sports Science, Medicine and Rehabilitation. 2025. doi:10.1186/s13102-025-01381-2.', '10.1186/s13102-025-01381-2', '41219818', 'meta_analysis', 'Athletes receiving different antioxidant interventions around exercise.', 'partial', 'yes', 'Some antioxidants improved selected oxidative-stress or muscle-damage markers, demonstrating compound- and outcome-specific acute effects rather than a class-wide rule.', 'Biomarker changes do not necessarily translate to endurance adaptation or performance, and compounds and doses were heterogeneous.'),
+    ],
+  ),
 ];
 
 export interface EvidenceDossierAudit {
@@ -446,6 +544,12 @@ export function auditEvidenceDossiers(
       if (!entry.metadataVerifiedBy || !Number.isFinite(Date.parse(entry.metadataVerifiedAt))) errors.push(`${item.candidateId} has unverified dossier metadata.`);
     }
     if (![item.accuracyRationale, item.oppositeOptionConditions, item.classificationRationale, item.knownDisagreementOrHeterogeneity, item.decisionBoundary, item.numericalGranularity].every((value) => typeof value === 'string' && value.trim())) errors.push(`${item.candidateId} has an incomplete decision mapping.`);
+  }
+
+  for (const evidencePath of paths) {
+    if (!dossierIds.has(evidencePath.candidateId)) {
+      errors.push(`Missing dossier for registered evidence path ${evidencePath.candidateId}.`);
+    }
   }
 
   return { valid: errors.length === 0, errors, counts: { complete: dossiers.length, strong, mixed } };

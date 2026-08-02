@@ -9,7 +9,7 @@ test('completed evidence dossiers have source-to-claim mappings', () => {
   const audit = auditEvidenceDossiers(STUDY2_EVIDENCE_DOSSIERS, STUDY2_CANDIDATES, STUDY2_EVIDENCE_PATHS);
 
   assert.equal(audit.valid, true, audit.errors.join('\n'));
-  assert.deepEqual(audit.counts, { complete: 20, strong: 13, mixed: 7 });
+  assert.deepEqual(audit.counts, { complete: 27, strong: 13, mixed: 14 });
 });
 
 test('dossier audit rejects a source not registered in provenance', () => {
@@ -24,4 +24,5 @@ test('dossier audit rejects a source not registered in provenance', () => {
   const audit = auditEvidenceDossiers([invalid], STUDY2_CANDIDATES, STUDY2_EVIDENCE_PATHS);
 
   assert.match(audit.errors.join('\n'), /absent from the provenance registry/);
+  assert.match(audit.errors.join('\n'), /Missing dossier for registered evidence path/);
 });
