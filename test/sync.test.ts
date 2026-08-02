@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { SyncedLogger, type KVStorage } from '../lib/sync';
+import type { LogEvent } from '../types/log-event';
 
 class MemoryStorage implements KVStorage {
   private m = new Map<string, string>();
@@ -71,10 +72,10 @@ function makeFakeServer(): FakeServer {
   return server;
 }
 
-function makeEvent(over: Partial<Record<string, unknown>> = {}): Record<string, unknown> {
+function makeEvent(over: Partial<LogEvent> = {}): LogEvent {
   return {
     participantId: 'P1',
-    studyId: 'demo',
+    studyId: 'interactionkit',
     condition: 'v1',
     patternVersion: 1,
     scenarioId: 'session',
