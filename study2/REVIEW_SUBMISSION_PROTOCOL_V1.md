@@ -39,10 +39,12 @@ After both submissions validate, reviewer-specific crosswalks map blind IDs back
 
 - Reviewers disagree on the binary decision.
 - Reviewers disagree on the evidence-support level.
+- Reviewers provide non-equivalent normalized decision-boundary text.
+- Reviewers provide non-equivalent normalized numerical-granularity text.
 - Either reviewer selects `unresolved`.
 - Either reviewer recommends `revise` or `reject`.
 
-Only candidates with the same non-unresolved decision, the same non-unresolved support level, and two `retain` recommendations achieve full reviewer agreement. Agreement still does not automatically set `retained_v1`; the final 24-item, 12/12 support-level, and within-level 6A/6B answer-side constraints must be satisfied during freeze.
+Only candidates with the same non-unresolved decision, the same non-unresolved support level, matching normalized decision-boundary and numerical-granularity text, and two `retain` recommendations achieve full reviewer agreement. This deliberately routes semantically uncertain text differences to post-lock adjudication instead of arbitrarily preferring one reviewer’s wording. Agreement still does not automatically set `retained_v1`; the final 24-item, 12/12 support-level, and within-level 6A/6B answer-side constraints must be satisfied during freeze.
 
 ## Human-work boundary
 

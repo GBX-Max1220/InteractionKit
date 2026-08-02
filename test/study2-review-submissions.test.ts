@@ -181,3 +181,36 @@ test('same reviewer cannot satisfy independence', () => {
   assert.equal(audit.valid, false);
   assert.match(audit.errors.join('\n'), /two distinct reviewer IDs/);
 });
+
+test('different calibration-boundary text enters adjudication instead of choosing one reviewer', () => {
+  const first = generateReviewerPacket({
+    candidates: reviewable,
+    reviewerId: 'reviewer-a',
+    seed: 'review-v1',
+  });
+  const second = generateReviewerPacket({
+    candidates: reviewable,
+    reviewerId: 'reviewer-b',
+    seed: 'review-v1',
+  });
+  const firstSubmission = submissionFor('reviewer-a', 'review-v1', first.packet.items);
+  const secondSubmission = submissionFor('reviewer-b', 'review-v1', second.packet.items);
+  secondSubmission.items[0] = {
+    ...secondSubmission.items[0],
+    decisionBoundary: 'A distinct boundary proposed by the second reviewer.',
+  };
+  const audit = auditIndependentReviewPair({
+    firstSubmission,
+    firstPacket: first.packet,
+    firstCrosswalk: first.crosswalk,
+    secondSubmission,
+    secondPacket: second.packet,
+    secondCrosswalk: second.crosswalk,
+  });
+  assert.equal(audit.valid, true, audit.errors.join('\n'));
+  assert.equal(audit.counts.adjudicationRequired, 1);
+  assert.equal(
+    audit.items.find((item) => item.adjudicationRequired)?.agreesOnDecisionBoundary,
+    false,
+  );
+});

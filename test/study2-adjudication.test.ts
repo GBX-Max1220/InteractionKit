@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildAdjudicationQueue } from '../src/study2/adjudication';
+import {
+  buildAdjudicationQueue,
+  resolveReviewOutcomes,
+  type AdjudicationResolution,
+  validateAdjudicationResolution,
+} from '../src/study2/adjudication';
 import { STUDY2_CANDIDATES } from '../src/study2/candidate-registry';
 import { generateReviewerPacket } from '../src/study2/review-packets';
 import {
@@ -49,6 +54,7 @@ test('adjudication queue preserves the exact disagreement and source-concern tri
   secondSubmission.items[0] = {
     ...secondSubmission.items[0],
     binaryDecision: 'option_b',
+    decisionBoundary: 'A materially different proposed boundary.',
     sourceConcernIdentified: true,
     sourceConcern: 'The source population is not aligned.',
     recommendation: 'revise',
@@ -71,9 +77,52 @@ test('adjudication queue preserves the exact disagreement and source-concern tri
   });
   assert.equal(queue.items.length, 1);
   assert.equal(queue.items[0].triggers.decisionDisagreementOrUnresolved, true);
+  assert.equal(queue.items[0].triggers.decisionBoundaryDisagreement, true);
   assert.equal(queue.items[0].triggers.recommendationNotRetain, true);
   assert.equal(queue.items[0].triggers.sourceConcernIdentified, true);
   assert.equal(queue.items[0].secondReview.sourceConcern, 'The source population is not aligned.');
+
+  const resolution: AdjudicationResolution = {
+    schemaVersion: 'study2-adjudication-resolution-v1',
+    roundId: queue.roundId,
+    materialVersion: queue.materialVersion,
+    panelId: queue.panelId,
+    method: 'third_expert',
+    resolverIds: ['nutrition-adjudicator-01'],
+    relevantQualifications: 'Independent sports-nutrition expertise.',
+    conflictOfInterestStatement: 'No relevant conflict.',
+    independenceAttestation: 'Did not see author-side provisional labels.',
+    materialContributionConflict: false,
+    adjudicatedAt: '2026-08-02T14:00:00Z',
+    items: queue.items.map((item) => ({
+      candidateId: item.candidateId,
+      disposition: 'retain_without_change',
+      finalBinaryDecision: 'option_a',
+      finalSupportLevel: 'strong_consensus',
+      finalDecisionBoundary: 'Resolved boundary.',
+      finalNumericalGranularity: 'Direction only.',
+      rationale: 'Proposed adjudication fixture.',
+    })),
+  };
+  assert.match(
+    validateAdjudicationResolution(resolution, queue).errors.join('\n'),
+    /cannot be retained without change while a source concern exists/,
+  );
+  resolution.items[0] = {
+    ...resolution.items[0],
+    disposition: 'revise_and_re_review',
+    finalBinaryDecision: 'unresolved',
+    finalSupportLevel: 'unresolved',
+    finalDecisionBoundary: '',
+    finalNumericalGranularity: '',
+  };
+  const resolved = resolveReviewOutcomes({ audit, queue, resolution });
+  assert.equal(resolved.valid, true, resolved.errors.join('\n'));
+  assert.equal(
+    resolved.outcomes.find((outcome) => outcome.candidateId === queue.items[0].candidateId)
+      ?.disposition,
+    'revise_and_re_review',
+  );
 });
 
 test('full agreement produces an empty adjudication queue', () => {

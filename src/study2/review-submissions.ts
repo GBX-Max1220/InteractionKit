@@ -240,8 +240,18 @@ export interface ReviewPairItem {
   second: UnblindedReviewItem;
   agreesOnDecision: boolean;
   agreesOnSupportLevel: boolean;
+  agreesOnDecisionBoundary: boolean;
+  agreesOnNumericalGranularity: boolean;
   bothRecommendRetain: boolean;
   adjudicationRequired: boolean;
+}
+
+function normalizeReviewerText(value: string): string {
+  return value
+    .trim()
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
 }
 
 export interface ReviewPairAudit {
@@ -329,15 +339,27 @@ export function auditIndependentReviewPair(options: {
       first.supportLevel === second.supportLevel;
     const bothRecommendRetain =
       first.recommendation === 'retain' && second.recommendation === 'retain';
+    const agreesOnDecisionBoundary =
+      normalizeReviewerText(first.decisionBoundary) ===
+      normalizeReviewerText(second.decisionBoundary);
+    const agreesOnNumericalGranularity =
+      normalizeReviewerText(first.numericalGranularity) ===
+      normalizeReviewerText(second.numericalGranularity);
     items.push({
       candidateId: first.candidateId,
       first,
       second,
       agreesOnDecision,
       agreesOnSupportLevel,
+      agreesOnDecisionBoundary,
+      agreesOnNumericalGranularity,
       bothRecommendRetain,
       adjudicationRequired:
-        !agreesOnDecision || !agreesOnSupportLevel || !bothRecommendRetain,
+        !agreesOnDecision ||
+        !agreesOnSupportLevel ||
+        !agreesOnDecisionBoundary ||
+        !agreesOnNumericalGranularity ||
+        !bothRecommendRetain,
     });
   }
   items.sort((a, b) => a.candidateId.localeCompare(b.candidateId));
