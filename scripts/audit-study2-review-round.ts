@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { buildAdjudicationQueue } from '../src/study2/adjudication';
 import type { ReviewerCrosswalkItem, ReviewerPacket } from '../src/study2/review-packets';
 import {
   auditIndependentReviewPair,
@@ -180,6 +181,22 @@ async function main(): Promise<void> {
   if (!audit.valid) {
     throw new Error(`Review pair is invalid; private diagnostic written to ${outputPath}.`);
   }
+  const adjudicationQueue = buildAdjudicationQueue({
+    audit,
+    roundId: manifest.roundId,
+    materialVersion: manifest.materialVersion,
+    panelId: firstEntry.panelId,
+    generatedAt: auditArtifact.auditedAt,
+  });
+  const adjudicationQueuePath = path.join(
+    privateDirectory,
+    `${firstEntry.panelId}.adjudication-queue.json`,
+  );
+  await writeFile(
+    adjudicationQueuePath,
+    `${JSON.stringify(adjudicationQueue, null, 2)}\n`,
+    'utf8',
+  );
 
   const expectedPanels = [...new Set(manifest.entries.map((entry) => entry.panelId))].sort();
   const completedAudits: StoredPairAudit[] = [];
@@ -254,6 +271,7 @@ async function main(): Promise<void> {
         fullAgreement: audit.counts.fullAgreement,
         adjudicationRequired: audit.counts.adjudicationRequired,
         privateAudit: outputPath,
+        privateAdjudicationQueue: adjudicationQueuePath,
         completedPanels,
         allPanelsComplete,
         roundCoverageValid: coverageValid,
