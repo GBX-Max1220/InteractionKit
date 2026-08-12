@@ -4,9 +4,9 @@ InteractionKit is a typed specification format for defining AI interaction exper
 
 ## Current Status
 
-**Artifact version:** 1.0.0 release candidate
+**Artifact version:** 1.0.0
 
-**Release status:** Implementation verified locally and MIT licensed; not yet committed or tagged.
+**Release status:** Publicly tagged as `interactionkit-v1.0.0`; implementation verified locally and MIT licensed.
 
 ### Implemented
 
@@ -146,7 +146,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-The v1.0 release candidate was verified on Node.js 24.16.0 and npm 11.13.0. Next.js requires Node.js 20.9.0 or newer.
+The v1.0 artifact was verified on Node.js 24.16.0 and npm 11.13.0. Next.js requires Node.js 20.9.0 or newer.
 
 ## v1.0 Release Scope
 
@@ -222,7 +222,7 @@ If you use InteractionKit in research, please cite:
   author = {Guo, Baixin},
   title = {InteractionKit: Typed Specifications for AI Interaction Experiments},
   year = {2026},
-  note = {Version 1.0.0 release candidate; no public release tag},
+  note = {Version 1.0.0; public tag interactionkit-v1.0.0},
   url = {https://github.com/GBX-Max1220/InteractionKit}
 }
 ```
