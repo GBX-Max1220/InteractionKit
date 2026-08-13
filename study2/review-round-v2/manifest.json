@@ -1,0 +1,113 @@
+{
+  "roundId": "study2-domain-review-round-v2",
+  "materialVersion": "study2-candidates-v0.6",
+  "packetSchemaVersion": "study2-domain-review-packet-v1",
+  "submissionSchemaVersion": "study2-domain-review-submission-v3",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
+  "generatedAt": "2026-08-02T00:00:00Z",
+  "candidateCount": 27,
+  "assignmentCount": 6,
+  "reviewsPerCandidate": 2,
+  "reviewerRosterSchemaVersion": "study2-reviewer-roster-v1",
+  "reviewerRosterTemplateFile": "reviewer-roster.template.json",
+  "reviewerRosterTemplateSha256": "8a633346e3e2224301e8592bc653115c7597c4e6a1efaf1145aff7690d405623",
+  "completedReviewerRosterLocation": "study2/private-review-artifacts/review-round-v2/reviewer-roster.completed.json (gitignored)",
+  "publicSafe": true,
+  "crosswalkLocation": "study2/private-review-artifacts/review-round-v2 (gitignored)",
+  "entries": [
+    {
+      "reviewerId": "exercise-physiology-reviewer-01",
+      "panelId": "exercise-physiology",
+      "requiredDomains": [
+        "exercise_training",
+        "recovery",
+        "environment"
+      ],
+      "itemCount": 15,
+      "packetFile": "exercise-physiology-reviewer-01.packet.json",
+      "submissionTemplateFile": "exercise-physiology-reviewer-01.submission-template.json",
+      "reviewerFormFile": "exercise-physiology-reviewer-01.review-form.html",
+      "packetSha256": "2e38675b59fda12d772028ca303789bef2c9f7d96b4b88137b17eb58613d0511",
+      "submissionTemplateSha256": "b8c9fcf12a0cbe06cefde1e28931fb3ec7fa2f9bd320c1cb5f21edbd24eca20d",
+      "reviewerFormSha256": "bd10d792fe408b22b505bab4483be9eabf1ced1b4b9b41231a4c1d4f69e00987",
+      "privateCrosswalkSha256": "30db97a82dd4d148eb1ffd3601758d5c1864d14fb64eef6244201764f0ee1477"
+    },
+    {
+      "reviewerId": "exercise-physiology-reviewer-02",
+      "panelId": "exercise-physiology",
+      "requiredDomains": [
+        "exercise_training",
+        "recovery",
+        "environment"
+      ],
+      "itemCount": 15,
+      "packetFile": "exercise-physiology-reviewer-02.packet.json",
+      "submissionTemplateFile": "exercise-physiology-reviewer-02.submission-template.json",
+      "reviewerFormFile": "exercise-physiology-reviewer-02.review-form.html",
+      "packetSha256": "0b65402372996d2dac8402deb4c65eb68094e11ca5e94155412c0235f01b451f",
+      "submissionTemplateSha256": "276b60e00313959f220285b004b6d6f7993b9155e35caf510aae45c3682e4cfa",
+      "reviewerFormSha256": "89f4b5fe139c168a650f999b972738fceb6a1dd4ec937beed3da59e5cff2394a",
+      "privateCrosswalkSha256": "3f09f9f913808a666d595670b174e40511274520c98d8f09c9352a367364883b"
+    },
+    {
+      "reviewerId": "sports-nutrition-reviewer-01",
+      "panelId": "sports-nutrition",
+      "requiredDomains": [
+        "nutrition"
+      ],
+      "itemCount": 8,
+      "packetFile": "sports-nutrition-reviewer-01.packet.json",
+      "submissionTemplateFile": "sports-nutrition-reviewer-01.submission-template.json",
+      "reviewerFormFile": "sports-nutrition-reviewer-01.review-form.html",
+      "packetSha256": "2ebe0aec6b2b85c4efaf5124494937aad02742196b4cc178a44062c6c0d71a0e",
+      "submissionTemplateSha256": "3f26f80cf03ed348dffb3ef9f0f282f8d05afab71cf4c231ea580d3049b0d3d0",
+      "reviewerFormSha256": "766a1bb4ee19e131b6072bc9ed6d141cd63e90df74603351df0ec857c3177a96",
+      "privateCrosswalkSha256": "00a31324c0754ed233f17f508a4e8a9cfb4b91514c2bc3596a984d90fe7483e3"
+    },
+    {
+      "reviewerId": "sports-nutrition-reviewer-02",
+      "panelId": "sports-nutrition",
+      "requiredDomains": [
+        "nutrition"
+      ],
+      "itemCount": 8,
+      "packetFile": "sports-nutrition-reviewer-02.packet.json",
+      "submissionTemplateFile": "sports-nutrition-reviewer-02.submission-template.json",
+      "reviewerFormFile": "sports-nutrition-reviewer-02.review-form.html",
+      "packetSha256": "06f4e78529c8e5c6ecb956201d251ee1d68168d89de0b8431af2765b670df611",
+      "submissionTemplateSha256": "1df24ddbe44d1955cc62184f28f6b568eb25d584f4eeb301f54ef95554c302f1",
+      "reviewerFormSha256": "8e5cf510fc7f81d80e8551dc55e1afceef570990022374fef45d701d9e1f2f0f",
+      "privateCrosswalkSha256": "1f5c4c6748782270dd8653d9d8e741295f46c113d89174d43d66e9967a3a395a"
+    },
+    {
+      "reviewerId": "sports-medicine-reviewer-01",
+      "panelId": "sports-medicine",
+      "requiredDomains": [
+        "injury_risk"
+      ],
+      "itemCount": 4,
+      "packetFile": "sports-medicine-reviewer-01.packet.json",
+      "submissionTemplateFile": "sports-medicine-reviewer-01.submission-template.json",
+      "reviewerFormFile": "sports-medicine-reviewer-01.review-form.html",
+      "packetSha256": "9804b16aa01326bad0ced53c4b65e37de3b3791894e1e88c39b51588693c8e88",
+      "submissionTemplateSha256": "8d439b7147ed213c47c47d107e721350695233e6ccbf17718200ef0062347091",
+      "reviewerFormSha256": "82bcdea8ff5835e730df28526b89302517aa46f84584b40961cf42370510f12c",
+      "privateCrosswalkSha256": "6adfd0a3255d3f6803c2cc502baec01ab3b65919f7579857f2143d5723009d27"
+    },
+    {
+      "reviewerId": "sports-medicine-reviewer-02",
+      "panelId": "sports-medicine",
+      "requiredDomains": [
+        "injury_risk"
+      ],
+      "itemCount": 4,
+      "packetFile": "sports-medicine-reviewer-02.packet.json",
+      "submissionTemplateFile": "sports-medicine-reviewer-02.submission-template.json",
+      "reviewerFormFile": "sports-medicine-reviewer-02.review-form.html",
+      "packetSha256": "9918656adeb4a70952480af81264bfba746e0b2b76dedce4996f8fe8fb4823a8",
+      "submissionTemplateSha256": "ff40233247cb6f45ca921b1ff9b33add0b1f9ffceb1da1d2e764962e4234c92d",
+      "reviewerFormSha256": "f38c55fbf9426e129a0111030aad313cd079d5dc0321148dafb3e7fefbe77cbf",
+      "privateCrosswalkSha256": "a3425aa07713bc69091b079d4e73d90eaf03d0ea3cc0e1c9ac164632096dad50"
+    }
+  ]
+}

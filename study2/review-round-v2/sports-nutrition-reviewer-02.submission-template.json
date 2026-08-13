@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "study2-domain-review-submission-v3",
+  "materialVersion": "study2-candidates-v0.6",
+  "reviewerId": "sports-nutrition-reviewer-02",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
+  "relevantExpertise": "",
+  "conflictOfInterestStatement": "",
+  "submittedAt": "",
+  "items": [
+    {
+      "blindId": "S01",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S02",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S03",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S04",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S05",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S06",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S07",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    },
+    {
+      "blindId": "S08",
+      "binaryDecision": "unresolved",
+      "supportLevel": "unresolved",
+      "decisionBoundary": "",
+      "numericalGranularity": "",
+      "sourceConcernIdentified": true,
+      "sourceConcern": "",
+      "recommendation": "revise",
+      "rationale": ""
+    }
+  ]
+}

@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { StudyId, ConditionId } from '@/types/log-event';
 import type { Scenario, StudyConfig } from '@/types/log-event';
-import { Logger } from '@/lib/logger';
+import { SyncedLogger } from '@/lib/sync';
 import { assignCondition, fisherYatesShuffle } from '@/lib/randomize';
 import { saveCheckpoint, loadCheckpoint, clearCheckpoint, createCheckpoint } from '@/lib/checkpoint';
 import { ConsentScreen } from '@/components/consent-screen';
@@ -43,7 +43,7 @@ const TSI_ITEMS = [
 ];
 
 export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Props) {
-  const loggerRef = useRef(new Logger());
+  const [logger] = useState(() => new SyncedLogger());
   const timerStartRef = useRef<number>(0);
 
   const [phase, setPhase] = useState<Phase>('consent');
@@ -80,7 +80,17 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
     }
   }, [phase]);
 
-  const startNewSession = useCallback(() => {
+  // Best-effort flush when the participant leaves the page mid-session; the
+  // buffer persists in localStorage so a failed flush is retried on reload.
+  useEffect(() => {
+    const onPageHide = () => {
+      void logger.flush();
+    };
+    window.addEventListener('pagehide', onPageHide);
+    return () => window.removeEventListener('pagehide', onPageHide);
+  }, [logger]);
+
+  const startNewSession = useCallback(async () => {
     const cond = assignCondition();
     const shuffled = fisherYatesShuffle([...scenarios]).slice(0, config.scenariosPerParticipant);
     const pid = prolificPid || 'P' + crypto.randomUUID().slice(0, 8).toUpperCase();
@@ -89,7 +99,12 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
     setParticipantId(pid);
     setCurrentIdx(0);
     saveCheckpoint(createCheckpoint(pid, cond, studyId, shuffled.map((s) => s.id)));
-    loggerRef.current.push({
+    // Reset any prior backend session so a fresh participant never writes into
+    // an old session; then create the backend session (best-effort — the study
+    // still runs local-first with CSV export if the backend is unavailable).
+    logger.resetSession();
+    await logger.startSession(studyId, pid, cond);
+    logger.push({
       participantId: pid, studyId, condition: cond,
       patternVersion: cond === 'v1' ? 1 : 2,
       scenarioId: 'session', eventType: 'session_start',
@@ -98,7 +113,7 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
     });
     setPhase('demographics');
     setShowContinuePrompt(false);
-  }, [scenarios, config.scenariosPerParticipant, studyId, prolificPid]);
+  }, [scenarios, config.scenariosPerParticipant, studyId, prolificPid, logger]);
 
   const resumeSession = useCallback(() => {
     const cp = loadCheckpoint();
@@ -110,13 +125,14 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
       .filter((s): s is Scenario => s !== undefined);
     setScenarioOrder(ordered);
     setCurrentIdx(cp.currentScenarioIndex);
+    // Reattach the persisted backend session and pending buffer after reload.
+    logger.restore();
     setPhase('trial-intro');
     setShowContinuePrompt(false);
-  }, [scenarios]);
+  }, [scenarios, logger]);
 
   const logAllEventsAndAdvance = useCallback(() => {
     if (!currentScenario || probability === null || !decision) return;
-    const logger = loggerRef.current;
 
     // Log decision event with ALL trial data
     logger.push({
@@ -139,10 +155,9 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
     if (cp) { cp.completedScenariosCount = next; cp.currentScenarioIndex = next; saveCheckpoint(cp); }
     if (next >= config.scenariosPerParticipant) setPhase('tsi');
     else { setCurrentIdx(next); setPhase('trial-intro'); }
-  }, [currentScenario, probability, decision, decisionTimer, familiarity, currentIdx, participantId, studyId, condition, config.scenariosPerParticipant]);
+  }, [currentScenario, probability, decision, decisionTimer, familiarity, currentIdx, participantId, studyId, condition, config.scenariosPerParticipant, logger]);
 
-  const finish = useCallback(() => {
-    const logger = loggerRef.current;
+  const finish = useCallback(async () => {
     const reversed = TSI_ITEMS.map((item) => {
       const v = tsiResponses[item.id];
       if (v === undefined) return undefined;
@@ -171,9 +186,12 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
       decisionTimeMs: -1, probabilityPrediction: -1,
     });
     setCsvContent(logger.exportCsv());
+    // Best-effort final flush (buffered events + session_complete). The local
+    // CSV export remains the fallback if the backend is unreachable.
+    await logger.flush();
     clearCheckpoint();
     setPhase('debrief');
-  }, [tsiResponses, participantId, studyId, condition]);
+  }, [tsiResponses, participantId, studyId, condition, logger]);
 
   // ─── RESUME PROMPT ────────────────────────────────────
   if (showContinuePrompt) {
@@ -244,7 +262,7 @@ export function ScenarioRunner({ config, scenarios, prolificPid, returnUrl }: Pr
           </div>
 
           <button onClick={() => {
-            loggerRef.current.push({
+            logger.push({
               participantId, studyId, condition,
               patternVersion: condition === 'v1' ? 1 : 2,
               scenarioId: 'session', eventType: 'demographics',

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "study2-reviewer-roster-v1",
+  "roundId": "study2-domain-review-round-v2",
+  "entries": [
+    {
+      "reviewerId": "exercise-physiology-reviewer-01",
+      "panelId": "exercise-physiology",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "exercise_training",
+        "recovery",
+        "environment"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    },
+    {
+      "reviewerId": "exercise-physiology-reviewer-02",
+      "panelId": "exercise-physiology",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "exercise_training",
+        "recovery",
+        "environment"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    },
+    {
+      "reviewerId": "sports-nutrition-reviewer-01",
+      "panelId": "sports-nutrition",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "nutrition"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    },
+    {
+      "reviewerId": "sports-nutrition-reviewer-02",
+      "panelId": "sports-nutrition",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "nutrition"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    },
+    {
+      "reviewerId": "sports-medicine-reviewer-01",
+      "panelId": "sports-medicine",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "injury_risk"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    },
+    {
+      "reviewerId": "sports-medicine-reviewer-02",
+      "panelId": "sports-medicine",
+      "stablePersonId": "",
+      "qualifiedDomains": [
+        "injury_risk"
+      ],
+      "relevantQualifications": "",
+      "identityVerificationMethod": "",
+      "conflictOfInterestStatement": "",
+      "materialContributionConflict": true,
+      "independenceAttestation": "",
+      "compensationStatement": "",
+      "outcomeContingentCompensation": true,
+      "eligibilityDecision": "ineligible",
+      "verifiedBy": "",
+      "verifiedAt": ""
+    }
+  ]
+}

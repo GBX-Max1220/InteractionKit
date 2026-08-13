@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "study2-domain-review-packet-v1",
+  "materialVersion": "study2-candidates-v0.6",
+  "reviewerId": "sports-nutrition-reviewer-02",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
+  "items": [
+    {
+      "blindId": "S01",
+      "domain": "nutrition",
+      "decisionPrompt": "An adult wants exercise-related body-mass reduction. Which nutritional strategy is more likely to matter over time?",
+      "optionA": "Change meal timing while keeping total energy intake above expenditure.",
+      "optionB": "Maintain an appropriate, sustained energy deficit.",
+      "targetPopulation": "Adults pursuing body-mass reduction",
+      "evidenceSources": [
+        {
+          "citation": "Jensen MD, et al. 2013 AHA/ACC/TOS guideline for the management of overweight and obesity in adults. Circulation. 2014;129(25 Suppl 2):S102-S138. doi:10.1161/01.cir.0000437739.71477.ee.",
+          "urlOrDoi": "https://doi.org/10.1161/01.cir.0000437739.71477.ee",
+          "authorityType": "guideline"
+        },
+        {
+          "citation": "Wu X, et al. Comparison of Different Intermittent Fasting Patterns or Different Extents of Calorie Restriction for Weight Loss and Metabolic Improvement in Adults: A Systematic Review and Network Meta-Analysis of Randomized Controlled Trials. Nutrition Reviews. 2026. doi:10.1093/nutrit/nuaf056.",
+          "urlOrDoi": "https://doi.org/10.1093/nutrit/nuaf056",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S02",
+      "domain": "nutrition",
+      "decisionPrompt": "An endurance athlete can tolerate food before a prolonged morning performance session. Which preparation is preferable?",
+      "optionA": "Begin the session after an overnight fast.",
+      "optionB": "Eat an appropriate pre-exercise meal.",
+      "targetPopulation": "Healthy endurance athletes preparing for a prolonged aerobic performance session",
+      "evidenceSources": [
+        {
+          "citation": "Aird TP, Davies RW, Carson BP. Effects of fasted vs fed-state exercise on performance and post-exercise metabolism: A systematic review and meta-analysis. Scandinavian Journal of Medicine & Science in Sports. 2018;28(5):1476-1493. doi:10.1111/sms.13054.",
+          "urlOrDoi": "https://doi.org/10.1111/sms.13054",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Thomas DT, Erdman KA, Burke LM. American College of Sports Medicine Joint Position Statement. Nutrition and Athletic Performance. Medicine & Science in Sports & Exercise. 2016;48(3):543-568. doi:10.1249/MSS.0000000000000852.",
+          "urlOrDoi": "https://doi.org/10.1249/MSS.0000000000000852",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S03",
+      "domain": "nutrition",
+      "decisionPrompt": "A healthy athlete with an adequate diet begins a new endurance-training block. Which antioxidant strategy is preferable?",
+      "optionA": "Rely on dietary sources unless a specific deficiency or indication is identified.",
+      "optionB": "Add a high-dose antioxidant supplement immediately after training.",
+      "targetPopulation": "Healthy adult athletes",
+      "evidenceSources": [
+        {
+          "citation": "Pastor R, Tur JA. Antioxidant Supplementation and Adaptive Response to Training: A Systematic Review. Current Pharmaceutical Design. 2019;25(16):1889-1912. doi:10.2174/1381612825666190701164923.",
+          "urlOrDoi": "https://doi.org/10.2174/1381612825666190701164923",
+          "authorityType": "systematic_review"
+        },
+        {
+          "citation": "Chen J, et al. Effects of different antioxidants on exercise-induced oxidative stress and muscle damage in athletes: a systematic review and meta-analysis. BMC Sports Science, Medicine and Rehabilitation. 2025. doi:10.1186/s13102-025-01381-2.",
+          "urlOrDoi": "https://doi.org/10.1186/s13102-025-01381-2",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S04",
+      "domain": "nutrition",
+      "decisionPrompt": "An endurance athlete finishes a glycogen-depleting session and must train again in less than four hours. Which recovery plan is preferable?",
+      "optionA": "Begin carbohydrate-focused refueling promptly after the first session.",
+      "optionB": "Wait until the regular evening meal to begin carbohydrate refueling.",
+      "targetPopulation": "Healthy endurance athletes with less than four hours between demanding sessions",
+      "evidenceSources": [
+        {
+          "citation": "Kerksick CM, et al. International society of sports nutrition position stand: nutrient timing. Journal of the International Society of Sports Nutrition. 2017;14:33. doi:10.1186/s12970-017-0189-4.",
+          "urlOrDoi": "https://doi.org/10.1186/s12970-017-0189-4",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Thomas DT, Erdman KA, Burke LM. Position of the Academy of Nutrition and Dietetics, Dietitians of Canada, and the American College of Sports Medicine: Nutrition and Athletic Performance. Journal of the Academy of Nutrition and Dietetics. 2016;116(3):501-528. doi:10.1016/j.jand.2015.12.006.",
+          "urlOrDoi": "https://doi.org/10.1016/j.jand.2015.12.006",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S05",
+      "domain": "nutrition",
+      "decisionPrompt": "Is creatine monohydrate generally evidence-supported for healthy adults pursuing strength?",
+      "optionA": "Consider it evidence-supported when no contraindication applies.",
+      "optionB": "Treat it as unsupported.",
+      "targetPopulation": "Healthy adults without relevant contraindications",
+      "evidenceSources": [
+        {
+          "citation": "Kreider RB, et al. International Society of Sports Nutrition position stand: safety and efficacy of creatine supplementation in exercise, sport, and medicine. Journal of the International Society of Sports Nutrition. 2017;14:18. doi:10.1186/s12970-017-0173-z.",
+          "urlOrDoi": "https://doi.org/10.1186/s12970-017-0173-z",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Wang Z, et al. Effects of Creatine Supplementation and Resistance Training on Muscle Strength Gains in Adults <50 Years of Age: A Systematic Review and Meta-Analysis. Nutrients. 2024;16(21):3665. doi:10.3390/nu16213665.",
+          "urlOrDoi": "https://doi.org/10.3390/nu16213665",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S06",
+      "domain": "nutrition",
+      "decisionPrompt": "An endurance athlete prioritizes performance in an event lasting more than 90 minutes and tolerates carbohydrate during exercise. Which fueling plan is preferable?",
+      "optionA": "Consume carbohydrate during the event.",
+      "optionB": "Use water without carbohydrate during the event.",
+      "targetPopulation": "Healthy endurance athletes in prolonged performance events who tolerate carbohydrate intake",
+      "evidenceSources": [
+        {
+          "citation": "Kerksick CM, et al. International society of sports nutrition position stand: nutrient timing. Journal of the International Society of Sports Nutrition. 2017;14:33. doi:10.1186/s12970-017-0189-4.",
+          "urlOrDoi": "https://doi.org/10.1186/s12970-017-0189-4",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Pöchmüller M, Schwingshackl L, Colombani PC, Hoffmann G. Meta-Analysis of Carbohydrate Solution Intake during Prolonged Exercise in Adults: From the Last 45+ Years' Perspective. Nutrients. 2021;13(12):4223. doi:10.3390/nu13124223.",
+          "urlOrDoi": "https://doi.org/10.3390/nu13124223",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S07",
+      "domain": "nutrition",
+      "decisionPrompt": "Is adequate total daily protein relevant to adaptation from resistance training?",
+      "optionA": "Treat daily protein as irrelevant.",
+      "optionB": "Treat adequate daily protein as relevant.",
+      "targetPopulation": "Healthy resistance-training adults",
+      "evidenceSources": [
+        {
+          "citation": "Jäger R, et al. International Society of Sports Nutrition Position Stand: protein and exercise. Journal of the International Society of Sports Nutrition. 2017;14:20. doi:10.1186/s12970-017-0177-8.",
+          "urlOrDoi": "https://doi.org/10.1186/s12970-017-0177-8",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Morton RW, et al. A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults. British Journal of Sports Medicine. 2018;52(6):376-384. doi:10.1136/bjsports-2017-097608.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2017-097608",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S08",
+      "domain": "nutrition",
+      "decisionPrompt": "An athlete who is caffeine-sensitive is competing in the evening. Which pre-exercise strategy is preferable?",
+      "optionA": "Use a standard performance-oriented caffeine dose.",
+      "optionB": "Use a lower dose or avoid caffeine to protect sleep and tolerability.",
+      "targetPopulation": "Adult athletes considering caffeine",
+      "evidenceSources": [
+        {
+          "citation": "Guest NS, et al. International society of sports nutrition position stand: caffeine and exercise performance. Journal of the International Society of Sports Nutrition. 2021;18(1):1. doi:10.1186/s12970-020-00383-4.",
+          "urlOrDoi": "https://doi.org/10.1186/s12970-020-00383-4",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Gardiner C, et al. The effect of caffeine on subsequent sleep: A systematic review and meta-analysis. Sleep Medicine Reviews. 2023;69:101764. doi:10.1016/j.smrv.2023.101764.",
+          "urlOrDoi": "https://doi.org/10.1016/j.smrv.2023.101764",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    }
+  ]
+}

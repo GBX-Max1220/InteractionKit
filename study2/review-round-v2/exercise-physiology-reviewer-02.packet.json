@@ -1,0 +1,308 @@
+{
+  "schemaVersion": "study2-domain-review-packet-v1",
+  "materialVersion": "study2-candidates-v0.6",
+  "reviewerId": "exercise-physiology-reviewer-02",
+  "packetSeed": "study2-domain-review-v2-2026-08-02",
+  "items": [
+    {
+      "blindId": "S01",
+      "domain": "environment",
+      "decisionPrompt": "An athlete is preparing for repeated exercise in the heat. Which preparation is more likely to reduce physiological strain?",
+      "optionA": "Use one hard heat session shortly before the event.",
+      "optionB": "Use a structured period of repeated, managed heat exposure.",
+      "targetPopulation": "Healthy adults training in heat",
+      "evidenceSources": [
+        {
+          "citation": "Racinais S, et al. Consensus recommendations on training and competing in the heat. British Journal of Sports Medicine. 2015;49(18):1164-1173. doi:10.1136/bjsports-2015-094915.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2015-094915",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "Brown HA, et al. Quantifying Exercise Heat Acclimatisation in Athletes and Military Personnel: A Systematic Review and Meta-analysis. Sports Medicine. 2024. doi:10.1007/s40279-023-01972-4.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-023-01972-4",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S02",
+      "domain": "exercise_training",
+      "decisionPrompt": "During heavy multi-joint resistance exercise for strength, which inter-set rest plan is preferable?",
+      "optionA": "Use approximately one minute between sets.",
+      "optionB": "Use approximately three minutes between sets.",
+      "targetPopulation": "Healthy resistance-training adults",
+      "evidenceSources": [
+        {
+          "citation": "Grgic J, et al. Effects of Rest Interval Duration in Resistance Training on Measures of Muscular Strength: A Systematic Review. Sports Medicine. 2018;48(1):137-151. doi:10.1007/s40279-017-0788-x.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-017-0788-x",
+          "authorityType": "systematic_review"
+        },
+        {
+          "citation": "de Salles BF, et al. Rest interval between sets in strength training. Sports Medicine. 2009;39(9):765-777. doi:10.2165/11315230-000000000-00000.",
+          "urlOrDoi": "https://doi.org/10.2165/11315230-000000000-00000",
+          "authorityType": "systematic_review"
+        }
+      ]
+    },
+    {
+      "blindId": "S03",
+      "domain": "exercise_training",
+      "decisionPrompt": "A trained athlete has a strength-focused program and day-to-day readiness varies. Which loading method is preferable?",
+      "optionA": "Adjust working loads with predefined performance-feedback rules.",
+      "optionB": "Use the scheduled percentage loads without a session-level adjustment.",
+      "targetPopulation": "Resistance-trained adult athletes pursuing maximal strength",
+      "evidenceSources": [
+        {
+          "citation": "Zhang M, et al. Comparison of Velocity and Percentage-based Training on Maximal Strength: Meta-analysis. International Journal of Sports Medicine. 2022;43(12):981-995. doi:10.1055/a-1790-8546.",
+          "urlOrDoi": "https://doi.org/10.1055/a-1790-8546",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Zhang X, Li H, Bi S, Luo Y, Cao Y, Zhang G. Auto-Regulation Method vs. Fixed-Loading Method in Maximum Strength Training for Athletes: A Systematic Review and Meta-Analysis. Frontiers in Physiology. 2021;12:651112. doi:10.3389/fphys.2021.651112.",
+          "urlOrDoi": "https://doi.org/10.3389/fphys.2021.651112",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S04",
+      "domain": "exercise_training",
+      "decisionPrompt": "For a volume-matched hypertrophy program, which effort strategy is preferable for most working sets?",
+      "optionA": "Finish most sets close to failure while managing fatigue.",
+      "optionB": "Reach momentary muscular failure on each set.",
+      "targetPopulation": "Healthy adults training for hypertrophy",
+      "evidenceSources": [
+        {
+          "citation": "Grgic J, et al. Effects of resistance training performed to repetition failure or non-failure on muscular strength and hypertrophy: A systematic review and meta-analysis. Journal of Sport and Health Science. 2022;11(2):202-211. doi:10.1016/j.jshs.2021.01.007.",
+          "urlOrDoi": "https://doi.org/10.1016/j.jshs.2021.01.007",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Refalo MC, et al. Influence of Resistance Training Proximity-to-Failure on Skeletal Muscle Hypertrophy: A Systematic Review with Meta-analysis. Sports Medicine. 2023;53(3):649-665. doi:10.1007/s40279-022-01784-y.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-022-01784-y",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S05",
+      "domain": "exercise_training",
+      "decisionPrompt": "For general whole-body fitness, which resistance-training plan is better?",
+      "optionA": "Prioritize upper-body muscle groups and rely on daily activity for the lower body.",
+      "optionB": "Train all major muscle groups across the program.",
+      "targetPopulation": "Generally healthy adults seeking whole-body fitness",
+      "evidenceSources": [
+        {
+          "citation": "Currier BS, et al. American College of Sports Medicine Position Stand. Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews. Medicine & Science in Sports & Exercise. 2026. doi:10.1249/MSS.0000000000003897.",
+          "urlOrDoi": "https://doi.org/10.1249/MSS.0000000000003897",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "American College of Sports Medicine. Progression models in resistance training for healthy adults. Medicine & Science in Sports & Exercise. 2009;41(3):687-708. doi:10.1249/MSS.0b013e3181915670.",
+          "urlOrDoi": "https://doi.org/10.1249/MSS.0b013e3181915670",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S06",
+      "domain": "environment",
+      "decisionPrompt": "A low-altitude resident develops substantial symptoms and reduced exercise tolerance soon after arriving at altitude. What is the better training response?",
+      "optionA": "Temporarily reduce training load and respond to the symptoms.",
+      "optionB": "Maintain the planned sea-level workload to accelerate adaptation.",
+      "targetPopulation": "Low-altitude residents newly exposed to altitude",
+      "evidenceSources": [
+        {
+          "citation": "Luks AM, et al. Wilderness Medical Society Clinical Practice Guidelines for the Prevention, Diagnosis, and Treatment of Acute Altitude Illness: 2024 Update. Wilderness & Environmental Medicine. 2024. doi:10.1016/j.wem.2023.05.013.",
+          "urlOrDoi": "https://doi.org/10.1016/j.wem.2023.05.013",
+          "authorityType": "guideline"
+        },
+        {
+          "citation": "Bergeron MF, et al. International Olympic Committee consensus statement on thermoregulatory and altitude challenges for high-level athletes. British Journal of Sports Medicine. 2012;46(11):770-779. doi:10.1136/bjsports-2012-091296.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2012-091296",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S07",
+      "domain": "exercise_training",
+      "decisionPrompt": "A healthy beginner has adapted to the same resistance-training workload for several weeks. Which progression is better for continued strength development?",
+      "optionA": "Increase training demands gradually while monitoring technique and recovery.",
+      "optionB": "Keep the original workload until progress has clearly stopped.",
+      "targetPopulation": "Healthy adults beginning resistance training",
+      "evidenceSources": [
+        {
+          "citation": "Currier BS, et al. American College of Sports Medicine Position Stand. Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews. Medicine & Science in Sports & Exercise. 2026. doi:10.1249/MSS.0000000000003897.",
+          "urlOrDoi": "https://doi.org/10.1249/MSS.0000000000003897",
+          "authorityType": "position_stand"
+        },
+        {
+          "citation": "American College of Sports Medicine. Progression models in resistance training for healthy adults. Medicine & Science in Sports & Exercise. 2009;41(3):687-708. doi:10.1249/MSS.0b013e3181915670.",
+          "urlOrDoi": "https://doi.org/10.1249/MSS.0b013e3181915670",
+          "authorityType": "position_stand"
+        }
+      ]
+    },
+    {
+      "blindId": "S08",
+      "domain": "recovery",
+      "decisionPrompt": "Before a session emphasizing sprint and jump performance, which warm-up emphasis is preferable?",
+      "optionA": "Use a dynamic, task-specific warm-up.",
+      "optionB": "Use prolonged static stretching immediately before the task.",
+      "targetPopulation": "Healthy adult exercisers",
+      "evidenceSources": [
+        {
+          "citation": "Behm DG, Blazevich AJ, McHugh M, Kay AD. Acute effects of muscle stretching on physical performance, range of motion, and injury incidence in healthy active individuals: a systematic review. Applied Physiology, Nutrition, and Metabolism. 2016;41(1):1-11. doi:10.1139/apnm-2015-0235.",
+          "urlOrDoi": "https://doi.org/10.1139/apnm-2015-0235",
+          "authorityType": "systematic_review"
+        },
+        {
+          "citation": "Li FY, Guo CG, Li HS, Xu HR, Sun P. A systematic review and net meta-analysis of the effects of different warm-up methods on the acute effects of lower limb explosive strength. BMC Sports Science, Medicine and Rehabilitation. 2023;15:106. doi:10.1186/s13102-023-00703-6.",
+          "urlOrDoi": "https://doi.org/10.1186/s13102-023-00703-6",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S09",
+      "domain": "recovery",
+      "decisionPrompt": "A young athlete slept substantially less than usual and has an evening performance test. Which afternoon recovery plan is preferable?",
+      "optionA": "Take a 30-to-60-minute nap ending more than one hour before the test.",
+      "optionB": "Remain awake to avoid possible post-nap grogginess.",
+      "targetPopulation": "Young adult athletes after partial sleep restriction",
+      "evidenceSources": [
+        {
+          "citation": "Mesas AE, et al. Is daytime napping an effective strategy to improve sport-related cognitive and physical performance and reduce fatigue? A systematic review and meta-analysis of randomised controlled trials. British Journal of Sports Medicine. 2023;57(7):417-426. doi:10.1136/bjsports-2022-106355.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2022-106355",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Souabni M, et al. Benefits of Daytime Napping Opportunity on Physical and Cognitive Performances in Physically Active Participants: A Systematic Review. Sports Medicine. 2021;51(10):2115-2146. doi:10.1007/s40279-021-01482-1.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-021-01482-1",
+          "authorityType": "systematic_review"
+        }
+      ]
+    },
+    {
+      "blindId": "S10",
+      "domain": "recovery",
+      "decisionPrompt": "After a demanding team-sport match, which recovery plan is preferable when comfort is the main outcome?",
+      "optionA": "Recover without compression garments.",
+      "optionB": "Wear compression garments during recovery.",
+      "targetPopulation": "Healthy adult athletes",
+      "evidenceSources": [
+        {
+          "citation": "Brown F, Gissane C, Howatson G, van Someren K, Pedlar C, Hill J. Compression Garments and Recovery from Exercise: A Meta-Analysis. Sports Medicine. 2017;47(11):2245-2267. doi:10.1007/s40279-017-0728-9.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-017-0728-9",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Dupuy O, Douzi W, Theurot D, Bosquet L, Dugué B. An Evidence-Based Approach for Choosing Post-exercise Recovery Techniques to Reduce Markers of Muscle Damage, Soreness, Fatigue, and Inflammation: A Systematic Review With Meta-Analysis. Frontiers in Physiology. 2018;9:403. doi:10.3389/fphys.2018.00403.",
+          "urlOrDoi": "https://doi.org/10.3389/fphys.2018.00403",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S11",
+      "domain": "exercise_training",
+      "decisionPrompt": "An older adult without a contraindication wants to improve physical function. Which program is better?",
+      "optionA": "Use aerobic and mobility training without a resistance component.",
+      "optionB": "Include appropriately prescribed progressive resistance training.",
+      "targetPopulation": "Older adults without contraindications",
+      "evidenceSources": [
+        {
+          "citation": "Radaelli R, et al. Effects of Resistance Training Volume on Physical Function, Lean Body Mass and Lower-Body Muscle Hypertrophy and Strength in Older Adults: A Systematic Review and Network Meta-analysis of 151 Randomised Trials. Sports Medicine. 2025. doi:10.1007/s40279-024-02123-z.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-024-02123-z",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Lai CC, et al. Effects of resistance training, endurance training and whole-body vibration on lean body mass, muscle strength and physical performance in older people: a systematic review and network meta-analysis. Age and Ageing. 2018;47(3):367-373. doi:10.1093/ageing/afy009.",
+          "urlOrDoi": "https://doi.org/10.1093/ageing/afy009",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S12",
+      "domain": "exercise_training",
+      "decisionPrompt": "A generally healthy inactive adult wants to improve cardiorespiratory fitness. Which plan is better?",
+      "optionA": "Begin repeated aerobic training at an appropriate dose.",
+      "optionB": "Use flexibility sessions as the main fitness stimulus.",
+      "targetPopulation": "Generally healthy adults",
+      "evidenceSources": [
+        {
+          "citation": "Bull FC, et al. World Health Organization 2020 guidelines on physical activity and sedentary behaviour. British Journal of Sports Medicine. 2020;54(24):1451-1462. doi:10.1136/bjsports-2020-102955.",
+          "urlOrDoi": "https://doi.org/10.1136/bjsports-2020-102955",
+          "authorityType": "guideline"
+        },
+        {
+          "citation": "Huang T, et al. Effects of exercise on body fat percentage and cardiorespiratory fitness in sedentary adults: a systematic review and network meta-analysis. Frontiers in Public Health. 2025;13:1624562. doi:10.3389/fpubh.2025.1624562.",
+          "urlOrDoi": "https://doi.org/10.3389/fpubh.2025.1624562",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S13",
+      "domain": "exercise_training",
+      "decisionPrompt": "A healthy adult combines endurance and resistance exercise in the same session, with strength as the current priority. Which order is preferable?",
+      "optionA": "Perform resistance exercise before endurance exercise.",
+      "optionB": "Perform endurance exercise before resistance exercise.",
+      "targetPopulation": "Healthy adults performing concurrent training",
+      "evidenceSources": [
+        {
+          "citation": "Eddens L, van Someren K, Howatson G. The Role of Intra-Session Exercise Sequence in the Interference Effect: A Systematic Review with Meta-Analysis. Sports Medicine. 2018;48(1):177-188. doi:10.1007/s40279-017-0784-1.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-017-0784-1",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Petré H, Hemmingsson E, Rosdahl H, Psilander N. Development of Maximal Dynamic Strength During Concurrent Resistance and Endurance Training in Untrained, Moderately Trained, and Trained Individuals: A Systematic Review and Meta-analysis. Sports Medicine. 2021;51(5):991-1010. doi:10.1007/s40279-021-01426-9.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-021-01426-9",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S14",
+      "domain": "recovery",
+      "decisionPrompt": "After substantial sleep loss during the preceding night, should an athlete expect recovery and performance to remain unaffected?",
+      "optionA": "Expect meaningful costs.",
+      "optionB": "Expect no meaningful costs.",
+      "targetPopulation": "Adult recreational and competitive athletes after acute sleep loss",
+      "evidenceSources": [
+        {
+          "citation": "Craven J, et al. Effects of Acute Sleep Loss on Physical Performance: A Systematic and Meta-Analytical Review. Sports Medicine. 2022. doi:10.1007/s40279-022-01706-y.",
+          "urlOrDoi": "https://doi.org/10.1007/s40279-022-01706-y",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Gong M, et al. Effects of Acute Sleep Deprivation on Sporting Performance in Athletes: A Comprehensive Systematic Review and Meta-Analysis. Nature and Science of Sleep. 2024;16:935-948. doi:10.2147/NSS.S467531.",
+          "urlOrDoi": "https://doi.org/10.2147/NSS.S467531",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    },
+    {
+      "blindId": "S15",
+      "domain": "recovery",
+      "decisionPrompt": "During a normal hypertrophy-training week with no urgent need to compete again, which immediate recovery approach is preferable?",
+      "optionA": "Use passive recovery without cold-water immersion.",
+      "optionB": "Use cold-water immersion after the session.",
+      "targetPopulation": "Healthy resistance-trained adults",
+      "evidenceSources": [
+        {
+          "citation": "Piñero A, et al. Effects of post-exercise cold-water immersion on resistance training-induced gains in muscular strength: a meta-analysis. European Journal of Sport Science. 2022. doi:10.1080/17461391.2022.2033851.",
+          "urlOrDoi": "https://doi.org/10.1080/17461391.2022.2033851",
+          "authorityType": "meta_analysis"
+        },
+        {
+          "citation": "Yu T, et al. Cold water immersion protocol optimization across exercise modalities: a systematic review and network meta-analysis of resistance training, endurance exercise, and team sport applications. BMC Sports Science, Medicine and Rehabilitation. 2026. doi:10.1186/s13102-026-01653-5.",
+          "urlOrDoi": "https://doi.org/10.1186/s13102-026-01653-5",
+          "authorityType": "meta_analysis"
+        }
+      ]
+    }
+  ]
+}
